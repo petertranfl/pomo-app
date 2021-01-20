@@ -14,7 +14,7 @@ const Timer = (props) => {
     }
     return (
         <div>
-            {minDisplay} : {secDisplay} ///// {props.duration}
+            {minDisplay} : {secDisplay} ==== {props.duration} secs
         </div>
     )
 }
