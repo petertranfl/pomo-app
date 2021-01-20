@@ -3,7 +3,8 @@ import './TimerBlock.css'
 import TimerStartPause from '../TimerButton/TimerStartPause';
 import TimerReset from '../TimerButton/TimerReset';
 
-const TimerBlock = () => {
+class TimerBlock extends Component {
+    render() {
         return (
             <div>
                 <div>
@@ -16,5 +17,6 @@ const TimerBlock = () => {
             </div>
         )
     }
+}
 
 export default TimerBlock;

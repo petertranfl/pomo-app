@@ -1,8 +1,7 @@
 import React from 'react';
 
 const TimerStartPause = (props) => {
-    const isRunning = props.isRunning;
-    if (isRunning) {
+    if (props.isRunning) {
     return (
             <button onClick={props.pause}>Pause</button>
         )
