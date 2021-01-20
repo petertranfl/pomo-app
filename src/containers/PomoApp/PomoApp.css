@@ -1,6 +1,7 @@
 .TimerBlock {
     margin: auto;
-    margin-top: 5em;
+    margin-top: 0em;
     height: 15em;
     width: 25em;
+    border: 2px solid
 }

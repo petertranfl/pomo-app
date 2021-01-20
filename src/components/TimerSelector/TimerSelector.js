@@ -1,15 +1,16 @@
 import React from 'react';
+import './TimerSelector.css'
 
-const TimerSelector = () => {
+const TimerSelector = (props) => {
     return (
-        <div>
-            <div>
+        <div className="TimerSelector">
+            <div className="PomodoroSelector" onClick={props.pomodoro}>
                 Pomodoro
             </div>
-            <div>
+            <div className="ShortBreakSelector" onClick={props.shortBreak}>
                 Short Break
             </div>
-            <div>
+            <div className="LongBreakSelector" onClick={props.longBreak}>
                 Long Break
             </div>
         </div>
