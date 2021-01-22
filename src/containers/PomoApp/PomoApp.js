@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
 import './PomoApp.css'
+import Modal from '../../components/UI/Modal/Modal'
 import Timer from '../../components/Timer/Timer';
 import TimerStartPause from '../../components/TimerButton/TimerStartPause'
 import TimerReset from '../../components/TimerButton/TimerReset'
 import TimerSelector from '../../components/TimerSelector/TimerSelector';
+import TimerEditor from '../../components/TimerEditor/TimerEditor';
 
 class PomoApp extends Component {
     constructor() {
         super();
         this.state = {
+            showModal: false,
             currentTimerType: 0,
             pomodoro: {
                 initialDuration: 1500,
@@ -33,6 +36,12 @@ class PomoApp extends Component {
         this.pomodoroTimerId = 4;
         this.shortBreakTimerId = 5;
         this.longBreakTimerId = 6;
+    }
+
+    modalToggler = () => {
+        this.setState(prevState => ({
+            showModal: !prevState.showModal
+        }))
     }
 
     tick = (timerType) => {
@@ -111,7 +120,6 @@ class PomoApp extends Component {
         }  
     }
 
-    //clean up switch statement
     timerActive = (start, timerType) => {
         if (start) {
             //change state of correct timer
@@ -248,7 +256,7 @@ class PomoApp extends Component {
     }
 
     changeTimer = (timerType) => {
-        if (timerType != this.state.currentTimerType) {
+        if (timerType !== this.state.currentTimerType) {
            this.setState({
                currentTimerType: timerType
            })
@@ -267,25 +275,28 @@ class PomoApp extends Component {
         }
         return (
             <div>
-                {/* <div>
-                    <TimerEditor
+                {/* <TimerEditor
                         input={this.state.initialDuration}
-                        editPomodoroTimer={this.editPomodoroTimer}/>
-                </div> */}
-                <div className="TimerContainer">
-                    <TimerSelector
-                        pomodoro={() => this.changeTimer(0)}
-                        shortBreak={() => this.changeTimer(1)}
-                        longBreak={() => this.changeTimer(2)}/>
-                        <div className="TimerBlock">
-                            {timer}
-                            <TimerStartPause
-                                isRunning={this.checkTimerRunning()}
-                                start={() => this.timerActive(true, this.state.currentTimerType)}
-                                pause={() => this.timerActive(false, this.state.currentTimerType)}/>
-                            <TimerReset reset={() => this.timerReset()}/>
-                        </div>
+                        editPomodoroTimer={this.editPomodoroTimer}/> */}
+                <TimerSelector
+                    pomodoro={() => this.changeTimer(0)}
+                    shortBreak={() => this.changeTimer(1)}
+                    longBreak={() => this.changeTimer(2)}/>
+                <div className="TimerBlock">
+                    {timer}
+                    <TimerStartPause
+                        isRunning={this.checkTimerRunning()}
+                        start={() => this.timerActive(true, this.state.currentTimerType)}
+                        pause={() => this.timerActive(false, this.state.currentTimerType)}/>
+                    <TimerReset reset={() => this.timerReset()}/>
                 </div>
+                <Modal 
+                    show={this.state.showModal}
+                    toggleModal={this.modalToggler}>
+                    <div>
+                        THIS IS THE MODAL
+                    </div>
+                </Modal>
             </div>
         )
     }

@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 class TimerEditor extends Component {
 
     state = {
-        editPomoDuration: 25,
+        editPomodoroDuration: 25,
         editShortBreakDuration: 5,
         editLongBreakDuration: 10,
     }
