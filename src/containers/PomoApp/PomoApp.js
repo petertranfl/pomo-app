@@ -228,6 +228,7 @@ class PomoApp extends Component {
                 }))
                 break;
         }
+        //still needs to be fixed for interval id
         clearInterval(this.interval);
     }
 
