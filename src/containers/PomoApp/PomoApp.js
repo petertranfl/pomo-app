@@ -30,142 +30,35 @@ class PomoApp extends Component {
             //if prev duration was 1s, timer is finished
             if (prevDuration === 1) {
                 clearInterval(this.interval)
-                this.setState(prevState => ({
-                                pomodoro:{
-                                    ...prevState.pomodoro,
-                                    currentDuration: this.state.pomodoro.initialDuration,
-                                    isRunning: false,
-                                    isFinished: true
-                                }}))
+                this.setState({
+                    isRunning: false,
+                    isFinished: true,
+                    currentDuration: this.state.pomodoro
+                })
                 alert('pomotimer is finished')
             }
             //otherwise, tick down a duration
-            this.setState(prevState => ({
-                pomodoro:{
-                    ...prevState.pomodoro,
+            this.setState({
                     currentDuration: prevDuration - 1,
-                }
-            }))
+            })
             console.log('pomotick')
-            prevDuration = this.state.shortBreak.currentDuration;
-            //if prev duration was 1s, timer is finished
-            if (prevDuration === 1) {
-                clearInterval(this.shortBreakTimer)
-                this.setState(prevState => ({
-                                shortBreak:{
-                                    ...prevState.shortBreak,
-                                    currentDuration: this.state.shortBreak.initialDuration,
-                                    isRunning: false,
-                                    isFinished: true
-                                }}))
-                alert('shortBreak is finished')
-            }}
-                //otherwise, tick down a duration
-                this.setState(prevState => ({
-                    shortBreak:{
-                        ...prevState.shortBreak,
-                        currentDuration: prevDuration - 1,
-                    }
-                }))
-                console.log('short tick');
-                break;
-            case 2:
-                prevDuration = this.state.longBreak.currentDuration;
-                //if prev duration was 1s, timer is finished
-                if (prevDuration === 1) {
-                    clearInterval(this.longBreakTimer)
-                    this.setState(prevState => ({
-                                    longBreak:{
-                                        ...prevState.longBreak,
-                                        currentDuration: this.state.longBreak.initialDuration,
-                                        isRunning: false,
-                                        isFinished: true
-                                    }}))
-                    alert('longBreak is finished')
-                }
-                //otherwise, tick down a duration
-                this.setState(prevState => ({
-                    longBreak:{
-                        ...prevState.longBreak,
-                        currentDuration: prevDuration - 1,
-                    }
-                }))
-                console.log('long tick');
-                break;
-        }  
     }
 
-    timerActive = (start) => {
+    timerActive = (start, timerType) => {
         if (start) {
-            //change state of correct timer
-                this.setState(prevState => ({
-                    pomodoro: {
-                        ...prevState.pomodoro,
-                        isRunning: true,
-                        isFinished: false
-                    }
-                }))
-                console.log('started pomo timer')
+                this.setState({
+                    isRunning: true
+                })
+                console.log('started timer')
                 setInterval(this.tick(), 1000)
-                break;
-            case 1: 
-                this.setState(prevState => ({
-                    shortBreak: {
-                        ...prevState.shortBreak,
-                        isRunning: true,
-                        isFinished: false
-                    }
-                }))
-                console.log('started shortBreak timer')
-                this.shortBreakTimerId = setInterval(() => this.tick(1), 1000)
-                break;
-            case 2:
-                this.setState(prevState => ({
-                    longBreak: {
-                        ...prevState.longBreak,
-                        isRunning: true,
-                        isFinished: false
-                    }
-                }))
-                this.longBreakTimerId = setInterval(() => this.tick(2), 1000)
-                console.log('started longbreak timer')
-                break;
-            }
         } else {
             //pause state of timer
-            switch (this.state.currentTimerType) {
-                case 0:
-                    this.setState(prevState => ({
-                        pomodoro: {
-                            ...prevState.pomodoro,
-                            isRunning: false,
-                        }
-                    }))
-                    console.log('pomotimer paused')
-                    clearInterval(this.pomodoroTimerId);
-                    break;
-                case 1:
-                    this.setState(prevState => ({
-                        shortBreak: {
-                            ...prevState.shortBreak,
-                            isRunning: false,
-                        }
-                    }))
-                    console.log('shorttimer paused')
-                    clearInterval(this.shortBreakTimerId);
-                    break;
-                case 2:
-                    this.setState(prevState => ({
-                        longBreak: {
-                            ...prevState.longBreak,
-                            isRunning: false,
-                        }
-                    }))
-                    console.log('longtimer paused')
-                    clearInterval(this.longBreakTimerId);
-                    break;
+                this.setState({
+                    isRunning: false,
+                })
+                console.log('timer paused')
+                clearInterval(this.interval);
             }
-        }
     }
 
     timerReset = () => {
@@ -250,8 +143,8 @@ class PomoApp extends Component {
                     <Timer duration={this.state.currentDuration}/>
                     <TimerStartPause
                         isRunning={this.checkTimerRunning()}
-                        start={() => this.timerActive(true)}
-                        pause={() => this.timerActive(false)}/>
+                        start={() => this.timerActive(true, this.state.currentTimerType)}
+                        pause={() => this.timerActive(false, this.state.currentTimerType)}/>
                     <TimerReset reset={() => this.timerReset()}/>
                 </div>
                 <Modal 
