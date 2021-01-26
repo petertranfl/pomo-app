@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './PomoApp.css'
-import Modal from '../../components/UI/Modal/Modal'
+import ReactModal from 'react-modal'
 import Timer from '../../components/Timer/Timer';
 import TimerStartPause from '../../components/TimerButton/TimerStartPause'
 import TimerReset from '../../components/TimerButton/TimerReset'
@@ -8,7 +8,10 @@ import TimerSelector from '../../components/TimerSelector/TimerSelector';
 import TimerEditor from '../../components/TimerEditor/TimerEditor';
 
 class PomoApp extends Component {
-        state = {
+    constructor(props) {
+        super(props)
+        this.state = {
+            timerId: 0,
             showModal: false,
             currentTimerType: 0,
             isRunning: false,
@@ -18,6 +21,8 @@ class PomoApp extends Component {
             shortInitial: 300,
             longInitial: 600,
         }
+        this.editorRef = React.createRef()
+    }  
 
     modalToggler = () => {
         this.setState(prevState => ({
@@ -25,16 +30,20 @@ class PomoApp extends Component {
         }))
     }
 
+    closeOverlay = () => {
+        this.editorRef.current.submitEdit(); 
+    }
+
     tick = () => {
         let prevDuration = this.state.currentDuration;
             //if prev duration was 1s, timer is finished
             if (prevDuration === 1) {
-                clearInterval(this.interval)
+                clearInterval(this.state.timerId)
                 this.setState({
                     isRunning: false,
                     isFinished: true,
-                    currentDuration: this.state.pomodoro
                 })
+                //TODO: switch timer
                 alert('pomotimer is finished')
             }
             //otherwise, tick down a duration
@@ -42,99 +51,82 @@ class PomoApp extends Component {
                     currentDuration: prevDuration - 1,
             })
             console.log('pomotick')
+            console.log(this.state.showModal)
     }
 
-    timerActive = (start, timerType) => {
+    startTimer = (start) => {
         if (start) {
+                console.log(this.state)
                 this.setState({
                     isRunning: true
                 })
                 console.log('started timer')
-                setInterval(this.tick(), 1000)
+                this.state.timerId = setInterval(this.tick, 1000)
         } else {
             //pause state of timer
                 this.setState({
                     isRunning: false,
                 })
                 console.log('timer paused')
-                clearInterval(this.interval);
+                clearInterval(this.state.timerId);
             }
     }
 
-    timerReset = () => {
+    resetTimer = () => {
+        clearInterval(this.state.timerId);
         switch (this.state.currentTimerType) {
             case 0: 
-                this.setState(prevState => ({
-                    pomodoro: {
-                        ...prevState.pomodoro,
-                        currentDuration: this.state.pomodoro.initialDuration,
-                        isRunning: false,
-                        isFinished: false
-                    }
-                }))
+                this.setState({
+                   currentDuration: this.state.pomodoroInitial
+                })
                 break;
             case 1: 
-                this.setState(prevState => ({
-                    shortBreak: {
-                        ...prevState.shortBreak,
-                        currentDuration: this.state.shortBreak.initialDuration,
-                        isRunning: false,
-                        isFinished: false
-                    }
-                }))
+                this.setState({
+                    currentDuration: this.state.shortInitial
+                })
                 break;
             case 2:
-                this.setState(prevState => ({
-                    longBreak: {
-                        ...prevState.longBreak,
-                        currentDuration: this.state.longBreak.initialDuration,
-                        isRunning: false,
-                        isFinished: false
-                    }
-                }))
+                this.setState({
+                    currentDuration: this.state.longInitial
+                })
                 break;
-        }
-        clearInterval(this.interval);
-    }
-
-    //returns true if current timer is running
-    checkTimerRunning = () => {
-        switch (this.state.currentTimerType) {
-            case 0:
-                return this.state.pomodoro.isRunning
-            case 1:
-                return this.state.shortBreak.isRunning
-            case 2:
-                return this.state.longBreak.isRunning
         }
     }
 
-    editTimer = (newDuration) => {
-        this.setState(prevState => ({
-            pomodoro: {
-                ...prevState.pomodoro,
-                initialDuration: newDuration,
-                currentDuration: newDuration
-            }
-         }))
-        console.log('pomo timer changed');
-        console.log(this.state.pomodoro)
+    editTimer = (newTimers) => {
+        console.log(newTimers)
+        this.setState({
+            pomodoroInitial: newTimers.editPomodoro,
+            shortInitial: newTimers.editShort,
+            longInitial: newTimers.editLong
+        }, this.resetTimer)
     }
+
 
     changeTimer = (timerType) => {
         if (timerType !== this.state.currentTimerType) {
            this.setState({
                currentTimerType: timerType
-           })
+           }, this.resetTimer);
         }
     }
 
     render() {
         return (
-            <div>
-                {/* <TimerEditor
-                        input={this.state.initialDuration}
-                        editPomodoroTimer={this.editPomodoroTimer}/> */}
+            <div className="wholePage">
+                <ReactModal
+                    isOpen={this.state.showModal}
+                    className="Modal"
+                    overlayClassName="Overlay"
+                    shouldCloseOnOverlayClick={true}
+                    shouldFocusAfterRender={true}
+                    shouldCloseOnEsc={true}
+                    onRequestClose={this.closeOverlay}>
+                    {<TimerEditor
+                        ref={this.editorRef}
+                        submitEdit={this.editTimer}
+                        toggleModal={this.modalToggler}/>}
+                </ReactModal>
                 <TimerSelector
                     pomodoro={() => this.changeTimer(0)}
                     shortBreak={() => this.changeTimer(1)}
@@ -142,18 +134,12 @@ class PomoApp extends Component {
                 <div className="TimerBlock">
                     <Timer duration={this.state.currentDuration}/>
                     <TimerStartPause
-                        isRunning={this.checkTimerRunning()}
-                        start={() => this.timerActive(true, this.state.currentTimerType)}
-                        pause={() => this.timerActive(false, this.state.currentTimerType)}/>
-                    <TimerReset reset={() => this.timerReset()}/>
+                        isRunning={this.state.isRunning}
+                        start={() => this.startTimer(true)}
+                        pause={() => this.startTimer(false)}/>
+                    <TimerReset reset={() => this.resetTimer()}/>
                 </div>
-                <Modal 
-                    show={this.state.showModal}
-                    toggleModal={this.modalToggler}>
-                    <div>
-                        THIS IS THE MODAL
-                    </div>
-                </Modal>
+                <button onClick={() => this.modalToggler()}></button>
             </div>
         )
     }

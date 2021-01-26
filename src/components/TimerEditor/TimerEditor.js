@@ -1,41 +1,65 @@
 import React, {Component} from 'react';
 
 class TimerEditor extends Component {
-
-    state = {
-        editPomodoroDuration: 25,
-        editShortBreakDuration: 5,
-        editLongBreakDuration: 10,
+    constructor() {
+        super()
+        this.state = {
+            editPomodoro: 25,
+            editShort: 5,
+            editLong: 10,
+        }
+        // this.focusRef = React.createRef()
     }
+
+    // autoFocus = () => {
+    //     this.focusRef.current.focus();
+    // }
+
+    //saves latest change in state
     handleChange = (event) => {
+        event.preventDefault();
 
-    }
-    
-    changeTimerDuration = (event) => {
         this.setState({
-            editDuration: event.target.value
+            [event.target.name] : event.target.value
         })
     }
 
     handleSubmit = (event) => {
-        let convertedDuration = this.state.editDuration * 60
-        this.props.editPomodoroTimer(convertedDuration)
         event.preventDefault()
-        console.log(convertedDuration)
-        console.log('submitted')
+        this.submitEdit()
+    }
+
+    submitEdit = () => {
+        this.setState(prevState => ({
+            ...prevState
+        }))
+        this.props.submitEdit(this.state);
+        this.props.toggleModal();
     }
 
     render() {
 
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}
+                    onBlur={this.submitEdit}>
                 <h1>Pomodoro</h1> <p>Minutes</p>
-                <input 
+                <input
+                    name="editPomodoro"
                     type="number"
                     defaultValue={25}
                     onChange={this.handleChange}
-                    
+                    // ref={this.focusRef}
                     />
+                <input
+                    name="editShort"
+                    type="number"
+                    defaultValue={5}
+                    onChange={this.handleChange}/>
+                <input
+                    name="editLong"
+                    type="number"
+                    defaultValue={10}
+                    onChange={this.handleChange}/>
                 <input type="submit" value="Submit" />
             </form>
         )
