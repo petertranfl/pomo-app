@@ -5,46 +5,69 @@
 
 .window {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-end;
     margin: 0% 2%;
     height: 70%;
     width: 100%;
     border-left: 7px;
     border-right: 7px;
+    border-bottom: 15px;
+    border-top: 0px;
     border-style: solid;
-    border-top-style: none;
-    border-color: rgb(204, 115, 42);
+    border-color: rgb(80, 21, 7);
+    border-radius: 6px;
+    overflow: hidden;
+}
+.cloud1 {width: 100%;}
+
+.cloud1 img{
+    height: 5em;
+    width: auto;
+}
+
+.cloud2 {width: 100%; z-index: 1}
+.cloud2 img{
+    height: 5em;
+    width: auto;
+}
+.cloud3 {width: 100%;}
+.cloud3 img{
+    height: 5em;
+    width: auto;
 }
 
 .timerContainer {
     display: flex;
     flex-wrap: wrap;
     height: 24em;
-    width: 46em;
+    width: 51em;
     flex-direction: column;
-    margin-top: 18%;
+    margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0;
-    background-color: #ECC7B0;
+    z-index: 2;
 }
 
 .timerSubContainer {
     display: flex;
     align-items: center;
     margin: 0;
-    height: 20em;
-    width: 35em;
-    border-radius: 10px;
-    border: 8px solid rgb(126, 72, 72);
+    height: 30em;
+    width: 50em;
+    border-radius: 12px;;
+    border: 8px solid rgb(121, 64, 64);
+    border-bottom-width: 14px;
+    background-color: #ECC7B0;
 }
 
 .timerDisplay {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 18em;
-    width: 33em;
+    height: 90%;
+    width: 75%;
     margin: 1em 1em;
     border-radius: 10px;
     border: 5px solid rgb(126, 72, 72);
@@ -91,9 +114,4 @@ html, body {
     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
     box-shadow: inset 0px 0px 5px #c1c1c1;
     outline: none;
-}
-
-.divAboveStartButton {
-    height: 2.6em;
-    width: 10em;
 }

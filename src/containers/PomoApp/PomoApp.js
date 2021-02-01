@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import './PomoApp.css'
+import cloud1 from '../../img/clouds/cloud1.png'
+import cloud2 from '../../img/clouds/cloud2.png'
+import cloud3 from '../../img/clouds/cloud3.png'
 import {motion} from 'framer-motion'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
@@ -55,12 +58,13 @@ class PomoApp extends Component {
                     case 2: this.changeTimer(0)
                         break;
                 }
-            }
+            } else {
             //otherwise, tick down a duration
             this.setState({
                     currentDuration: prevDuration - 1,
             })
             console.log('pomotick')
+        }
     }
 
     startTimer = (start) => {
@@ -92,12 +96,12 @@ class PomoApp extends Component {
             case 0: 
                 this.setState({
                    currentDuration: this.state.pomodoroInitial
-                }, console.log(this.state.currentDuration))
+                })
                 break;
             case 1: 
                 this.setState({
                     currentDuration: this.state.shortInitial
-                }, console.log(this.state.currentDuration))
+                })
                 break;
             case 2:
                 this.setState({
@@ -144,22 +148,33 @@ class PomoApp extends Component {
                         toggleModal={this.modalToggler}/>}
                 </ReactModal>
                 <div className="window">
+                    <div className="cloud1">
+                        <motion.img src={cloud1}
+                                    animate={{x: 2000}}
+                                    transition={{duration: 8, type:"tween"}}
+                                    />
+                    </div>
+                    <div className="cloud2">
+                        <motion.img src={cloud2}/>
+                    </div>
+                    <div className="cloud3">
+                        <motion.img src={cloud3}/>
+                    </div>
                     <div className="timerContainer">
-                        <TimerSelector
-                            pomodoro={() => this.changeTimer(0)}
-                            shortBreak={() => this.changeTimer(1)}
-                            longBreak={() => this.changeTimer(2)}/>
                         <div className="timerSubContainer">
                             <div className="timerDisplay">
+                            <TimerSelector
+                                pomodoro={() => this.changeTimer(0)}
+                                shortBreak={() => this.changeTimer(1)}
+                                longBreak={() => this.changeTimer(2)}/>
                                 <button className="editButton" onClick={() => this.modalToggler()}><FontAwesomeIcon icon={faEdit} size="2x"/></button>
                                 <Timer duration={this.state.currentDuration}/>
                             </div>
-                        </div>
-                        <div className="divAboveStartButton"></div>
-                        <TimerStartPause
+                            <TimerStartPause
                             isRunning={this.state.isRunning}
                             start={() => this.startTimer(true)}
                             pause={() => this.startTimer(false)}/>
+                        </div>
                     </div>
                 </div>
             </div>
