@@ -1,4 +1,5 @@
 import React from 'react';
+import './Timer.css';
 
 const Timer = (props) => {
     let minutes = (Math.floor(props.duration / 60));
@@ -13,8 +14,8 @@ const Timer = (props) => {
         secDisplay = "0" + secDisplay;
     }
     return (
-        <div>
-            {minDisplay} : {secDisplay} ==== {props.duration} secs
+        <div className="timer">
+            {minDisplay}:{secDisplay}
         </div>
     )
 }

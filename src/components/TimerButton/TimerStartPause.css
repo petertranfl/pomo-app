@@ -1,0 +1,24 @@
+.timerStart {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+    height: 10.5em;
+    width: 5em;
+    border: 10px solid rgb(126, 72, 72);
+    border-left-width: 4px;
+    border-radius: 12px;
+    padding: 0;
+    background-color: #ECC7B0;
+   
+}
+
+.timerPause {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+    height: 10.5em;
+    width: 5em;
+    border: 10px solid rgb(126, 72, 72);
+    border-left-width: 4px;
+    border-radius: 12px;
+    padding: 0;
+    background-color: #f2c1c1; 
+}

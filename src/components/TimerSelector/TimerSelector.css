@@ -1,28 +1,30 @@
 .TimerSelector {
+    display: flex;
     justify-content: space-between;
-    margin: auto;
-    margin-top: 10em;
-    width: 25em;
-    height: 2em;
-    border: 2px green solid;
+    font-size: 1.75em;
+    margin: 0;
+    height: 1.5em;
+    width: 20.5em;
+    border: none;
 }
 
 .PomodoroSelector {
-    margin-left: 1em;
+    width: 6em;
     text-align: center;
     float: left;
     cursor: pointer;
+    border-radius: 10px 10px 0 0;
 }
 
 .ShortBreakSelector {
-    margin: 0 1em;
+    width: 6em;
     text-align: center;
     float: left;
     cursor: pointer;
 }
 
 .LongBreakSelector {
-    margin-left: 1em;
+    width: 6em;
     text-align: center;
     float: left;
     cursor: pointer;
