@@ -1,3 +1,11 @@
+html, body {
+    height: 100%;
+    font-family: 'Fredoka One', cursive;
+    background-color: #f6e4d9;
+    color: #2f2a2a;
+}
+
+
 .wholePage {
     display: flex;
     height: 100vh;
@@ -18,6 +26,12 @@
     border-color: rgb(80, 21, 7);
     border-radius: 6px;
     overflow: hidden;
+}
+
+@media only screen and (max-height: 1080px) {
+    .window {
+        height: 75%;
+    }
 }
 .cloud1 {width: 100%;}
 
@@ -40,10 +54,10 @@
 .timerContainer {
     display: flex;
     flex-wrap: wrap;
-    height: 24em;
-    width: 51em;
+    height: 22em;
+    width: 48em;
     flex-direction: column;
-    margin-top: 10%;
+    margin-top: 6%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0;
@@ -54,12 +68,20 @@
     display: flex;
     align-items: center;
     margin: 0;
-    height: 30em;
-    width: 50em;
+    height: 100%;
+    width: 100%;
     border-radius: 12px;;
     border: 8px solid rgb(121, 64, 64);
     border-bottom-width: 14px;
     background-color: #ECC7B0;
+}
+
+.timerButtons {
+    display: flex;
+    flex-wrap: wrap;
+    height: 92%;
+    width: 10em;
+    margin-right: 1em;
 }
 
 .timerDisplay {
@@ -73,14 +95,6 @@
     border: 5px solid rgb(126, 72, 72);
     background-color: #f5eeea;
 }
-
-html, body {
-    height: 100%;
-    font-family: 'Fredoka One', cursive;
-    background-color: #f6e4d9;
-    color: #2f2a2a;
-}
-
 .Modal {
     position: absolute;
     height: 35em;
@@ -100,8 +114,8 @@ html, body {
 
 .editButton {
     align-self: flex-end;
-    height: 4em;
-    width: 4em;
+    height: 3em;
+    width: 5.5em;
     background-color: rgba(255, 255, 255, 0.418);
     border: none;
     padding: 5px 5px;
@@ -114,4 +128,12 @@ html, body {
     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
     box-shadow: inset 0px 0px 5px #c1c1c1;
     outline: none;
+}
+
+.chartButton{
+    align-self: flex-end;
+    height: 3em;
+    width: 5.5em;
+    padding: 5px 5px;
+    border-radius: 5px;
 }
