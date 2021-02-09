@@ -5,7 +5,8 @@ import cloud2 from '../../img/clouds/cloud2.png'
 import cloud3 from '../../img/clouds/cloud3.png'
 import {motion} from 'framer-motion'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import {faCog} from '@fortawesome/free-solid-svg-icons';
+import { faChartBar } from '@fortawesome/free-regular-svg-icons';
 import ReactModal from 'react-modal'
 import Timer from '../../components/Timer/Timer';
 import TimerStartPause from '../../components/TimerButton/TimerStartPause';
@@ -29,12 +30,7 @@ class PomoApp extends Component {
                 shortInitial: 300,
                 longInitial: 600,
             },
-            tasks: {
-                title: "",
-                category: "",
-                duration: 0,
-                finished: false,
-            }
+            tasks: []
         }
         this.editorRef = React.createRef()
     }
@@ -56,7 +52,7 @@ class PomoApp extends Component {
             //if prev duration was 0s, timer is finished
             if (this.state.currentDuration === 0) {
                 clearInterval(this.state.timerId)
-                //check to see which timer it's on. if  pomodoro timer ends, add one to pomodoro, if 
+                //check to see which timer it's on
                 if (this.state.currentTimerType === 0) {
                     //if pomodoroCounter is 4, reset counter and go to long break
                     if (this.state.pomodoroCounter === 4) {
@@ -66,21 +62,16 @@ class PomoApp extends Component {
                         })
                         this.changeTimer(2);
                     } else {
-                         //add +1 to pomodoroCounter to track when to long break and if pomodoro is finished
+                         //add +1 to pomodoroCounter and go to short break
                         this.setState(prevState => ({
                             ...prevState,
-                            isRunning: false,
                             pomodoroCounter: prevState.pomodoroCounter++
                         }))
                         this.changeTimer(1);
                     }
                 } else {
-                switch (this.state.currentTimerType) {
-                    case 0: this.changeTimer(1)
-                        break;
-                    case 2: this.changeTimer(0)
-                        break;
-                    }
+                    //if not on pomodorotimer, then switch to pomodorotimer
+                    this.changeTimer(0);
                 }
             } else {
             //otherwise, tick down a duration
@@ -205,12 +196,12 @@ class PomoApp extends Component {
                                 <motion.button className="editButton" 
                                                     onClick={() => this.modalToggler()}
                                                     whileHover={{color: "#ffffff"}}>
-                                        <FontAwesomeIcon icon={faEdit} size="2x"/>
+                                        <FontAwesomeIcon icon={faCog} size="2x"/>
                                 </motion.button>
                                 <motion.button className="chartButton" 
                                                     onClick={() => this.modalToggler()}
                                                     whileHover={{color: "#ffffff"}}>
-                                        <FontAwesomeIcon icon={faEdit} size="2x"/>
+                                        <FontAwesomeIcon icon={faChartBar} size="2x"/>
                                 </motion.button>
                             </div>
                         </div>
