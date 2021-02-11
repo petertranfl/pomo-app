@@ -12,6 +12,7 @@ import Timer from '../../components/Timer/Timer';
 import TimerStartPause from '../../components/TimerButton/TimerStartPause';
 import TimerSelector from '../../components/TimerSelector/TimerSelector';
 import TimerEditor from '../../components/TimerEditor/TimerEditor';
+import TaskManager from '../../components/Tasks/TaskManager';
 
 class PomoApp extends Component {
     constructor(props) {
@@ -166,6 +167,9 @@ class PomoApp extends Component {
                         submitEdit={this.editTimer}
                         toggleModal={this.modalToggler}/>}
                 </ReactModal>
+                <header>
+                    <h1>Pomofi</h1>
+                </header>
                 <div className="window">
                     <div className="cloud1">
                         <motion.img src={cloud1}
@@ -205,6 +209,7 @@ class PomoApp extends Component {
                                 </motion.button>
                             </div>
                         </div>
+                        <TaskManager/>
                     </div>
                 </div>
             </div>

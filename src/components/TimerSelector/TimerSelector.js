@@ -8,10 +8,10 @@ const TimerSelector = (props) => {
                 Pomodoro
             </div>
             <div className="ShortBreakSelector" onClick={props.shortBreak}>
-                Short Break
+                Short Brk
             </div>
             <div className="LongBreakSelector" onClick={props.longBreak}>
-                Long Break
+                Long Brk
             </div>
         </div>
     )

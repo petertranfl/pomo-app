@@ -1,23 +1,38 @@
 html, body {
     height: 100%;
+    width: 100vw;
     font-family: 'Fredoka One', cursive;
-    background-color: #f6e4d9;
+    background-color: #ecc7b0;
     color: #2f2a2a;
+}
+
+header {
+    z-index: 5;
+    position: absolute;
+    color: #501607c7;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto;
+    text-align: center;
+    width: 100em; /* Need a specific value to work */
 }
 
 
 .wholePage {
-    display: flex;
     height: 100vh;
+    width: 100vw;
 }
 
 .window {
+    position: relative;
+    z-index: 0;
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
     margin: 0% 2%;
-    height: 70%;
-    width: 100%;
+    height: 91%;
+    width: 95%;
+    background-color: #f6e4d9;
     border-left: 7px;
     border-right: 7px;
     border-bottom: 15px;
@@ -25,14 +40,8 @@ html, body {
     border-style: solid;
     border-color: rgb(80, 21, 7);
     border-radius: 6px;
-    overflow: hidden;
 }
 
-@media only screen and (max-height: 1080px) {
-    .window {
-        height: 75%;
-    }
-}
 .cloud1 {width: 100%;}
 
 .cloud1 img{
@@ -52,27 +61,35 @@ html, body {
 }
 
 .timerContainer {
+    z-index: 1;
     display: flex;
-    flex-wrap: wrap;
-    height: 22em;
-    width: 48em;
     flex-direction: column;
-    margin-top: 6%;
+    flex-wrap: nowrap;
+    height: 642px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 0;
-    z-index: 2;
+}
+
+@media (min-height: 1200px) {
+    .timerContainer {
+        margin-top: 13.5%
+    }
 }
 
 .timerSubContainer {
+    z-index: 1;
     display: flex;
-    align-items: center;
-    margin: 0;
-    height: 100%;
-    width: 100%;
-    border-radius: 12px;;
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    height: 14.5em;
+    width: 45em;
+    border-radius: 12px;
     border: 8px solid rgb(121, 64, 64);
-    border-bottom-width: 14px;
+    border-top-width: 6px;
+    border-bottom-width: 10px;
     background-color: #ECC7B0;
 }
 
@@ -81,6 +98,7 @@ html, body {
     flex-wrap: wrap;
     height: 92%;
     width: 10em;
+    margin-top: 0.5em;
     margin-right: 1em;
 }
 
@@ -88,14 +106,18 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 90%;
+    height: 85%;
     width: 75%;
-    margin: 1em 1em;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
     border-radius: 10px;
     border: 5px solid rgb(126, 72, 72);
     background-color: #f5eeea;
 }
 .Modal {
+    z-index: 5;
     position: absolute;
     height: 35em;
     width: 60em;
@@ -105,6 +127,7 @@ html, body {
 }
 .Overlay {
     position: fixed;
+    z-index: 5;
     top: 0;
     left: 0;
     right: 0;
@@ -113,17 +136,17 @@ html, body {
 }
 
 .editButton {
-    align-self: flex-end;
-    height: 3em;
-    width: 5.5em;
-    background-color: rgba(255, 255, 255, 0.418);
-    border: none;
+    height: 3.5em;
+    width: 6.25em;
     padding: 5px 5px;
-    border-radius: 5px;
+    border: 4px inset rgb(126, 72, 72);
+    border-radius: 12px;
+    padding: 0;
+    background-color: #ECC7B0;
 }
 
 .editButton:active {
-    background-color: transparent;
+    background-color: none;
     -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
     -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
     box-shadow: inset 0px 0px 5px #c1c1c1;
@@ -131,9 +154,12 @@ html, body {
 }
 
 .chartButton{
-    align-self: flex-end;
-    height: 3em;
-    width: 5.5em;
+    height: 3.5em;
+    width: 4em;
     padding: 5px 5px;
-    border-radius: 5px;
+    border: 4px inset rgb(126, 72, 72);
+    border-radius: 12px;
+    padding: 0;
+    background-color: #ECC7B0;
+    margin-left: 1em;
 }

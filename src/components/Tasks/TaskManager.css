@@ -1,0 +1,14 @@
+.taskManager {
+    z-index: 1;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 70em;
+    border-radius: 12px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 8px solid #501507;
+    border-bottom: none;
+    background-color: #ECC7B0;
+}

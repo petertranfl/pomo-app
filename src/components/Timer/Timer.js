@@ -15,7 +15,11 @@ const Timer = (props) => {
     }
     return (
         <div className="timer">
-            {minDisplay}:{secDisplay}
+            {minDisplay}
+            <div className="timerColon">
+            :
+            </div>
+            {secDisplay}
         </div>
     )
 }

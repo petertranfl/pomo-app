@@ -1,7 +1,7 @@
 .timerStart {
     font-family: 'Fredoka One', cursive;
     font-size: 2.5em;
-    height: 85%;
+    height: 70%;
     width: 100%;
     border: 4px inset rgb(126, 72, 72);
     border-radius: 12px;
@@ -12,8 +12,8 @@
 .timerPause {
     font-family: 'Fredoka One', cursive;
     font-size: 2.5em;
-    height: 85%;
-    width: 90%;
+    height: 70%;
+    width: 100%;
     border: 4px inset rgb(126, 72, 72);
     border-radius: 12px;
     padding: 0;
