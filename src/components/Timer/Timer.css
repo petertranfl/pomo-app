@@ -11,6 +11,12 @@
     color: #2f2a2a;
 }
 
+@media screen and (max-height: 1200px) {
+    .timer {
+        font-size: 8em;
+    }
+}
+
 .timerColon {
     margin-top: -7%;
 }

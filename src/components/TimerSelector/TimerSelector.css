@@ -1,11 +1,17 @@
 .TimerSelector {
     display: flex;
     justify-content: space-between;
-    font-size: 1.75em;
+    font-size: 28px;
     margin: 0;
     height: 1.5em;
     width: 100%;
     border: none;
+}
+
+@media screen and (max-height: 1200px) {
+    .TimerSelector {
+        font-size: 25px;
+    }
 }
 
 .PomodoroSelector {

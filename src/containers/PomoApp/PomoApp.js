@@ -13,6 +13,7 @@ import TimerStartPause from '../../components/TimerButton/TimerStartPause';
 import TimerSelector from '../../components/TimerSelector/TimerSelector';
 import TimerEditor from '../../components/TimerEditor/TimerEditor';
 import TaskManager from '../../components/Tasks/TaskManager';
+import TaskCreator from '../../components/Tasks/TaskCreator';
 
 class PomoApp extends Component {
     constructor(props) {
@@ -50,12 +51,6 @@ class PomoApp extends Component {
                 category: "",
                 duration: 0,
                 finished: false,
-            }, {
-                timeStamp: "132233421",
-                title: "1trick",
-                category: "lol",
-                duration: 34,
-                finished: false,
             }]
         }
         this.editorRef = React.createRef()
@@ -64,14 +59,21 @@ class PomoApp extends Component {
         ReactModal.setAppElement('body');
         //TODO: check for cookies and update user preferences
     }
-    modalToggler = () => {
+
+    //toggles modal opening/closing and opens different modal child based on modalType
+    modalToggler = (newModalType) => {
         this.setState(prevState => ({
-            showModal: !prevState.showModal
+            showModal: !prevState.showModal,
+            modalType: newModalType,
         }))
     }
 
     closeOverlay = () => {
+        if (this.state.modalType == 0) {
         this.editorRef.current.submitEdit(); 
+        } else {
+            this.modalToggler(0)
+        }
     }
 
     tick = () => {
@@ -179,10 +181,33 @@ class PomoApp extends Component {
         this.setState(prevState => ({
             ...prevState,
             taskList: newTaskList
-        }), console.log('this is new task list' + newTaskList))
+        }))
+    }
+
+    pushTaskToApp = (task) => {
+        const newTaskList = this.state.taskList.push(task);
+        this.setState({
+            taskList: newTaskList
+        })
     }
 
     render() {
+        var modalChild;
+        switch (this.state.modalType) {
+            case 0: {
+                modalChild = <TimerEditor
+                    initialState={this.state.userPref}
+                    ref={this.editorRef}
+                    submitEdit={this.editTimer}
+                    toggleModal={this.modalToggler}/>
+                }
+                break;
+            case 1: {
+                modalChild = <TaskCreator
+                    pushTaskToApp={this.pushTaskToApp}/>
+                break;
+                }
+            }
         return (
             <div className="wholePage">
                 <ReactModal
@@ -193,11 +218,7 @@ class PomoApp extends Component {
                     shouldFocusAfterRender={true}
                     shouldCloseOnEsc={true}
                     onRequestClose={this.closeOverlay}>
-                    {<TimerEditor
-                        initialState={this.state.userPref}
-                        ref={this.editorRef}
-                        submitEdit={this.editTimer}
-                        toggleModal={this.modalToggler}/>}
+                    {modalChild}
                 </ReactModal>
                 <header>
                     <h1>Pomofi</h1>
@@ -231,13 +252,13 @@ class PomoApp extends Component {
                                 start={() => this.startTimer(true)}
                                 pause={() => this.startTimer(false)}/>
                                 <motion.button className="editButton" 
-                                                    onClick={() => this.modalToggler()}
-                                                    whileHover={{color: "#ffffff"}}>
+                                                onClick={() => this.modalToggler(0)}
+                                                whileHover={{color: "#ffffff"}}>
                                         <FontAwesomeIcon icon={faCog} size="2x"/>
                                 </motion.button>
                                 <motion.button className="chartButton" 
-                                                    onClick={() => this.modalToggler()}
-                                                    whileHover={{color: "#ffffff"}}>
+                                                onClick={() => this.modalToggler(0)}
+                                                whileHover={{color: "#ffffff"}}>
                                         <FontAwesomeIcon icon={faChartBar} size="2x"/>
                                 </motion.button>
                             </div>
@@ -245,6 +266,7 @@ class PomoApp extends Component {
                         <TaskManager
                             taskList={this.state.taskList}
                             updateTaskList={this.updateTaskList}
+                            modalToggler={() => this.modalToggler(1)}
                             />
                     </div>
             </div>

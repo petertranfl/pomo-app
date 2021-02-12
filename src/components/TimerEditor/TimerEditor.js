@@ -10,10 +10,6 @@ class TimerEditor extends Component {
         }
     }
 
-    // autoFocus = () => {
-    //     this.focusRef.current.focus();
-    // }
-
     //saves latest change in state
     handleChange = (event) => {
         event.preventDefault();

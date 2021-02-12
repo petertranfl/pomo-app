@@ -11,20 +11,49 @@
     border: 8px solid #501507;
     border-bottom: none;
     background-color: #ECC7B0;
+    font-size: 1em;
+}
+
+.taskManagerDisplay {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 96%;
+    margin-top: 0.5em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 1em;
+    border-radius: 10px;
+    border: 5px solid rgb(126, 72, 72);
+    background-color: #f5eeea;
 }
 
 .tasks {
     list-style: none;
     padding: 0;
-    font-size: 12px;
+    width: 97%;
 }
 
 .tasks li {
     display: flex;
-    align-items: center;
+    width: 100%;
     border: solid 4px #794040;
     border-radius: 12px;
-    padding: .5em .8em .5em .5em;
+    margin-left: 0.5em;
     margin-bottom: 1em;
 }
-    
+
+.taskCard {
+    width: 100%;
+    background-color: #ecc7b0
+}
+
+.createTaskButton {
+    align-self: flex-end;
+}
+
+@media screen and (max-height: 1200px) {
+    .taskManager {
+        font-size: 0.75em;
+    }
+}
