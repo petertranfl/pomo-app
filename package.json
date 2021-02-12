@@ -13,6 +13,7 @@
     "firebase": "^8.2.6",
     "framer-motion": "^3.2.2-rc.1",
     "react": "^16.13.1",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
     "react-modal": "^3.12.1",
     "react-scripts": "^4.0.1"

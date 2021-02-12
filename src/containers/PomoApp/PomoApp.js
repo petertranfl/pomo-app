@@ -20,6 +20,7 @@ class PomoApp extends Component {
         this.state = {
             timerId: 0,
             showModal: false,
+            modalType: 0,
             currentTimerType: 0,
             pomodoroCounter: 0,
             isRunning: false,
@@ -31,7 +32,31 @@ class PomoApp extends Component {
                 shortInitial: 300,
                 longInitial: 600,
             },
-            tasks: []
+            taskList: [{
+                timeStamp: "10101112331",
+                title: "taskList",
+                category: "Programming",
+                duration: 1,
+                finished: false,
+            }, {
+                timeStamp: "1049314231",
+                title: "portraits",
+                category: "Art",
+                duration: 2,
+                finished: true,
+            }, {
+                timeStamp: "199321",
+                title: "Add New Task",
+                category: "",
+                duration: 0,
+                finished: false,
+            }, {
+                timeStamp: "132233421",
+                title: "1trick",
+                category: "lol",
+                duration: 34,
+                finished: false,
+            }]
         }
         this.editorRef = React.createRef()
     }
@@ -150,6 +175,13 @@ class PomoApp extends Component {
         }
     }
 
+    updateTaskList = (newTaskList) => {
+        this.setState(prevState => ({
+            ...prevState,
+            taskList: newTaskList
+        }), console.log('this is new task list' + newTaskList))
+    }
+
     render() {
         return (
             <div className="wholePage">
@@ -170,18 +202,19 @@ class PomoApp extends Component {
                 <header>
                     <h1>Pomofi</h1>
                 </header>
-                <div className="window">
-                    <div className="cloud1">
-                        <motion.img src={cloud1}
-                                    animate={{x: 2000}}
-                                    transition={{duration: 8, type:"tween"}}
-                                    />
-                    </div>
-                    <div className="cloud2">
-                        <motion.img src={cloud2}/>
-                    </div>
-                    <div className="cloud3">
-                        <motion.img src={cloud3}/>
+                    <div className="window">
+                        <div className="cloud1">
+                            <motion.img src={cloud1}
+                                        animate={{x: 2000}}
+                                        transition={{duration: 8, type:"tween"}}
+                                        />
+                        </div>
+                        <div className="cloud2">
+                            <motion.img src={cloud2}/>
+                        </div>
+                        <div className="cloud3">
+                            <motion.img src={cloud3}/>
+                        </div>
                     </div>
                     <div className="timerContainer">
                         <div className="timerSubContainer">
@@ -209,9 +242,11 @@ class PomoApp extends Component {
                                 </motion.button>
                             </div>
                         </div>
-                        <TaskManager/>
+                        <TaskManager
+                            taskList={this.state.taskList}
+                            updateTaskList={this.updateTaskList}
+                            />
                     </div>
-                </div>
             </div>
         )
     }

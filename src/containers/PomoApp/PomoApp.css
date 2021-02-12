@@ -35,14 +35,17 @@ header {
     background-color: #f6e4d9;
     border-left: 7px;
     border-right: 7px;
-    border-bottom: 15px;
+    border-bottom: 14px;
     border-top: 0px;
     border-style: solid;
     border-color: rgb(80, 21, 7);
     border-radius: 6px;
 }
 
-.cloud1 {width: 100%;}
+.cloud1 {
+    width: 100%;
+    overflow: hidden;
+}
 
 .cloud1 img{
     height: 5em;
@@ -65,15 +68,16 @@ header {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    height: 642px;
+    height: 60%;
     width: 100%;
+    margin-top: -30%;
     margin-left: auto;
     margin-right: auto;
 }
 
 @media (min-height: 1200px) {
     .timerContainer {
-        margin-top: 13.5%
+        margin-top: -31%
     }
 }
 
