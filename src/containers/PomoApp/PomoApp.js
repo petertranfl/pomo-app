@@ -27,32 +27,32 @@ class PomoApp extends Component {
             isRunning: false,
             isFinished: false,
             currentDuration: 1500,
+            isLoggedIn: false,
             username: "",
             userPref: {
                 pomodoroInitial: 1500,
                 shortInitial: 300,
                 longInitial: 600,
+                autoStart: false,
             },
-            taskList: [{
+            taskList: [
+                {
                 timeStamp: "10101112331",
                 title: "taskList",
                 category: "Programming",
                 duration: 1,
+                completed: 0,
                 finished: false,
             }, {
                 timeStamp: "1049314231",
                 title: "portraits",
                 category: "Art",
                 duration: 2,
-                finished: true,
-            }, {
-                timeStamp: "199321",
-                title: "Add New Task",
-                category: "",
-                duration: 0,
+                completed: 0,
                 finished: false,
-            }]
-        }
+            }
+        ]
+    }
         this.editorRef = React.createRef()
     }
     componentDidMount() {
@@ -69,7 +69,7 @@ class PomoApp extends Component {
     }
 
     closeOverlay = () => {
-        if (this.state.modalType == 0) {
+        if (this.state.modalType === 0) {
         this.editorRef.current.submitEdit(); 
         } else {
             this.modalToggler(0)
@@ -136,6 +136,9 @@ class PomoApp extends Component {
             isRunning: false
         })
         switch (this.state.currentTimerType) {
+            //just in case an unexpected value was given
+            default: alert('UNEXPECTED VALUE GIVEN TO TIMERTYPE')
+            break;
             case 0: 
                 this.setState({
                    currentDuration: this.state.userPref.pomodoroInitial
@@ -185,7 +188,8 @@ class PomoApp extends Component {
     }
 
     pushTaskToApp = (task) => {
-        const newTaskList = this.state.taskList.push(task);
+        const newTaskList = this.state.taskList;
+        newTaskList.push(task)
         this.setState({
             taskList: newTaskList
         })
@@ -194,20 +198,23 @@ class PomoApp extends Component {
     render() {
         var modalChild;
         switch (this.state.modalType) {
-            case 0: {
+            default: 
+                //just in case unexpected value was given
+                modalChild = <div>UNEXPECTED VALUE GIVEN TO MODALTYPE</div>;
+                break;
+            case 0: 
                 modalChild = <TimerEditor
                     initialState={this.state.userPref}
                     ref={this.editorRef}
                     submitEdit={this.editTimer}
                     toggleModal={this.modalToggler}/>
-                }
                 break;
-            case 1: {
+            case 1:
                 modalChild = <TaskCreator
                     pushTaskToApp={this.pushTaskToApp}/>
                 break;
-                }
-            }
+        }
+            
         return (
             <div className="wholePage">
                 <ReactModal
@@ -267,8 +274,13 @@ class PomoApp extends Component {
                             taskList={this.state.taskList}
                             updateTaskList={this.updateTaskList}
                             modalToggler={() => this.modalToggler(1)}
+                            pushTaskToApp={this.pushTaskToApp}
                             />
                     </div>
+                    <div className="hintDiv">
+                            This is content to explain pomodoros. 
+                            Maybe a tutorial? also content to give scrollbar for content layout.
+                        </div>
             </div>
         )
     }

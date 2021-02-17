@@ -1,43 +1,35 @@
 import React from 'react';
 import './TaskCreator.css';
+import {motion} from 'framer-motion';
 
 const TaskCreator = (props) => {
 
-    function createTask(event) {
-        event.preventDefault();
+    function createTask() {
         const task = {
             timeStamp: Date.now().toString(),
-            title: event.target[0].value,
-            category: event.target[1].value,
-            duration: event.target[2].value,
+            title: document.getElementById('taskTitle').value,
+            category:document.getElementById('taskCategory').value,
+            duration: document.getElementById('taskEstPomodoro').value,
             finished: false,
         };
         console.log('task created')
         props.pushTaskToApp(task);
     }
 
-    function handleChange(event) {
-            event.preventDefault();
-     }
     return (
-        <div className="taskCreator">
-            <form onSubmit={createTask}>
-                <input
-                    type="string"
-                    defaultValue= "What do you want to focus on?"
-                    onChange={handleChange}
-                    />
-                <input
-                    type="string"
-                    defaultValue="Category"
-                    onChange={handleChange}/>
-                <input
-                    type="number"
-                    defaultValue="Number of Pomodoros"
-                    onChange={handleChange}/>
-                <input type="submit" value="Submit" />
-            </form>
-        </div>
+        // <motion.div className="taskCreatorCard">
+        //     <input type="text" placeholder="Name of Task?" autoFocus={true} required={true} id="taskTitle"></input>
+        //     <input type="text" placeholder="Category?" id="taskCategory"></input>
+        //     <p>Estimated Pomodoros to Complete?</p>
+        //     <input type="number" value={1} id="taskEstPomodoro"></input>
+        //     <motion.button>button to increment est. pomodoros</motion.button>
+        //     <motion.button>button to decrement est. pomodoros</motion.button>
+        //     <motion.button>cancel task</motion.button>
+        //     <motion.button onClick={createTask}>save task</motion.button>
+        // </motion.div>
+        <motion.div className="createTaskButton">
+            Add a Task
+        </motion.div>
     )
 }
 

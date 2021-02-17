@@ -16,6 +16,10 @@ header {
     width: 20em; /* Need a specific value to work */
 }
 
+input {
+    outline: none;
+}
+
 .wholePage {
     height: 100vh;
 }
@@ -64,28 +68,23 @@ header {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    height: 60%;
+    height: 57.55%;
     width: 100%;
     margin-top: -30%;
     margin-left: auto;
     margin-right: auto;
 }
 
-@media (min-height: 1200px) {
-    .timerContainer {
-        margin-top: -31%
-    }
-}
-
 .timerSubContainer {
+    font-size: 0.9em;
     z-index: 1;
     display: flex;
     margin-top: 1%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0;
-    height: 14.5em;
-    width: 45em;
+    height: 27%;
+    width: 27%;
     border-radius: 12px;
     border: 8px solid rgb(121, 64, 64);
     border-top-width: 6px;
@@ -93,17 +92,11 @@ header {
     background-color: #ECC7B0;
 }
 
-@media screen and (max-height: 1200px) {
-    .timerSubContainer {
-        font-size: 0.9em;
-    }
-}
-
 .timerButtons {
     display: flex;
     flex-wrap: wrap;
     height: 92%;
-    width: 10em;
+    width: 100%;
     margin-top: 0.5em;
     margin-right: 1em;
 }
@@ -143,8 +136,9 @@ header {
 
 .editButton {
     height: 3.5em;
-    width: 6.25em;
+    width: 4.6em;
     padding: 5px 5px;
+    margin-top: 0.5em;
     border: 4px inset rgb(126, 72, 72);
     border-radius: 12px;
     padding: 0;
@@ -159,12 +153,6 @@ header {
     outline: none;
 }
 
-@media screen and (max-height: 1200px) {
-    .editButton {
-        font-size: 0.85em;
-    }
-}
-
 .chartButton{
     height: 3.5em;
     width: 4em;
@@ -173,11 +161,31 @@ header {
     border-radius: 12px;
     padding: 0;
     background-color: #ECC7B0;
-    margin-left: 0.5em;
+    margin-top: 0.5em;
+    margin-left: 1em;
 }
 
+.hintDiv {
+    border-style: dotted black 4px;
+    height: 40em;
+}
+
+
 @media screen and (max-height: 1200px) {
+    .timerContainer {
+        height: 59.6%;
+    }
+    .timerSubContainer {
+        height: 30%;
+        width: 32%;
+    }
+    .editButton {
+        width: 4em;
+        font-size: 0.85em;
+    }
     .chartButton {
+        width: 4em;
+        margin-left: 0.5em;
         font-size: 0.85em;
     }
 }

@@ -1,59 +1,85 @@
 .taskManager {
     z-index: 1;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-    height: 100%;
-    width: 70em;
+    height: 72.9%;
+    width: 66em;
     border-radius: 12px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     border: 8px solid #501507;
     border-bottom: none;
     background-color: #ECC7B0;
-    font-size: 1em;
 }
 
-.taskManagerDisplay {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 96%;
+.tasksHeader {
+    font-size: 2em;
     margin-top: 0.5em;
-    margin-bottom: 1em;
     margin-left: 1em;
-    margin-right: 1em;
-    border-radius: 10px;
-    border: 5px solid rgb(126, 72, 72);
-    background-color: #f5eeea;
+}
+
+.statsHeader {
+    align-self: flex-end;
+    font-size: 2em;
+    margin-top: -1.3em;
+    margin-right: 1.5em;
 }
 
 .tasks {
     list-style: none;
+    margin-left: 3em;
     padding: 0;
-    width: 97%;
+    width: 41%;
+}
+
+.tasks p {
+    margin: 0;
 }
 
 .tasks li {
-    display: flex;
-    width: 100%;
-    border: solid 4px #794040;
+    border: solid 4px #fff3ed;
     border-radius: 12px;
     margin-left: 0.5em;
     margin-bottom: 1em;
 }
 
 .taskCard {
-    width: 100%;
-    background-color: #ecc7b0
+    min-height: 4em;
+    background-color: #ffe7d9;
+    padding: 8px;
 }
 
-.createTaskButton {
+.taskCard h2 {
+    max-width: 80%;
+    word-wrap: break-word;
+    margin-top: 0.6em;
+    margin-bottom: 0;
+}
+
+.taskCard h3 {
+    max-width: 80%;
+    word-wrap: break-word;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
+.taskCard p {
+    max-width: 5em;
     align-self: flex-end;
+    margin-left: 0;
 }
 
 @media screen and (max-height: 1200px) {
     .taskManager {
+        height: 61.6%;
         font-size: 0.75em;
     }
+}
+
+#stats {
+    display: flex;
+    align-self: flex-end;
 }

@@ -1,0 +1,27 @@
+.createTaskButton {
+    height: 4em;
+    width: 38%;
+    background-color: #ffe7d9;
+    border: solid 4px #fff3ed;
+    padding: 8px;
+    border-radius: 12px;
+    margin-left: 2em;
+    text-align: center;
+    font-size: 2em;
+}
+
+.taskCreatorCard {
+    height: 60%;
+    width: 42%;
+    border: dotted 4px #fff3ed;
+    border-radius: 12px;
+    background-color: #ecc7b0;
+    margin-left: 3.5em;
+    margin-bottom: 1em;
+}
+
+.taskCreatorCard input {
+    background-color: #ecc7b0;
+    border-style: none;
+    font-size: 2em;
+}
