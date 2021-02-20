@@ -1,0 +1,33 @@
+.taskCard {
+    border: solid 4px #fff3ed;
+    border-radius: 12px;
+    min-height: 4em;
+    background-color: #ffe7d9;
+    padding: 8px;
+    padding-left: 12px;
+}
+
+.taskCard h2 {
+    max-width: 80%;
+    word-wrap: break-word;
+    margin-top: 0.6em;
+    margin-bottom: 0;
+}
+
+.taskCard h3 {
+    max-width: 15%;
+    word-wrap: break-word;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
+.taskCard p {
+    max-width: 5em;
+    margin-left: 0;
+}
+
+.activeTask {
+    border-left-width: 6px;
+    border-left-color: #501507;
+}

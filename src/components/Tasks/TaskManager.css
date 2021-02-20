@@ -4,7 +4,7 @@
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
-    height: 72.9%;
+    height: 31.8em;
     width: 66em;
     border-radius: 12px;
     border-bottom-left-radius: 0px;
@@ -27,49 +27,29 @@
     margin-right: 1.5em;
 }
 
-.tasks {
+.taskList {
     list-style: none;
     margin-left: 3em;
+    margin-bottom: 0em;
     padding: 0;
     width: 41%;
 }
 
-.tasks p {
+.taskList p {
     margin: 0;
 }
 
-.tasks li {
-    border: solid 4px #fff3ed;
-    border-radius: 12px;
+.taskList li {
     margin-left: 0.5em;
     margin-bottom: 1em;
 }
 
-.taskCard {
-    min-height: 4em;
-    background-color: #ffe7d9;
-    padding: 8px;
+.taskList li:hover {
+    border-left-color: #50160796
 }
 
-.taskCard h2 {
-    max-width: 80%;
-    word-wrap: break-word;
-    margin-top: 0.6em;
-    margin-bottom: 0;
-}
-
-.taskCard h3 {
-    max-width: 80%;
-    word-wrap: break-word;
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1em;
-}
-
-.taskCard p {
-    max-width: 5em;
-    align-self: flex-end;
-    margin-left: 0;
+.activeTask {
+    border-left-color: #501607
 }
 
 @media screen and (max-height: 1200px) {

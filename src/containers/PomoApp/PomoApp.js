@@ -35,6 +35,7 @@ class PomoApp extends Component {
                 longInitial: 600,
                 autoStart: false,
             },
+            activeTaskId: 0,
             taskList: [
                 {
                 timeStamp: "10101112331",
@@ -43,6 +44,7 @@ class PomoApp extends Component {
                 duration: 1,
                 completed: 0,
                 finished: false,
+                isActive: false
             }, {
                 timeStamp: "1049314231",
                 title: "portraits",
@@ -50,6 +52,7 @@ class PomoApp extends Component {
                 duration: 2,
                 completed: 0,
                 finished: false,
+                isActive: false
             }
         ]
     }
@@ -84,6 +87,7 @@ class PomoApp extends Component {
                 if (this.state.currentTimerType === 0) {
                     //if pomodoroCounter is 4, reset counter and go to long break
                     if (this.state.pomodoroCounter === 4) {
+                        this.completePomodoro();
                         this.setState({
                             pomodoroCounter: 0,
                             isFinished: true
@@ -107,7 +111,14 @@ class PomoApp extends Component {
                     currentDuration: this.state.currentDuration - 1,
             })
             console.log('pomotick')
+            console.log(this.state.taskList[0].completed)
         }
+    }
+
+    completePomodoro = () => {
+        const taskList = this.state.taskList;
+        const activeTaskIndex = taskList.findIndex((task => task.isActive === true));
+        taskList[activeTaskIndex].completed++;
     }
 
     startTimer = (start) => {
@@ -195,8 +206,21 @@ class PomoApp extends Component {
         })
     }
 
+    startTask = (taskId) => {
+        console.log(taskId)
+        this.setState({
+            activeTaskId: taskId
+        })
+    }
+
+    setEditCard = (taskId) => {
+        this.setState({
+            editingTaskId: taskId
+        })
+    }
+
     render() {
-        var modalChild;
+        let modalChild;
         switch (this.state.modalType) {
             default: 
                 //just in case unexpected value was given
@@ -271,10 +295,12 @@ class PomoApp extends Component {
                             </div>
                         </div>
                         <TaskManager
+                            startTask={this.startTask}
                             taskList={this.state.taskList}
                             updateTaskList={this.updateTaskList}
                             modalToggler={() => this.modalToggler(1)}
                             pushTaskToApp={this.pushTaskToApp}
+                            showEditCard={this.setEditCard}
                             />
                     </div>
                     <div className="hintDiv">

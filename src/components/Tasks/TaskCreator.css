@@ -1,27 +1,34 @@
 .createTaskButton {
-    height: 4em;
-    width: 38%;
-    background-color: #ffe7d9;
-    border: solid 4px #fff3ed;
+    font-size: 2em;
+    height: 2.5em;
+    width: 40%;
+    background-color: #2f2a2a36;
+    color: #2f2a2a;
+    border: dotted 4px #fff3ed63;
     padding: 8px;
     border-radius: 12px;
-    margin-left: 2em;
-    text-align: center;
-    font-size: 2em;
+    margin-left: 1.75em;
+    cursor: pointer;
+}
+
+.createTaskButton:active {
+    -webkit-box-shadow: inset 1px 1px 10px #333;
+    -moz-box-shadow:    inset 1px 1px 10px #333;
+    box-shadow:         inset 1px 1px 10px #333;
 }
 
 .taskCreatorCard {
     height: 60%;
-    width: 42%;
-    border: dotted 4px #fff3ed;
+    width: 39.5%;
+    border: solid 4px #fff3ed;
     border-radius: 12px;
-    background-color: #ecc7b0;
+    background-color: #ffe7d9;
     margin-left: 3.5em;
     margin-bottom: 1em;
 }
 
 .taskCreatorCard input {
-    background-color: #ecc7b0;
+    background-color: #ffe7d9;
     border-style: none;
     font-size: 2em;
 }

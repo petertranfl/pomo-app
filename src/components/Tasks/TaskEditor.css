@@ -1,0 +1,15 @@
+.taskEditorCard {
+    border: solid 4px #fff3ed;
+    border-radius: 12px;
+    min-height: 10em;
+    background-color: #ffe7d9;
+    padding: 8px;
+    padding-left: 12px;
+}
+
+.taskEditorCard input {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+    background-color: #ffe7d9;
+    border: none;
+}
