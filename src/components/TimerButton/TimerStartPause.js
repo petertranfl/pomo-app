@@ -2,7 +2,7 @@ import React from 'react';
 import './TimerStartPause.css'
 
 const TimerStartPause = (props) => {
-    if (props.isRunning) {
+    if (props.isTimerRunning) {
     return (
                 <button className="timerPause" onClick={props.pause}>Pause</button>
         )

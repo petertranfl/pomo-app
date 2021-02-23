@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Tasks/Task.css';
+import './Task.css';
 import {motion} from 'framer-motion';
 const Task = (props) => {
     const taskInfo = props.taskInfo;
@@ -21,7 +21,7 @@ const Task = (props) => {
     }
 
     return (
-        <motion.div className={taskInfo.isActive ? "taskCard activeTask" : "taskCard"}
+        <motion.div className={taskInfo.timeStamp === props.activeTaskId ? "taskCard activeTask" : "taskCard"}
                         onClick={() => startTask(taskInfo.timeStamp)}>
                         <h2>{taskInfo.title}</h2>
                         <h3>{taskInfo.completed} / {taskInfo.duration}</h3>

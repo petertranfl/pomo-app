@@ -24,18 +24,27 @@ class PomoApp extends Component {
             modalType: 0,
             currentTimerType: 0,
             pomodoroCounter: 0,
-            isRunning: false,
-            isFinished: false,
+            isTimerRunning: false,
             currentDuration: 1500,
             isLoggedIn: false,
+            loggedInYesterday: false,
             username: "",
             userPref: {
                 pomodoroInitial: 1500,
                 shortInitial: 300,
                 longInitial: 600,
-                autoStart: false,
+                autoStartTimer: true,
+                autoStartTasks: true
             },
-            activeTaskId: 0,
+            userStats: {
+                streak: 10,
+                totalHours: 20,
+                dailyHours: 0,
+                weeklyHours: 6,
+                favoriteTask: '',
+                lastLoginDate: '',
+            },
+            activeTaskId: '',
             taskList: [
                 {
                 timeStamp: "10101112331",
@@ -44,7 +53,6 @@ class PomoApp extends Component {
                 duration: 1,
                 completed: 0,
                 finished: false,
-                isActive: false
             }, {
                 timeStamp: "1049314231",
                 title: "portraits",
@@ -52,7 +60,6 @@ class PomoApp extends Component {
                 duration: 2,
                 completed: 0,
                 finished: false,
-                isActive: false
             }
         ]
     }
@@ -61,6 +68,12 @@ class PomoApp extends Component {
     componentDidMount() {
         ReactModal.setAppElement('body');
         //TODO: check for cookies and update user preferences
+        //check state for login after obtaining new data
+        if (this.state.userPref.autoStartTasks === true) {
+            this.setState({
+                activeTaskId: this.state.taskList[0].timeStamp
+            })
+        }
     }
 
     //toggles modal opening/closing and opens different modal child based on modalType
@@ -87,52 +100,89 @@ class PomoApp extends Component {
                 if (this.state.currentTimerType === 0) {
                     //if pomodoroCounter is 4, reset counter and go to long break
                     if (this.state.pomodoroCounter === 4) {
-                        this.completePomodoro();
                         this.setState({
                             pomodoroCounter: 0,
-                            isFinished: true
                         })
+                        console.log('changed to long break')
                         this.changeTimer(2);
                     } else {
                          //add +1 to pomodoroCounter and go to short break
-                        this.setState(prevState => ({
-                            ...prevState,
-                            pomodoroCounter: prevState.pomodoroCounter++
-                        }))
+                        this.completePomodoro();
+                        console.log('changed to short break')
                         this.changeTimer(1);
+                        if (this.state.userPref.autoStartTimer === true) {
+                            this.startTimer(true);
+                        }
                     }
                 } else {
                     //if not on pomodorotimer, then switch to pomodorotimer
                     this.changeTimer(0);
+                    console.log('changed to pomo')
+                    if (this.state.userPref.autoStartTimer === true) {
+                        this.startTimer(true);
+                    }
                 }
             } else {
             //otherwise, tick down a duration
             this.setState({
                     currentDuration: this.state.currentDuration - 1,
             })
+            console.log(this.state.taskList)
             console.log('pomotick')
-            console.log(this.state.taskList[0].completed)
         }
     }
 
     completePomodoro = () => {
-        const taskList = this.state.taskList;
-        const activeTaskIndex = taskList.findIndex((task => task.isActive === true));
-        taskList[activeTaskIndex].completed++;
+        const newTaskList = this.state.taskList;
+        const activeTaskIndex = newTaskList.findIndex((task => task.timeStamp === this.state.activeTaskId));
+        newTaskList[activeTaskIndex].completed++;
+        const newHours = this.state.userStats.dailyHours + Math.fround(this.state.userPref.pomodoroInitial / 3600)
+
+        //if completed task completed, set as completed
+        if (newTaskList[activeTaskIndex].completed === newTaskList[activeTaskIndex].duration) {
+            newTaskList[activeTaskIndex].finished = true;
+            this.setState(prevState => ({
+                ...prevState,
+                pomodoroCounter: prevState.pomodoroCounter++,
+                userStats: {
+                    ...prevState.userStats,
+                    dailyHours: newHours
+                },
+                taskList: newTaskList
+            }), this.checkForNewTask(activeTaskIndex))
+        } else {
+            this.setState(prevState => ({
+                ...prevState,
+                pomodoroCounter: prevState.pomodoroCounter++,
+                userStats: {
+                    ...prevState.userStats,
+                    dailyHours: newHours
+                }
+            }))
+        }
+    }
+
+    checkForNewTask = (taskIndex) => {
+        if (taskIndex + 1 == this.state.taskList.length) {
+            alert('tasks completed!')
+        } else {
+            const newTaskId = this.state.taskList[taskIndex + 1].timeStamp;
+            this.startTask(newTaskId)
+        }
     }
 
     startTimer = (start) => {
         if (start) {
                 console.log(this.state)
                 this.setState({
-                    isRunning: true,
+                    isTimerRunning: true,
                     timerId: setInterval(this.tick, 1000)
                 })
                 console.log('started timer')
         } else {
             //pause state of timer
                 this.setState({
-                    isRunning: false,
+                    isTimerRunning: false,
                 })
                 console.log('timer paused')
                 clearInterval(this.state.timerId);
@@ -141,10 +191,9 @@ class PomoApp extends Component {
 
     resetTimer = () => {
         console.log('resetTimer activated')
-        console.log(this.state.currentTimerType)
         clearInterval(this.state.timerId);
         this.setState({
-            isRunning: false
+            isTimerRunning: false
         })
         switch (this.state.currentTimerType) {
             //just in case an unexpected value was given
@@ -207,10 +256,23 @@ class PomoApp extends Component {
     }
 
     startTask = (taskId) => {
-        console.log(taskId)
         this.setState({
-            activeTaskId: taskId
+            activeTaskId: taskId,
         })
+    }
+
+    clearFinishedTasks = () => {
+        //archive tasks
+        let newTaskList = this.state.taskList
+        let archivedData = [];
+        newTaskList.forEach(({task}, index) => {
+            if (task.finished === true) {
+                const removed = newTaskList.splice(index, 1)
+                archivedData.push(removed)
+            } else alert('no copmletex tasks')
+        })
+        this.setState({taskList: newTaskList})
+        //push archivedData to database
     }
 
     setEditCard = (taskId) => {
@@ -224,7 +286,7 @@ class PomoApp extends Component {
         switch (this.state.modalType) {
             default: 
                 //just in case unexpected value was given
-                modalChild = <div>UNEXPECTED VALUE GIVEN TO MODALTYPE</div>;
+                // modalChild = <Login></Login>;
                 break;
             case 0: 
                 modalChild = <TimerEditor
@@ -237,6 +299,8 @@ class PomoApp extends Component {
                 modalChild = <TaskCreator
                     pushTaskToApp={this.pushTaskToApp}/>
                 break;
+            // case 2:
+            //     modalChild = <Charts></Charts>
         }
             
         return (
@@ -279,7 +343,7 @@ class PomoApp extends Component {
                             </div>
                             <div className="timerButtons">
                                 <TimerStartPause
-                                isRunning={this.state.isRunning}
+                                isTimerRunning={this.state.isTimerRunning}
                                 start={() => this.startTimer(true)}
                                 pause={() => this.startTimer(false)}/>
                                 <motion.button className="editButton" 
@@ -297,6 +361,8 @@ class PomoApp extends Component {
                         <TaskManager
                             startTask={this.startTask}
                             taskList={this.state.taskList}
+                            userPref={this.state.userPref}
+                            activeTaskId={this.state.activeTaskId}
                             updateTaskList={this.updateTaskList}
                             modalToggler={() => this.modalToggler(1)}
                             pushTaskToApp={this.pushTaskToApp}

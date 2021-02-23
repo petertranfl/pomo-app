@@ -9,7 +9,8 @@ const TaskCreator = (props) => {
             timeStamp: Date.now().toString(),
             title: document.getElementById('taskTitle').value,
             category:document.getElementById('taskCategory').value,
-            duration: document.getElementById('taskEstPomodoro').value,
+            completed: 0,
+            duration: parseInt(document.getElementById('taskEstPomodoro').value),
             finished: false,
         };
         console.log('task created')

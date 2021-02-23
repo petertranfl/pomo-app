@@ -4,6 +4,7 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import TaskCreator from '../Tasks/TaskCreator';
 import Task from '../Tasks/Task'
 import TaskEditor from '../Tasks/TaskEditor'
+import StatsViewer from '../Stats/StatsViewer'
 import { motion } from 'framer-motion';
 
 class TaskManager extends Component {
@@ -13,7 +14,6 @@ class TaskManager extends Component {
             editingTaskId: '',
             showTaskCreator: false,
             taskList: props.taskList
-
         }
     }
 
@@ -39,7 +39,7 @@ class TaskManager extends Component {
 
         this.setState({
             taskList: items
-        })
+        }, this.sendNewTaskList(items))
       
     }
 
@@ -78,14 +78,21 @@ class TaskManager extends Component {
                 timeStamp: this.state.taskList[index].timeStamp,
                 title: document.getElementById('editTaskTitle').value,
                 category: document.getElementById('editTaskCategory').value,
-                duration: document.getElementById('editTaskDuration').value,
+                duration: parseInt(document.getElementById('editTaskDuration').value),
                 completed: this.state.taskList[index].completed,
                 finished: this.state.taskList[index].finished,
-                isActive: this.state.taskList[index].isActive,
         }
         let newTaskList = this.state.taskList
         newTaskList[index] = editedTask
         console.log(document.getElementById('editTaskDuration'))
+        this.setState({
+            taskList: newTaskList
+        }, this.hideEditCard())
+        this.sendNewTaskList(newTaskList)
+    }
+
+    removeTask = (index) => {
+        let newTaskList = this.state.taskList.splice(index, 1);
         this.setState({
             taskList: newTaskList
         }, this.hideEditCard())
@@ -119,8 +126,10 @@ class TaskManager extends Component {
                                                             <TaskEditor
                                                                 taskInfo={this.state.taskList[index]}
                                                                 editTask={() => this.editTask(index)}
+                                                                removeTask={() => this.removeTask(index)}
                                                                 hideEditCard={this.hideEditCard}/>
                                                             :  <Task taskInfo={this.state.taskList[index]}
+                                                                    activeTaskId={this.props.activeTaskId}
                                                                     showEditCard={this.showEditCard}
                                                                     startTask={this.startTask}
                                                                     /> 
@@ -161,6 +170,11 @@ class TaskManager extends Component {
                 <div className="statsHeader">Stats</div>
                 {dragNDrop}
                 {taskCreatorCard}
+                <StatsViewer
+                    activeTaskId={this.props.activeTaskId}
+                    taskList={this.state.taskList}
+                    userPref={this.props.userPref}
+                    />
             </div>
         )
     }

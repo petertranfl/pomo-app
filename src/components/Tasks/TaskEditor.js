@@ -12,6 +12,10 @@ const TaskEditor = (props) => {
     function editTask() {
         props.editTask();
     }
+
+    function removeTask() {
+        props.removeTask();
+    }
     return (
         <motion.div 
             className="taskEditorCard"
@@ -26,6 +30,10 @@ const TaskEditor = (props) => {
                 onClick={hideEditCard}>cancel</motion.button>
             <motion.button
                 onClick={editTask}>save task</motion.button>
+            <motion.button
+                onClick={removeTask}>
+                Remove Task
+            </motion.button>
         </motion.div>
     )
 }
