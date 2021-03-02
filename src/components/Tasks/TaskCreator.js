@@ -14,7 +14,7 @@ const TaskCreator = (props) => {
             finished: false,
         };
         console.log('task created')
-        props.pushTaskToApp(task);
+        props.addTask(task);
         showTaskCreator(false)
     }
 

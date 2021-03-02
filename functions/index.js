@@ -1,9 +1,33 @@
 const functions = require('firebase-functions');
 
-exports.makeUppercase = functions.database.ref('/messages/{pushId}/original')
-    .onCreate((snapshot, context) => {
-      const original = snapshot.val();
-      console.log('Uppercasing', context.params.pushId, original);
-      const uppercase = original.toUpperCase();
-      return snapshot.ref.parent.child('uppercase').set(uppercase);
-    });
+const admin = require('firebase-admin')
+admin.initializeApp()
+
+exports.createUserDb = functions.auth.user().onCreate((user) => {
+    admin.auth().getUser(user.uid)
+    const newProfile = {
+        username: user.displayName,
+        userPref: {
+            "pomodoroInitial": 1500,
+            "shortInitial": 300,
+            "longInitial": 600,
+            "autoStartTimer": false,
+            "autoStartTasks": false
+            },
+        userStats: {
+            "longestStreak": 0,
+                "streak": 0,
+                "lastLoginDate": "",
+                "pomoData": {
+                        "Monday": 0,
+                        "Tuesday": 0,
+                        "Wednesday": 0, 
+                        "Thursday": 0,
+                        "Friday": 0,
+                        "Saturday": 0,
+                        "Sunday": 0
+                    }
+            },
+    }
+    admin.database().ref('/users/' + user.uid).set(newProfile)
+});

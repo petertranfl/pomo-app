@@ -28,6 +28,6 @@
 }
 
 .activeTask {
-    border-left-width: 6px;
-    border-left-color: #501507;
+    border-right-width: 6px;
+    border-right-color: #501507;
 }

@@ -1,7 +1,7 @@
 .taskManager {
     z-index: 1;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     margin-left: auto;
     margin-right: auto;
     height: 31.8em;
@@ -14,6 +14,16 @@
     background-color: #ECC7B0;
 }
 
+.leftTaskSide {
+    width: 50%;
+}
+
+.rightStatSide {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
 .tasksHeader {
     font-size: 2em;
     margin-top: 0.5em;
@@ -21,9 +31,8 @@
 }
 
 .statsHeader {
-    align-self: flex-end;
     font-size: 2em;
-    margin-top: -1.3em;
+    align-self: flex-end;
     margin-right: 1.5em;
 }
 
@@ -32,7 +41,6 @@
     margin-left: 3em;
     margin-bottom: 0em;
     padding: 0;
-    width: 41%;
 }
 
 .taskList p {

@@ -1,12 +1,15 @@
 import React, {Component} from 'react';
+import {Switch} from '@material-ui/core'
 
 class TimerEditor extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            editPomodoro: this.props.initialState.pomodoroInitial / 60,
-            editShort: this.props.initialState.shortInitial / 60,
-            editLong: this.props.initialState.longInitial / 60,
+            pomodoroInitial: this.props.initialState.pomodoroInitial / 60,
+            shortInitial: this.props.initialState.shortInitial / 60,
+            longInitial: this.props.initialState.longInitial / 60,
+            autoStartTimer: false,
+            autoStartTasks: false,
         }
     }
 
@@ -24,8 +27,24 @@ class TimerEditor extends Component {
     }
 
     submitEdit = () => {
-        this.props.submitEdit(this.state);
+        const newUserPref = this.state
+        newUserPref["pomodoroInitial"] *= 60
+        newUserPref["shortInitial"] *= 60
+        newUserPref["longInitial"] *= 60
+        this.props.submitEdit(newUserPref);
         this.props.toggleModal();
+    }
+
+    toggleAutoStartTimer = (bool) => {
+        this.setState({
+            autoStartTimer: bool
+        })
+    }
+
+    toggleAutoStartTasks = (bool) => {
+        this.setState({
+            autoStartTasks: bool
+        })
     }
 
     render() {
@@ -34,21 +53,25 @@ class TimerEditor extends Component {
             <form onSubmit={this.handleSubmit}>
                 <h1>Pomodoro</h1> <p>Minutes</p>
                 <input
-                    name="editPomodoro"
+                    name="pomodoroInitial"
                     type="number"
-                    defaultValue={this.state.editPomodoro}
+                    defaultValue={this.state.pomodoroInitial}
                     onChange={this.handleChange}
                     />
                 <input
-                    name="editShort"
+                    name="shortInitial"
                     type="number"
-                    defaultValue={this.state.editShort}
+                    defaultValue={this.state.shortInitial}
                     onChange={this.handleChange}/>
                 <input
-                    name="editLong"
+                    name="longInitial"
                     type="number"
-                    defaultValue={this.state.editLong}
+                    defaultValue={this.state.longInitial}
                     onChange={this.handleChange}/>
+                <Switch
+                    checked={this.state.autoStartTimer} label="Autostart Timer" onChange={this.toggleAutoStartTimer}/>
+                <Switch
+                    checked={this.state.autoStartTasks} label="Autostart Tasks" onChange={this.toggleAutoStartTasks}/>
                 <input type="submit" value="Submit" />
             </form>
         )

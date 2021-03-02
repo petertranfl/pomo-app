@@ -1,7 +1,7 @@
 .createTaskButton {
     font-size: 2em;
     height: 2.5em;
-    width: 40%;
+    width: 90%;
     background-color: #2f2a2a36;
     color: #2f2a2a;
     border: dotted 4px #fff3ed63;
@@ -18,8 +18,7 @@
 }
 
 .taskCreatorCard {
-    height: 60%;
-    width: 39.5%;
+    height: 60%;;
     border: solid 4px #fff3ed;
     border-radius: 12px;
     background-color: #ffe7d9;

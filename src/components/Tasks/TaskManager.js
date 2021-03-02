@@ -13,7 +13,6 @@ class TaskManager extends Component {
         this.state = {
             editingTaskId: '',
             showTaskCreator: false,
-            taskList: props.taskList
         }
     }
 
@@ -32,23 +31,21 @@ class TaskManager extends Component {
         }
 
         const items = this.reorder(
-            this.state.taskList,
+            this.props.taskList,
             result.source.index,
             result.destination.index
           );
-
-        this.setState({
-            taskList: items
-        }, this.sendNewTaskList(items))
-      
+           this.sendNewTaskList(items)
     }
 
-    sendNewTaskList = (taskList) => {
-        this.props.updateTaskList(taskList)
+    saveNewTaskList = (taskList) => {
+        this.props.saveTaskList(taskList)
     }
 
-    pushTaskToApp = (task) => {
-        this.props.pushTaskToApp(task)
+    addTask = (task) => {
+        const newTaskList = this.props.taskList
+        newTaskList.push(task)
+        this.saveNewTaskList(newTaskList);
     }
 
     startTask = (taskId) => {
@@ -75,28 +72,25 @@ class TaskManager extends Component {
 
     editTask = (index) => {
         const editedTask = {
-                timeStamp: this.state.taskList[index].timeStamp,
+                timeStamp: this.props.taskList[index].timeStamp,
                 title: document.getElementById('editTaskTitle').value,
                 category: document.getElementById('editTaskCategory').value,
                 duration: parseInt(document.getElementById('editTaskDuration').value),
-                completed: this.state.taskList[index].completed,
-                finished: this.state.taskList[index].finished,
+                completed: this.props.taskList[index].completed,
+                finished: this.props.taskList[index].finished,
         }
-        let newTaskList = this.state.taskList
+        let newTaskList = this.props.taskList
         newTaskList[index] = editedTask
         console.log(document.getElementById('editTaskDuration'))
-        this.setState({
-            taskList: newTaskList
-        }, this.hideEditCard())
-        this.sendNewTaskList(newTaskList)
+        this.hideEditCard()
+        this.saveNewNewTaskList(newTaskList)
     }
 
     removeTask = (index) => {
-        let newTaskList = this.state.taskList.splice(index, 1);
-        this.setState({
-            taskList: newTaskList
-        }, this.hideEditCard())
-        this.sendNewTaskList(newTaskList)
+        let newTaskList = this.props.taskList;
+        newTaskList.splice(index, 1)
+        this.hideEditCard()
+        this.saveNewTaskList(newTaskList)
     }
 
     editCheck = (taskId) => {
@@ -110,25 +104,23 @@ class TaskManager extends Component {
 
     let dragNDrop;
 
-    if (this.state.taskList.length === 0) {
-        dragNDrop = null;
-    } else {
+    if (this.props.taskList) {
         dragNDrop = <DragDropContext onDragEnd={this.onDragEnd}>
                         <Droppable droppableId="droppable">
                             {(provided) => (
                                 <ul className="taskList" ref={provided.innerRef} {...provided.droppableProps}>
-                                    {this.state.taskList.map(({timeStamp}, index) => {
+                                    {this.props.taskList.map(({timeStamp}, index) => {
                                         return (
                                             <Draggable key={timeStamp} draggableId={timeStamp} index={index}>
                                                 {(provided) => (
                                                     <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                         {this.editCheck(timeStamp) ? 
                                                             <TaskEditor
-                                                                taskInfo={this.state.taskList[index]}
+                                                                taskInfo={this.props.taskList[index]}
                                                                 editTask={() => this.editTask(index)}
                                                                 removeTask={() => this.removeTask(index)}
                                                                 hideEditCard={this.hideEditCard}/>
-                                                            :  <Task taskInfo={this.state.taskList[index]}
+                                                            :  <Task taskInfo={this.props.taskList[index]}
                                                                     activeTaskId={this.props.activeTaskId}
                                                                     showEditCard={this.showEditCard}
                                                                     startTask={this.startTask}
@@ -144,12 +136,14 @@ class TaskManager extends Component {
                             )}
                         </Droppable>
                     </DragDropContext>
+    } else {
+       dragNDrop = null
     }
 
     let taskCreatorCard;
     if (this.state.showTaskCreator) {
         taskCreatorCard = <TaskCreator
-                         pushTaskToApp={this.pushTaskToApp}
+                         addTask={this.addTask}
                          showTaskCreator={this.showTaskCreator}>
                         </TaskCreator>
     } else {
@@ -166,15 +160,22 @@ class TaskManager extends Component {
 
         return (
             <div className="taskManager">
-                <div className="tasksHeader">Tasks</div>
-                <div className="statsHeader">Stats</div>
-                {dragNDrop}
-                {taskCreatorCard}
-                <StatsViewer
-                    activeTaskId={this.props.activeTaskId}
-                    taskList={this.state.taskList}
-                    userPref={this.props.userPref}
-                    />
+                <div className="leftTaskSide">
+                    <div className="tasksHeader">
+                        Tasks
+                    </div>
+                    {dragNDrop}
+                    {taskCreatorCard}
+                </div>
+                <div className="rightStatSide">
+                    <div className="statsHeader">Stats</div>
+                    <StatsViewer
+                        activeTaskId={this.props.activeTaskId}
+                        taskList={this.props.taskList}
+                        userPref={this.props.userPref}
+                        userStats={this.props.userStats}
+                        />
+                </div>
             </div>
         )
     }
