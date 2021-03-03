@@ -17,7 +17,7 @@ import TimerStartPause from '../../components/TimerButton/TimerStartPause';
 import TimerSelector from '../../components/TimerSelector/TimerSelector';
 import TimerEditor from '../../components/TimerEditor/TimerEditor';
 import TaskManager from '../../components/Tasks/TaskManager';
-import TaskCreator from '../../components/Tasks/TaskCreator';
+import Chart from '../../components/Chart/Chart';
 
 class PomoApp extends Component {
     constructor(props) {
@@ -45,7 +45,9 @@ class PomoApp extends Component {
                 longestStreak: 0,
                 lastLoginDate: '',
                 pomoData: {
-                    Monday: 0,
+                    Monday: {
+                        'Art': [0.25, 2]
+                    },
                     Tuesday: 0,
                     Wednesday: 0, 
                     Thursday: 0,
@@ -61,9 +63,7 @@ class PomoApp extends Component {
     }
     componentDidMount() {
         ReactModal.setAppElement('body');
-        //TODO: check for cookies and update user preferences
         this.firstLoad();
-        //check state for login after obtaining new data
     }
 
     resetDatabase = () => {
@@ -80,6 +80,7 @@ class PomoApp extends Component {
                 this.loadCookies();
             }
         }, (error) => {
+            console.log('cors?')
             console.log(error)
         })
     }
@@ -130,8 +131,8 @@ class PomoApp extends Component {
     }
 
     loadCookies = () => {
-        console.log('checking cookies...')
-        const cookie = Cookies.getJSON('pomofiCookie');
+        let cookie = Cookies.getJSON('pomofiCookie');
+        console.log(cookie)
         //if no cookie currently exists, create new
         if (!cookie) {
             Cookies.set('pomofiCookie', {
@@ -144,26 +145,30 @@ class PomoApp extends Component {
                 },
                 taskList: [],
             })
+        console.log('no cookie found, creating cookie')
         }
+        //set state from cookie
         this.setState({
             isLoggedIn: false,
             userPref: cookie.userPref,
             taskList: cookie.taskList
         })
-        console.log(cookie)
     }
 
     setCookies = (data) => {
         const tempCookie = Cookies.getJSON('pomofiCookie');
+        console.log('setting cookies');
+        console.log(data)
+        console.log(tempCookie)
         //if the data is userpref
         if (data.pomodoroInitial) {
             tempCookie.userPref = data;
-            Cookies.set('pomofiCookie', data)
+            Cookies.set('pomofiCookie', tempCookie)
         } 
         //otherwise it is taskList
         else {
             tempCookie.taskList = data;
-            Cookies.set('pomofiCookies', data)
+            Cookies.set('pomofiCookies', tempCookie)
         }
     }
 
@@ -178,7 +183,7 @@ class PomoApp extends Component {
         }
     }
 
-    //saves new tasklist sets state and saves to cookie or db if signed in
+    //saves new tasklist, sets state and saves to cookie or db if signed in
     saveTaskList = (newTaskList) => {
         if (this.state.isLoggedIn) {
             firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/taskList').set(newTaskList)
@@ -190,7 +195,7 @@ class PomoApp extends Component {
         })
     }
 
-    //saves new userpreferences to firebase db
+    //saves new userpreferences, sets state and saves to cookie or db if signed in
     saveUserPref = (newUserPref) => {
         if (this.state.isLoggedIn) {
             firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + firebase.auth().currentUser.displayName + '/userPref').set(newUserPref)
@@ -199,7 +204,7 @@ class PomoApp extends Component {
         }
         this.setState({
             userPref: newUserPref
-        })
+        }, this.resetTimer)
     }
 
     //toggles modal opening/closing and opens different modal child based on modalType
@@ -211,8 +216,8 @@ class PomoApp extends Component {
     }
 
     closeOverlay = () => {
-        if (this.state.modalType === 0) {
-        this.editorRef.current.submitEdit(); 
+        if (this.state.modalType === 1) {
+        this.submitEdit(); 
         } else {
             this.modalToggler(0)
         }
@@ -274,7 +279,6 @@ class PomoApp extends Component {
             })
         } else {
             let newPomoCount = this.state.pomodoroCounter + 1
-            console.log(newPomoCount)
             this.setState({
                 pomodoroCounter: newPomoCount
             })
@@ -342,10 +346,6 @@ class PomoApp extends Component {
         }
     }
 
-    editTimer = (newTimers) => {
-        this.saveUserPref(newTimers)
-    }
-
     changeTimer = (timerType) => {
         if (timerType !== this.state.currentTimerType) {
            this.setState({
@@ -385,21 +385,20 @@ class PomoApp extends Component {
         let modalChild;
         switch (this.state.modalType) {
             case 0: 
-                modalChild = <Login></Login>;
+                modalChild = <Login/>;
                 break;
             case 1: 
                 modalChild = <TimerEditor
                     initialState={this.state.userPref}
                     ref={this.editorRef}
-                    submitEdit={this.editTimer}
+                    submitEdit={this.saveUserPref}
                     toggleModal={this.modalToggler}/>
                 break;
             case 2:
-                modalChild = <TaskCreator
-                    pushTaskToApp={this.pushTaskToApp}/>
+                modalChild = <Chart
+                    data={this.state.userStats.pomoData}/>
                 break;
             default:
-                alert('incorrect modalType provided')
                 break;
         }
             
@@ -412,7 +411,7 @@ class PomoApp extends Component {
                     shouldCloseOnOverlayClick={true}
                     shouldFocusAfterRender={true}
                     shouldCloseOnEsc={true}
-                    onRequestClose={this.closeOverlay}>
+                    onRequestClose={this.modalToggler}>
                     {modalChild}
                 </ReactModal>
                 <header>
@@ -453,7 +452,7 @@ class PomoApp extends Component {
                                         <FontAwesomeIcon icon={faCog} size="2x"/>
                                 </motion.button>
                                 <motion.button className="chartButton" 
-                                                onClick={() => this.resetDatabase()}
+                                                onClick={() => this.modalToggler(2)}
                                                 whileHover={{color: "#ffffff"}}>
                                         <FontAwesomeIcon icon={faChartBar} size="2x"/>
                                 </motion.button>

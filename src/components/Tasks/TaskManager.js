@@ -83,7 +83,7 @@ class TaskManager extends Component {
         newTaskList[index] = editedTask
         console.log(document.getElementById('editTaskDuration'))
         this.hideEditCard()
-        this.saveNewNewTaskList(newTaskList)
+        this.saveNewTaskList(newTaskList)
     }
 
     removeTask = (index) => {

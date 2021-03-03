@@ -4,9 +4,11 @@ const admin = require('firebase-admin')
 admin.initializeApp()
 
 exports.createUserDb = functions.auth.user().onCreate((user) => {
-    admin.auth().getUser(user.uid)
+    let displayName;
+    const data = event.data
+    setTimeout(function(){ displayName = admin.auth().getUser(data.uid); }, 50);
     const newProfile = {
-        username: user.displayName,
+        username: displayName,
         userPref: {
             "pomodoroInitial": 1500,
             "shortInitial": 300,

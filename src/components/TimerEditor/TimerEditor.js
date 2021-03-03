@@ -32,7 +32,7 @@ class TimerEditor extends Component {
         newUserPref["shortInitial"] *= 60
         newUserPref["longInitial"] *= 60
         this.props.submitEdit(newUserPref);
-        this.props.toggleModal();
+        this.props.toggleModal(1);
     }
 
     toggleAutoStartTimer = (bool) => {
