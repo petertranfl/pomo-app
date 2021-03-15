@@ -1,78 +1,97 @@
 import React from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const Chart = (props) => {
     const pomoData = props.data
+    const order = {Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6, Sunday: 7,};
 
-    data =  [
-        {
-          name: 'Monday',
-          uv: 4000,
-          pv: 2400,
-          amt: 2400,
-        },
-        {
-          name: 'Tuesday',
-          uv: 3000,
-          pv: 1398,
-          amt: 2210,
-        },
-        {
-          name: 'Wednesday',
-          uv: 2000,
-          pv: 9800,
-          amt: 2290,
-        },
-        {
-          name: 'Thursday',
-          uv: 2780,
-          pv: 3908,
-          amt: 2000,
-        },
-        {
-          name: 'Friday',
-          uv: 1890,
-          pv: 4800,
-          amt: 2181,
-        },
-        {
-          name: 'Saturday',
-          uv: 2390,
-          pv: 3800,
-          amt: 2500,
-        },
-        {
-          name: 'Sunday',
-          uv: 3490,
-          pv: 4300,
-          amt: 2100,
-        },
-      ];
+
+    function generateData(data) {
+        //create a point of data for each key
+        const chartData = []
+        for (const [key, value] of Object.entries(data)) {
+            let day = {
+                day: key
+            }
+            for (const [innerkey, innervalue] of Object.entries(value)) {
+                day[innerkey] = innervalue
+            }
+        chartData.push(day)
+        }
+        return chartData.sort(function (a, b) {
+            return order[a.day] - order[b.day];
+          });
+    }
+
+
+    const hexColorArr = [
+      "#ea844a",
+      "#36ef7a",
+      "#9e6fee",
+      "#f12c86",
+      "#7af12c",
+      "#b0d0d3",
+      "#c08497",
+      "#f7af9d",
+      "#f7e3af",
+      "#f3eec3"
+    ];
+
+    const generateBar = (sortedArray) => {
+      const tempCategoryArray = []
+
+      //grab all categories for data
+      sortedArray.map((dataObj) =>
+        Object.keys(dataObj)
+          .filter((propName) => {
+            return propName !== "day";
+          })
+          .map((category) => {
+            tempCategoryArray.push(category)
+          })
+      );
+
+      //remove duplicate categories
+      const categoryArray = tempCategoryArray.filter(function(item, pos){
+        return tempCategoryArray.indexOf(item) == pos; 
+      });
+
+      //create bar per category
+      const barArray = categoryArray.map((category, index) => {
+        return (
+          <Bar
+              dataKey={category}
+              stackId="thisIsMyStackId"
+              fill={hexColorArr[index]}
+              name={category}
+            />
+        )
+      })
+      return barArray;
+    };
 
 
     return (
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                  top: 20,
-                  right: 30,
-                  left: 20,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-                <Bar dataKey="amt" stackId="a" fill="#82ca9d" />
-                <Bar dataKey="uv" fill="#ffc658" />
-              </BarChart>
-            </ResponsiveContainer>
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+          width={500}
+          height={300}
+          data={generateData(pomoData)}
+          margin={{
+            top: 20,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="day" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          {generateBar(generateData(pomoData))}
+        </BarChart>
+      </ResponsiveContainer>
     );
 }
 

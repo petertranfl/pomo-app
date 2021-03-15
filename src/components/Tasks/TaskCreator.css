@@ -1,7 +1,8 @@
 .createTaskButton {
     font-size: 2em;
+    font-family: 'Fredoka One', cursive;
     height: 2.5em;
-    width: 90%;
+    width: 16.4em;
     background-color: #2f2a2a36;
     color: #2f2a2a;
     border: dotted 4px #fff3ed63;
@@ -18,7 +19,8 @@
 }
 
 .taskCreatorCard {
-    height: 60%;;
+    position: relative;
+    height: 45%;
     border: solid 4px #fff3ed;
     border-radius: 12px;
     background-color: #ffe7d9;
@@ -29,5 +31,92 @@
 .taskCreatorCard input {
     background-color: #ffe7d9;
     border-style: none;
+    border-bottom: 2px solid #ccbab1;
     font-size: 2em;
+    margin-left: 0.8em;
+}
+
+.motionButtonFont {
+    outline: none;
+    border: none;
+    background-color: #ffe7d9;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.75em;
+}
+
+#taskTitle {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#taskCategory {
+    margin-bottom: 0.5em;
+}
+
+#estPomo {
+    position: absolute;
+    top: 1em;
+    right: 0.1em;
+    display: inline;
+    width: 6em;
+    margin-top: 0.5em;
+    margin-left: 1.5em;
+    font-size: 1.25em;
+}
+
+#taskEstPomodoro {
+    display: inline;
+    width: 2em;
+    font-size: 2.5em;
+    margin-left: 1em;
+    margin-top: -1em;
+}
+
+#saveTaskDiv {
+    position: absolute;
+    cursor: pointer;
+    bottom: 0.5em;
+    right: 1em;
+    height: 3.5em;
+    border: 3px outset #d3b1a9;
+    border-radius: 6px;
+    width: 22em;
+}
+
+#saveTaskDiv:hover #saveTask {
+    color: #c3998f;
+}
+
+#saveTask {
+    position: absolute;
+    top: 20%;
+    left: 46%;
+    color: #501507;
+}
+
+#cancelTaskDiv {
+    position: absolute;
+    cursor: pointer;
+    bottom: 0.5em;
+    left: 1.5em;
+    height: 3.5em;
+    border: 3px outset #d3b1a9;
+    border-radius: 8px;
+    width: 6em;;
+}
+
+#cancelTaskDiv:hover #cancelCreateTask {
+    color: #c3998f;
+}
+
+#cancelCreateTask {
+    position: absolute;
+    font-size: 2em;
+    top: 15%;
+    left: 28%;
+    color: #501507;
+}
+
+button:hover {
+    cursor: pointer;
 }

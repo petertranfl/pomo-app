@@ -1,0 +1,43 @@
+{
+    "users": {
+        "lolitspetey": {
+            "userPref": {
+                "pomodoroInitial": 1500,
+                "shortInitial": 300,
+                "longInitial": 600,
+                "autoStartTimer": true,
+                "autoStartTasks": true
+            },
+            "userStats": {
+                "streak": 23,
+                "lastLoginDate": "2021-02-25T14:58:21-06:00",
+                "pomoData": {
+                        "Monday": 4,
+                        "Tuesday": 0,
+                        "Wednesday": 4, 
+                        "Thursday": 8,
+                        "Friday": 6,
+                        "Saturday": 2,
+                        "Sunday": 0
+                        }
+                    },
+            "taskList": [
+                {
+                    "timeStamp": "10101112331",
+                    "title": "taskList",
+                    "category": "Programming",
+                    "duration": 1,
+                    "completed": 0,
+                    "finished": false
+                }, {
+                    "timeStamp": "1049314231",
+                    "title": "portraits",
+                    "category": "Art",
+                    "duration": 2,
+                    "completed": 0,
+                    "finished": false
+                }
+            ]
+        }
+    }
+}

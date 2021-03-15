@@ -1,15 +1,99 @@
 .taskEditorCard {
+    position: relative;
     border: solid 4px #fff3ed;
     border-radius: 12px;
-    min-height: 10em;
+    min-height: 14em;
     background-color: #ffe7d9;
-    padding: 8px;
-    padding-left: 12px;
 }
 
 .taskEditorCard input {
-    font-family: 'Fredoka One', cursive;
-    font-size: 2em;
     background-color: #ffe7d9;
-    border: none;
+    border-style: none;
+    border-bottom: 2px solid #ccbab1;
+    font-size: 2em;
+    margin-left: 0.8em;
 }
+
+#editTaskTitle {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+#editTaskCategory {
+    margin-bottom: 0.5em;
+}
+
+#editTaskDuration {
+    display: inline;
+    width: 2em;
+    font-size: 2.5em;
+    margin-left: 1em;
+    margin-top: -1em; 
+}
+
+#removeEditDiv {
+    position: absolute;
+    bottom: 0.5em;
+    left: 5%;
+    height: 3.5em;
+    width: 4em;
+    border: 3px outset #d3b1a9;
+    border-radius: 8px;
+}
+
+#removeEditDiv:hover #removeEditButton {
+    color: #c3998f;
+}
+
+#removeEditButton {
+    position: absolute;
+    top: 20%;
+    left: 26%;
+    color: #501507;
+}
+
+
+#cancelEditDiv {
+    position: absolute;
+    bottom: 0.5em;
+    left: 20%;
+    height: 3.5em;
+    border: 3px outset #d3b1a9;
+    border-radius: 8px;
+    width: 4em;
+}
+
+#cancelEditDiv:hover #cancelEditButton {
+    color: #c3998f;
+}
+
+#cancelEditButton {
+    position: absolute;
+    top: 12%;
+    left: 23%;
+    font-size: 2.75em;
+    color: #501507;
+}
+
+#saveEditDiv {
+    position: absolute;
+    bottom: 0.5em;
+    right: 1em;
+    height: 3.5em;
+    width: 16em;
+    border: 3px outset #d3b1a9;
+    border-radius: 6px;
+}
+
+#saveEditDiv:hover #saveEditButton{
+    color: #c3998f;
+}
+
+#saveEditButton {
+    position: absolute;
+    top: 15%;
+    left: 45%;
+    font-size: 2.5em;
+    color: #501507;
+}
+

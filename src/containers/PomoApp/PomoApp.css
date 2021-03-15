@@ -18,49 +18,22 @@ header {
 
 input {
     outline: none;
+    font-family: 'Fredoka One', cursive;
+}
+
+#loginButton {
+    position: absolute;
+    top: 1%;
+    right: 5%;
+    font-size: 1.75em;
+}
+
+#loginButton:hover {
+    cursor: pointer
 }
 
 .wholePage {
     height: 100vh;
-}
-
-.window {
-    position: relative;
-    z-index: 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0% auto;
-    height: 91%;
-    width: 95%;
-    background-color: #f6e4d9;
-    border-left: 7px;
-    border-right: 7px;
-    border-bottom: 14px;
-    border-top: 0px;
-    border-style: solid;
-    border-color: rgb(80, 21, 7);
-    border-radius: 6px;
-}
-
-.cloud1 {
-    width: 100%;
-    overflow: hidden;
-}
-
-.cloud1 img{
-    height: 5em;
-    width: auto;
-}
-
-.cloud2 {width: 100%; z-index: 1}
-.cloud2 img{
-    height: 5em;
-    width: auto;
-}
-.cloud3 {width: 100%;}
-.cloud3 img{
-    height: 5em;
-    width: auto;
 }
 
 .timerContainer {

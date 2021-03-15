@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
 import './PomoApp.css';
-import cloud1 from '../../img/clouds/cloud1.png';
-import cloud2 from '../../img/clouds/cloud2.png';
-import cloud3 from '../../img/clouds/cloud3.png';
 import {motion} from 'framer-motion';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCog} from '@fortawesome/free-solid-svg-icons';
+import {faCog, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faChartBar} from '@fortawesome/free-regular-svg-icons';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import firebase from '../../firebase/firebase';
 import ReactModal from 'react-modal';
+import Window from '../../components/Window/Window';
 import Login from '../../components/Login/Login';
 import Timer from '../../components/Timer/Timer';
 import TimerStartPause from '../../components/TimerButton/TimerStartPause';
@@ -46,12 +44,23 @@ class PomoApp extends Component {
                 lastLoginDate: '',
                 pomoData: {
                     Monday: {
-                        'Art': [0.25, 2]
+                        'Programming': 8,
+                        'Art': 4,
                     },
-                    Tuesday: 0,
-                    Wednesday: 0, 
+                    Tuesday: {
+                        'Programming': 10,
+                        'Art': 2,
+                    },
+                    Wednesday: {
+                        'Programming': 12,
+                        'Music': 4, 
+                        'Art': 4,
+                    },
                     Thursday: 0,
-                    Friday: 0,
+                    Friday: {
+                        'Programming': 4,
+                        'Job Search': 4
+                    },
                     Saturday: 0,
                     Sunday: 0,
                     }
@@ -59,7 +68,6 @@ class PomoApp extends Component {
             activeTaskId: '',
             taskList: []
         }
-        this.editorRef = React.createRef()
     }
     componentDidMount() {
         ReactModal.setAppElement('body');
@@ -77,6 +85,7 @@ class PomoApp extends Component {
                 this.loadUserPref(user);
                 this.watchUserStats(user);
             } else {
+                console.log('did not sign in')
                 this.loadCookies();
             }
         }, (error) => {
@@ -158,8 +167,6 @@ class PomoApp extends Component {
     setCookies = (data) => {
         const tempCookie = Cookies.getJSON('pomofiCookie');
         console.log('setting cookies');
-        console.log(data)
-        console.log(tempCookie)
         //if the data is userpref
         if (data.pomodoroInitial) {
             tempCookie.userPref = data;
@@ -173,13 +180,35 @@ class PomoApp extends Component {
     }
 
     //saves current hours finished to db
-    saveDailyHour = () => {
-        //get duration of pomo completed in hrs
+    saveDailyHour = (category) => {
+        //save if user is logged in
         if (this.state.isLoggedIn) {
-            const hours = this.state.userStats.pomoData[moment().format('dddd')] + Math.fround(this.state.userPref.pomodoroInitial / 3600)
-            const newPomoData = this.state.userStats.pomoData;
-            newPomoData[moment().format('dddd')] = hours;
-            firebase.database().ref('users/' + this.state.username + '/userStats').update({pomoData: newPomoData})
+            const hours =  Math.fround(this.state.userPref.pomodoroInitial / 3600)
+            const newPomoData = this.state.userStats.pomoData
+            const day = moment().format('dddd')
+            //if no record for that day, create new entry
+            if (this.state.userStats.pomoData[day] === 0) {
+                const newEntry = {
+                    [category]: hours
+                }
+                newPomoData[day] = newEntry;
+            //if category found, add hours
+            } else if (this.state.userStats.pomoData[day].hasOwnProperty(category)) {
+                const newHours = newPomoData[day][category] + hours
+                newPomoData[day][category] = newHours
+
+            //if record found but no category, just set new value in record
+            } else {
+                newPomoData[day][category] = hours
+            }
+            this.setState(prevState => ({
+                ...prevState,
+                userStats: {
+                    ...prevState.userStats,
+                    pomoData: newPomoData
+                }
+            }))
+            firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats').update({pomoData: newPomoData})
         }
     }
 
@@ -198,7 +227,7 @@ class PomoApp extends Component {
     //saves new userpreferences, sets state and saves to cookie or db if signed in
     saveUserPref = (newUserPref) => {
         if (this.state.isLoggedIn) {
-            firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/' + firebase.auth().currentUser.displayName + '/userPref').set(newUserPref)
+            firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userPref').set(newUserPref)
         } else {
             this.setCookies(newUserPref)
         }
@@ -229,7 +258,6 @@ class PomoApp extends Component {
                 clearInterval(this.state.timerId)
                 //check to see which timer it's on
                 if (this.state.currentTimerType === 0) {
-                    this.saveDailyHour();
                     this.completePomodoro();
                 } else {
                     //if not on pomodorotimer, then switch to pomodorotimer
@@ -271,6 +299,8 @@ class PomoApp extends Component {
             }
             //send updated taskList to db
             this.saveTaskList(newTaskList)
+            const category = newTaskList[activeTaskIndex].category
+            this.saveDailyHour(category);
         }
         if (this.state.pomodoroCounter === 4) {
             newTimerType = 2;
@@ -390,7 +420,6 @@ class PomoApp extends Component {
             case 1: 
                 modalChild = <TimerEditor
                     initialState={this.state.userPref}
-                    ref={this.editorRef}
                     submitEdit={this.saveUserPref}
                     toggleModal={this.modalToggler}/>
                 break;
@@ -417,21 +446,11 @@ class PomoApp extends Component {
                 <header>
                     <h1>Pomofi</h1>
                 </header>
-                    <div className="window">
-                        <div className="cloud1">
-                            <motion.img src={cloud1}
-                                        animate={{x: 2000}}
-                                        transition={{duration: 8, type:"tween"}}
-                                        />
-                        </div>
-                        <div className="cloud2">
-                            <motion.img src={cloud2}/>
-                        </div>
-                        <div className="cloud3">
-                            <motion.img src={cloud3}/>
-                        </div>
+                    <Window/>
+                    <div id="loginButton"
+                        onClick={() => this.modalToggler(0)}>
+                        <FontAwesomeIcon icon={faUserCircle} size="2x" color="#501607c7" id="loginButton"/>
                     </div>
-                    <button onClick={() => this.modalToggler(0)}></button>
                     <div className="timerContainer">
                         <div className="timerSubContainer">
                             <div className="timerDisplay">
@@ -447,13 +466,11 @@ class PomoApp extends Component {
                                 start={() => this.startTimer(true)}
                                 pause={() => this.startTimer(false)}/>
                                 <motion.button className="editButton" 
-                                                onClick={() => this.modalToggler(1)}
-                                                whileHover={{color: "#ffffff"}}>
+                                                onClick={() => this.modalToggler(1)}>
                                         <FontAwesomeIcon icon={faCog} size="2x"/>
                                 </motion.button>
                                 <motion.button className="chartButton" 
-                                                onClick={() => this.modalToggler(2)}
-                                                whileHover={{color: "#ffffff"}}>
+                                                onClick={() => this.modalToggler(2)}>
                                         <FontAwesomeIcon icon={faChartBar} size="2x"/>
                                 </motion.button>
                             </div>
@@ -469,8 +486,8 @@ class PomoApp extends Component {
                                 />
                         </div>
                     <div className="hintDiv">
-                            This is content to explain pomodoros. 
-                            Maybe a tutorial? also content to give scrollbar for content layout.
+                            {/* This is content to explain pomodoros. 
+                            Maybe a tutorial? also content to give scrollbar for content layout. */}
                         </div>
             </div>
         )

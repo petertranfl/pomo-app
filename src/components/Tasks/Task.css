@@ -1,4 +1,5 @@
 .taskCard {
+    position: relative;
     border: solid 4px #fff3ed;
     border-radius: 12px;
     min-height: 4em;
@@ -8,9 +9,10 @@
 }
 
 .taskCard h2 {
+    font-size: 1.5em;
     max-width: 80%;
     word-wrap: break-word;
-    margin-top: 0.6em;
+    margin-top: 0.5em;
     margin-bottom: 0;
 }
 
@@ -28,6 +30,26 @@
 }
 
 .activeTask {
+    margin-top: -0.5em;
+    margin-left: -0.5em;
     border-right-width: 6px;
-    border-right-color: #501507;
+    border-right-color: #835144;
+    border-bottom-color: #a87a6e
+}
+
+.editTaskPenDiv {
+    position: absolute;
+    top: 1.25em;
+    right: 0.5em;
+    height: 2.5em;
+    width: 2.5em;
+}
+
+.editTaskPen {
+    height: 2em;
+    color: #501507
+}
+
+.editTaskPen:hover {
+    color: #c3998f
 }

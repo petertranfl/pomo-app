@@ -1,0 +1,73 @@
+.cloud1 {
+    position: absolute;
+    overflow: hidden;
+    z-index: 5;
+    top: 6em;
+    height: 12em;
+    width: 100%;
+    }
+.cloud1 img{
+    height: 12em;
+    width: auto;
+}
+
+.cloud2  {
+    position: absolute;
+    overflow: hidden;
+    z-index: 4;
+    top:    14em;
+    height: 8em;
+    width: 100%;
+    }
+.cloud2 img{
+    height: 8em;
+    width: auto;
+}
+.cloud3{
+    position: absolute;
+    overflow: hidden;
+    z-index: 3;
+    top: 18em;
+    height: 7em;
+    width: 100%;
+    }
+.cloud3 img{
+    height: 7em;
+    width: auto;
+}
+
+.cloud4 { 
+    position: absolute;
+    overflow: hidden;
+    z-index: 2;
+    top: 22em;
+    height: 6em;
+    width: 100%;
+}
+.cloud4 img {
+    height: 6em;
+}
+
+.cloud5 { 
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+    top: 26em;
+    height: 4em;
+    width: 100%;
+}
+.cloud5 img{
+    height: 4em;
+}
+
+.cloud6 { 
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+    top: 29em;
+    height: 2em;
+    width: 100%;
+}
+.cloud6 img{
+    height: 2em;
+}

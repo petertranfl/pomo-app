@@ -15,13 +15,13 @@
 }
 
 .leftTaskSide {
-    width: 50%;
+    width: 55%;
 }
 
 .rightStatSide {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 45%;
 }
 
 .tasksHeader {
@@ -33,6 +33,7 @@
 .statsHeader {
     font-size: 2em;
     align-self: flex-end;
+    margin-top: 0.4em;
     margin-right: 1.5em;
 }
 
@@ -49,7 +50,7 @@
 
 .taskList li {
     margin-left: 0.5em;
-    margin-bottom: 1em;
+    margin-bottom: 1.5em;
 }
 
 .taskList li:hover {

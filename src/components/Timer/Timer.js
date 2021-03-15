@@ -13,13 +13,11 @@ const Timer = (props) => {
     if (seconds < 10) {
         secDisplay = "0" + secDisplay;
     }
+
+    let timerdisplay = minDisplay + ":" + secDisplay
     return (
         <div className="timer">
-            {minDisplay}
-            <div className="timerColon">
-            :
-            </div>
-            {secDisplay}
+            {timerdisplay}
         </div>
     )
 }

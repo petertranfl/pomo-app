@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "pomodoro-29592"
+    "default": "pomodoro-29592",
+    "staging": "pomodoro-29592"
   }
 }

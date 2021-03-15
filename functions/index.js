@@ -1,14 +1,11 @@
-const functions = require('firebase-functions');
+const functions = require("firebase-functions");
 
-const admin = require('firebase-admin')
+const admin = require("firebase-admin")
 admin.initializeApp()
 
-exports.createUserDb = functions.auth.user().onCreate((user) => {
-    let displayName;
-    const data = event.data
-    setTimeout(function(){ displayName = admin.auth().getUser(data.uid); }, 50);
+exports.createUserData = functions.auth.user().onCreate((user) => {
     const newProfile = {
-        username: displayName,
+        username: "",
         userPref: {
             "pomodoroInitial": 1500,
             "shortInitial": 300,
@@ -31,5 +28,5 @@ exports.createUserDb = functions.auth.user().onCreate((user) => {
                     }
             },
     }
-    admin.database().ref('/users/' + user.uid).set(newProfile)
+    admin.database().ref("/users/" + user.uid).set(newProfile)
 });

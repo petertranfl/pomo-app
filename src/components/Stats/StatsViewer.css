@@ -1,4 +1,5 @@
 .statsViewer {
+    min-width: 60%;
     align-self: flex-end;
     margin-right: 2em;
     font-size: 1.3em;

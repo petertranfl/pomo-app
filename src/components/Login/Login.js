@@ -19,7 +19,6 @@ class Login extends Component {
                 // Return type determines whether we continue the redirect automatically
                 // or whether we leave that to developer to handle.
                 console.log(authResult.user)
-                console.log('hep')
                 return true;
               },
             //   uiShown: function() {

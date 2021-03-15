@@ -13,6 +13,7 @@ class TaskManager extends Component {
         this.state = {
             editingTaskId: '',
             showTaskCreator: false,
+            shakeCard: false,
         }
     }
 
@@ -35,7 +36,7 @@ class TaskManager extends Component {
             result.source.index,
             result.destination.index
           );
-           this.sendNewTaskList(items)
+           this.saveNewTaskList(items)
     }
 
     saveNewTaskList = (taskList) => {
@@ -81,7 +82,6 @@ class TaskManager extends Component {
         }
         let newTaskList = this.props.taskList
         newTaskList[index] = editedTask
-        console.log(document.getElementById('editTaskDuration'))
         this.hideEditCard()
         this.saveNewTaskList(newTaskList)
     }
