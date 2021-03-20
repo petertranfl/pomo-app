@@ -2,10 +2,10 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const Chart = (props) => {
+  console.log(props.data)
     let pomoData;
-    if (props.pomoData) {
-      pomoData = props.pomoData
-    } else {
+    //if data object is empty, fill it with empty values
+    if (Object.keys(props.data).length === 0) {
       pomoData = {
         Monday: 0,
         Tuesday: 0,
@@ -15,6 +15,8 @@ const Chart = (props) => {
         Saturday: 0,
         Sunday: 0
       }
+    } else {
+      pomoData = props.data
     }
     const order = {Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6, Sunday: 7,};
 

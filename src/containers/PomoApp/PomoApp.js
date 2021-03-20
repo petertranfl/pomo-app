@@ -45,7 +45,7 @@ class PomoApp extends Component {
                 longestStreak: 0,
                 lastLoginDate: '',
                 pomoData: {}
-                },
+            },
             activeTaskId: '',
             taskList: []
         }
