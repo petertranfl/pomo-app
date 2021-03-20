@@ -26,8 +26,8 @@ const Task = (props) => {
         <motion.div className={taskInfo.timeStamp === props.activeTaskId ? "taskCard activeTask" : "taskCard"}
                         onClick={() => startTask(taskInfo.timeStamp)}>
                         <h2>{taskInfo.title}</h2>
-                        <div class="editTaskPenDiv">
-                            <FontAwesomeIcon icon={faPen} size="2x" class="editTaskPen" onClick={() => showEditCard(taskInfo.timeStamp)}></FontAwesomeIcon>
+                        <div className="editTaskPenDiv">
+                            <FontAwesomeIcon icon={faPen} size="2x" className="editTaskPen" onClick={() => showEditCard(taskInfo.timeStamp)}></FontAwesomeIcon>
                         </div>
                         <h3>{taskInfo.completed} / {taskInfo.duration}</h3>
         </motion.div>

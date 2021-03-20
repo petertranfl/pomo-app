@@ -1,21 +1,14 @@
 .timer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60%;
-    width: 100%;
-    margin-bottom: 0;
+    width: 80%;
+    text-align: center;
+    margin-top: -2%;
     font-size: 8em;
-    font-family: 'Concert One';
+    font-family: 'Concert One', monospace;
     color: #2f2a2a;
 }
 
-.timerColon {
-    display: flex;
-    align-items: baseline;
-}
 @media screen and (max-height: 1200px) {
     .timer {
-        font-size: 8em;
+        font-size: 6.5em;
     }
 }

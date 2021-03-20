@@ -50,7 +50,6 @@ const TaskCreator = (props) => {
             x: [0, -10, 0, 10, 0],
             transition: {type: "tween", duration: 0.2}
         }, 
-
     }
 
         return ( 

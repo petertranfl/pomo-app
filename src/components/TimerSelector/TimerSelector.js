@@ -4,13 +4,13 @@ import './TimerSelector.css'
 const TimerSelector = (props) => {
     return (
         <div className="TimerSelector">
-            <div className="PomodoroSelector" onClick={props.pomodoro}>
+            <div className={props.timerType == 0 ? "activePomodoroSelector" : "PomodoroSelector"} onClick={props.pomodoro}>
                 Pomodoro
             </div>
-            <div className="ShortBreakSelector" onClick={props.shortBreak}>
+            <div className={props.timerType == 1 ? "activeShortSelector" : "ShortBreakSelector"} onClick={props.shortBreak}>
                 Short Brk
             </div>
-            <div className="LongBreakSelector" onClick={props.longBreak}>
+            <div className={props.timerType == 2 ? "activeLongSelector" : "LongBreakSelector"} onClick={props.longBreak}>
                 Long Brk
             </div>
         </div>

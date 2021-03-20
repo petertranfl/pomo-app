@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './PomoApp.css';
 import {motion} from 'framer-motion';
+import click1 from '../../components/sound/FirstClickPomo.mp3'
+import click2 from '../../components/sound/SecondClickPomo.mp3'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCog, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faChartBar} from '@fortawesome/free-regular-svg-icons';
@@ -332,14 +334,16 @@ class PomoApp extends Component {
 
     startTimer = (start) => {
         if (start) {
-                console.log(this.state)
+                let audio1 = new Audio(click1)
+                audio1.play();
                 this.setState({
                     isTimerRunning: true,
                     timerId: setInterval(this.tick, 1000)
                 })
-                console.log('started timer')
         } else {
             //pause state of timer
+                let audio2 = new Audio(click2)
+                audio2.play()
                 this.setState({
                     isTimerRunning: false,
                 })
@@ -455,6 +459,7 @@ class PomoApp extends Component {
                         <div className="timerSubContainer">
                             <div className="timerDisplay">
                             <TimerSelector
+                                timerType={this.state.currentTimerType}
                                 pomodoro={() => this.changeTimer(0)}
                                 shortBreak={() => this.changeTimer(1)}
                                 longBreak={() => this.changeTimer(2)}/>

@@ -71,17 +71,12 @@ class TaskManager extends Component {
         })
     }
 
-    editTask = (index) => {
-        const editedTask = {
-                timeStamp: this.props.taskList[index].timeStamp,
-                title: document.getElementById('editTaskTitle').value,
-                category: document.getElementById('editTaskCategory').value,
-                duration: parseInt(document.getElementById('editTaskDuration').value),
-                completed: this.props.taskList[index].completed,
-                finished: this.props.taskList[index].finished,
-        }
+    editTask = (index, task) => {
+        console.log('editing task')
+        console.log(index)
+        console.log(task)
         let newTaskList = this.props.taskList
-        newTaskList[index] = editedTask
+        newTaskList[index] = task
         this.hideEditCard()
         this.saveNewTaskList(newTaskList)
     }
@@ -116,8 +111,9 @@ class TaskManager extends Component {
                                                     <li ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                         {this.editCheck(timeStamp) ? 
                                                             <TaskEditor
+                                                                taskList={this.props.taskList}
                                                                 taskInfo={this.props.taskList[index]}
-                                                                editTask={() => this.editTask(index)}
+                                                                editTask={this.editTask}
                                                                 removeTask={() => this.removeTask(index)}
                                                                 hideEditCard={this.hideEditCard}/>
                                                             :  <Task taskInfo={this.props.taskList[index]}

@@ -7,20 +7,43 @@ import {motion} from 'framer-motion';
 const TaskEditor = (props) => {
 
     const [shake, setShake] = useState(false);
+    const taskInfo = props.taskInfo;
+    const taskList = props.taskList
 
     function shakeCard() {
         setShake(true);
     }
-
-    const taskInfo = props.taskInfo;
+    
+    function editTask() {
+        setShake(false);
+        const index = taskList.findIndex((task => task.timeStamp === taskInfo.timeStamp));
+        const editedTask = {
+                timeStamp: taskInfo.timeStamp,
+                title: document.getElementById('editTaskTitle').value,
+                category: document.getElementById('editTaskCategory').value,
+                duration: parseInt(document.getElementById('editTaskDuration').value),
+                completed: taskInfo.completed,
+                finished: taskInfo.finished,
+        }
+        const str = editedTask.title.replace(/\s/g, "");
+        const pomo = editedTask.duration
+        if (str === "") {
+            document.getElementById('editTaskTitle').placeholder = "Task Must Have Title"
+            shakeCard();
+            return
+        }
+        if (pomo < 1) {
+            shakeCard();
+            return
+        }
+        props.editTask(index, editedTask)
+        props.hideEditCard()
+    }
 
     function hideEditCard() {
         props.hideEditCard()
     }
 
-    function editTask() {
-        props.editTask();
-    }
 
     function removeTask() {
         props.removeTask();
@@ -35,7 +58,6 @@ const TaskEditor = (props) => {
             x: [0, -10, 0, 10, 0],
             transition: {type: "tween", duration: 0.2}
         }, 
-
     }
 
     return (
