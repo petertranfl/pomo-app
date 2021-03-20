@@ -44,11 +44,16 @@ class Login extends Component {
             // Privacy policy url.
             privacyPolicyUrl: '<your-privacy-policy-url>'
           };
-        
+        let loginLogout;
+        if (this.state.isSignedIn) {
+          loginLogout = <div>SIGNOUT</div>
+        } else {
+          loginLogout = <div>
+                          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+                        </div>
+        }
           return (
-            <div>
-                <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
-            </div>
+            loginLogout
         )
     }
 }
