@@ -391,12 +391,22 @@ class PomoApp extends Component {
             editingTaskId: taskId
         })
     }
+    
+    signIn = (bool) => {
+        this.setState({
+            isLoggedIn: bool
+        })
+    }
 
     render() {
         let modalChild;
         switch (this.state.modalType) {
             case 0: 
-                modalChild = <Login/>;
+                modalChild = <Login
+                                isLoggedIn={this.state.isLoggedIn}
+                                signIn={() => this.signIn(true)}
+                                signOut={() => this.signIn(false)}
+                                toggleModal={this.modalToggler}/>
                 break;
             case 1: 
                 modalChild = <TimerEditor

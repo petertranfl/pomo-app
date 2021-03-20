@@ -7,19 +7,21 @@ class Login extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isSignedIn: false
+            isSignedIn: this.props.isLoggedIn
         }
     }
 
     render() {
         const uiConfig =  {
             callbacks: {
-              signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+              signInSuccessWithAuthResult: function(authResult) {
                 // User successfully signed in.
                 // Return type determines whether we continue the redirect automatically
                 // or whether we leave that to developer to handle.
+                this.props.signIn(true)
+                this.props.toggleModal()
                 console.log(authResult.user)
-                return true;
+                return false;
               },
             //   uiShown: function() {
             //     // The widget is rendered.
