@@ -44,7 +44,7 @@ const Chart = (props) => {
       "#36ef7a",
       "#9e6fee",
       "#f12c86",
-      "#7af12c",
+      "#1F78B4",
       "#b0d0d3",
       "#c08497",
       "#f7af9d",

@@ -392,10 +392,14 @@ class PomoApp extends Component {
         })
     }
     
+    //if true, login. if false, logout
     signIn = (bool) => {
         this.setState({
             isLoggedIn: bool
         })
+        if (bool === false) {
+            this.modalToggler(0)
+        }
     }
 
     render() {
@@ -405,8 +409,7 @@ class PomoApp extends Component {
                 modalChild = <Login
                                 isLoggedIn={this.state.isLoggedIn}
                                 signIn={() => this.signIn(true)}
-                                signOut={() => this.signIn(false)}
-                                toggleModal={this.modalToggler}/>
+                                signOut={() => this.signIn(false)}/>
                 break;
             case 1: 
                 modalChild = <TimerEditor
