@@ -44,7 +44,12 @@ class TaskManager extends Component {
     }
 
     addTask = (task) => {
-        const newTaskList = this.props.taskList
+        let newTaskList;
+        if (this.props.taskList) {
+            newTaskList = this.props.taskList
+        } else {
+            newTaskList = [];
+        }
         newTaskList.push(task)
         this.saveNewTaskList(newTaskList);
     }

@@ -44,28 +44,7 @@ class PomoApp extends Component {
                 currentStreak: 0,
                 longestStreak: 0,
                 lastLoginDate: '',
-                pomoData: {
-                    Monday: {
-                        'Programming': 8,
-                        'Art': 4,
-                    },
-                    Tuesday: {
-                        'Programming': 10,
-                        'Art': 2,
-                    },
-                    Wednesday: {
-                        'Programming': 12,
-                        'Music': 4, 
-                        'Art': 4,
-                    },
-                    Thursday: 0,
-                    Friday: {
-                        'Programming': 4,
-                        'Job Search': 4
-                    },
-                    Saturday: 0,
-                    Sunday: 0,
-                    }
+                pomoData: {}
                 },
             activeTaskId: '',
             taskList: []
@@ -143,10 +122,9 @@ class PomoApp extends Component {
 
     loadCookies = () => {
         let cookie = Cookies.getJSON('pomofiCookie');
-        console.log(cookie)
         //if no cookie currently exists, create new
         if (!cookie) {
-            Cookies.set('pomofiCookie', {
+            Cookies.set('pomofiCookie', JSON.stringify({
                 userPref: {
                     pomodoroInitial: 1500,
                     shortInitial: 300,
@@ -155,7 +133,7 @@ class PomoApp extends Component {
                     autoStartTasks: false
                 },
                 taskList: [],
-            })
+            })) 
         console.log('no cookie found, creating cookie')
         }
         //set state from cookie
@@ -168,16 +146,15 @@ class PomoApp extends Component {
 
     setCookies = (data) => {
         const tempCookie = Cookies.getJSON('pomofiCookie');
-        console.log('setting cookies');
         //if the data is userpref
         if (data.pomodoroInitial) {
             tempCookie.userPref = data;
-            Cookies.set('pomofiCookie', tempCookie)
+            Cookies.set('pomofiCookie', JSON.stringify(tempCookie))
         } 
         //otherwise it is taskList
         else {
             tempCookie.taskList = data;
-            Cookies.set('pomofiCookies', tempCookie)
+            Cookies.set('pomofiCookies', JSON.stringify(tempCookie))
         }
     }
 

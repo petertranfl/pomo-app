@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import {Switch} from '@material-ui/core'
 
 class TimerEditor extends Component {
@@ -8,8 +12,8 @@ class TimerEditor extends Component {
             pomodoroInitial: this.props.initialState.pomodoroInitial / 60,
             shortInitial: this.props.initialState.shortInitial / 60,
             longInitial: this.props.initialState.longInitial / 60,
-            autoStartTimer: false,
-            autoStartTasks: false,
+            autoStartTimer: this.props.initialState.autoStartTimer,
+            autoStartTasks: this.props.initialState.autoStartTasks,
         }
     }
 
@@ -35,20 +39,19 @@ class TimerEditor extends Component {
         this.props.toggleModal(1);
     }
 
-    toggleAutoStartTimer = (bool) => {
-        this.setState({
-            autoStartTimer: bool
-        })
+    toggleAutoStartTimer = () => {
+        this.setState(prevState => ({
+            autoStartTimer: !prevState.autoStartTimer
+        }))
     }
 
-    toggleAutoStartTasks = (bool) => {
-        this.setState({
-            autoStartTasks: bool
-        })
+    toggleAutoStartTasks = () => {
+        this.setState(prevState => ({
+            autoStartTasks: !prevState.autoStartTasks
+        }))
     }
 
     render() {
-
         return (
             <form onSubmit={this.handleSubmit}>
                 <h1>Pomodoro</h1> <p>Minutes</p>
@@ -68,10 +71,26 @@ class TimerEditor extends Component {
                     type="number"
                     defaultValue={this.state.longInitial}
                     onChange={this.handleChange}/>
-                <Switch
-                    checked={this.state.autoStartTimer} label="Autostart Timer" onChange={this.toggleAutoStartTimer}/>
-                <Switch
-                    checked={this.state.autoStartTasks} label="Autostart Tasks" onChange={this.toggleAutoStartTasks}/>
+                <FormControl component="fieldset">
+                    <FormGroup aria-label="position" row>
+                        <FormControlLabel
+                        value="AutoStartTimerTrue"
+                        control={<Switch
+                            checked={this.state.autoStartTimer} 
+                            onChange={this.toggleAutoStartTimer}/>}
+                        label="AutoStart Timer"
+                        labelPlacement="top"
+                        />
+                         <FormControlLabel
+                        value="AutoStartTasksTrue"
+                        control={<Switch
+                            checked={this.state.autoStartTasks} 
+                            onChange={this.toggleAutoStartTasks}/>}
+                        label="AutoStart Tasks"
+                        labelPlacement="top"
+                        />
+                    </FormGroup>
+                </FormControl>
                 <input type="submit" value="Submit" />
             </form>
         )

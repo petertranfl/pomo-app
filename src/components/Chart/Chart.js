@@ -2,7 +2,20 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const Chart = (props) => {
-    const pomoData = props.data
+    let pomoData;
+    if (props.pomoData) {
+      pomoData = props.pomoData
+    } else {
+      pomoData = {
+        Monday: 0,
+        Tuesday: 0,
+        Wednesday: 0,
+        Thursday: 0,
+        Friday: 0,
+        Saturday: 0,
+        Sunday: 0
+      }
+    }
     const order = {Monday: 1, Tuesday: 2, Wednesday: 3, Thursday: 4, Friday: 5, Saturday: 6, Sunday: 7,};
 
 

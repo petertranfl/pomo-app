@@ -27,14 +27,18 @@ const StatsViewer = (props) => {
     
     function totalDuration() {
         let totalDuration = 0;
+        if (props.taskList) {
         props.taskList.forEach(task => {
             totalDuration += (task.duration - task.completed)
         })
         return totalDuration *= (props.userPref.pomodoroInitial + props.userPref.shortInitial)
+        } else {
+            return 0
+        }
     }
 
     function completedHours() {
-        if (props.userStats.pomoData[moment().format('dddd')] === 0) {
+        if (props.userStats.pomoData[moment().format('dddd')] === 0 || typeof props.userStats.pomoData[moment().format('dddd')] == 'undefined') {
             return 0
         } else {
             console.log(props.userStats.pomoData[moment().format('dddd')])
