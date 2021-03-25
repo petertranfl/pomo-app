@@ -32,7 +32,7 @@ class PomoApp extends Component {
             currentDuration: 1500,
             isLoggedIn: false,
             loggedInYesterday: false,
-            username: "",
+            // username: "",
             userPref: {
                 pomodoroInitial: 1500,
                 shortInitial: 300,
@@ -65,9 +65,15 @@ class PomoApp extends Component {
                 // User is signed in.
                 this.loadUserPref(user);
                 this.watchUserStats(user);
+                if (this.state.showModal === true) {
+                    this.modalToggler(0)
+                }
             } else {
                 console.log('did not sign in')
                 this.loadCookies();
+                if (this.state.showModal === true) {
+                    this.modalToggler(0)
+                }
             }
         }, (error) => {
             console.log('cors?')
@@ -81,7 +87,7 @@ class PomoApp extends Component {
         userPrefRef.once('value', (snapshot) => {
             const data = snapshot.val();
             this.setState({
-                username: user.displayName,
+                // username: user.displayName,
                 isLoggedIn: true,
                 currentDuration: data.pomodoroInitial,
                 userPref: data
@@ -217,6 +223,7 @@ class PomoApp extends Component {
 
     //toggles modal opening/closing and opens different modal child based on modalType
     modalToggler = (newModalType) => {
+        console.log('modal toggled')
         this.setState(prevState => ({
             showModal: !prevState.showModal,
             modalType: newModalType,
@@ -379,7 +386,7 @@ class PomoApp extends Component {
             if (task.finished === true) {
                 const removed = newTaskList.splice(index, 1)
                 archivedData.push(removed)
-            } else alert('no copmletex tasks')
+            } else alert('no completed tasks')
         })
         this.saveTaskList(newTaskList)
         //push archivedData to database
@@ -391,25 +398,13 @@ class PomoApp extends Component {
             editingTaskId: taskId
         })
     }
-    
-    //if true, login. if false, logout
-    signIn = (bool) => {
-        this.setState({
-            isLoggedIn: bool
-        })
-        if (bool === false) {
-            this.modalToggler(0)
-        }
-    }
 
     render() {
         let modalChild;
         switch (this.state.modalType) {
             case 0: 
                 modalChild = <Login
-                                isLoggedIn={this.state.isLoggedIn}
-                                signIn={() => this.signIn(true)}
-                                signOut={() => this.signIn(false)}/>
+                                isLoggedIn={this.state.isLoggedIn}/>
                 break;
             case 1: 
                 modalChild = <TimerEditor

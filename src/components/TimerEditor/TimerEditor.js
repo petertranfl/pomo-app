@@ -19,6 +19,7 @@ class TimerEditor extends Component {
 
     //saves latest change in state
     handleChange = (event) => {
+        event.persist();
         event.preventDefault();
         this.setState({
             [event.target.name] : parseInt(event.target.value)

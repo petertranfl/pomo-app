@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from '../../firebase/firebase';
 import * as firebaseui from 'firebaseui'
-import firebase from '../../firebase/firebase'
+
 
 class Login extends Component {
     constructor(props) {
@@ -17,17 +18,10 @@ class Login extends Component {
               signInSuccessWithAuthResult: function(authResult) {
                 // User successfully signed in.
                 // Return type determines whether we continue the redirect automatically
-                // or whether we leave that to developer to handle.
-                this.props.signIn(true)
-                this.props.toggleModal()
+                // or whether we leave that to developer to handle.\
                 console.log(authResult.user)
                 return false;
               },
-            //   uiShown: function() {
-            //     // The widget is rendered.
-            //     // Hide the loader.
-            //     document.getElementById('loader').style.display = 'none';
-            //   }
             },
             // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
             signInFlow: 'popup',
@@ -38,7 +32,6 @@ class Login extends Component {
               firebase.auth.FacebookAuthProvider.PROVIDER_ID,
               firebase.auth.TwitterAuthProvider.PROVIDER_ID,
               firebase.auth.EmailAuthProvider.PROVIDER_ID,
-              firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
             ],
             credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
             // Terms of service url.
@@ -48,11 +41,13 @@ class Login extends Component {
           };
         let loginLogout;
         if (this.state.isSignedIn) {
-          loginLogout = <div class="signOut">
-                          <button onClick={this.props.signOut(false)}>Sign Out</button>
+          loginLogout = <div className="signOut">
+                          {/* <p>Welcome {firebase.auth().currentUser.displayName}</p> */}
+                          <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
                         </div>
         } else {
           loginLogout = <div>
+                        <p>Sign In:</p>
                           <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
                         </div>
         }
