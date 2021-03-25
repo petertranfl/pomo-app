@@ -85,13 +85,18 @@ class PomoApp extends Component {
     loadUserPref = (user) => {
         let userPrefRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userPref');
         userPrefRef.once('value', (snapshot) => {
-            const data = snapshot.val();
-            this.setState({
-                // username: user.displayName,
-                isLoggedIn: true,
-                currentDuration: data.pomodoroInitial,
-                userPref: data
-            }, this.loadTaskList(data.autoStartTasks))
+            let data = snapshot.val();
+            if (data) {
+                this.setState({
+                    // username: user.displayName,
+                    isLoggedIn: true,
+                    currentDuration: data.pomodoroInitial,
+                    userPref: data
+                }, this.loadTaskList(data.autoStartTasks))
+            } else {
+                //data hasn't finished creating after first signup. need to wait.
+                setTimeout(this.loadUserPref(user), 1000)
+            }
         })
     }
 
