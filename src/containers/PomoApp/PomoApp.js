@@ -124,10 +124,15 @@ class PomoApp extends Component {
     watchUserStats = (user) => {
         let userStatsRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats');
         userStatsRef.on('value', (snapshot) => {
-                const data = snapshot.val();
+            let data = snapshot.val();
+            if (data) {
                 this.setState({
                     userStats: data
                 }, console.log(data))
+                //if data hasn't loaded, try again in a second
+            } else {
+                setTimeout(this.watchUserStats(user), 1000)
+            }
         }); 
     }
 
