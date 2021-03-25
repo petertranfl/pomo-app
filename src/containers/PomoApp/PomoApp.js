@@ -95,7 +95,7 @@ class PomoApp extends Component {
                 }, this.loadTaskList(data.autoStartTasks))
             } else {
                 //data hasn't finished creating after first signup. need to wait.
-                setTimeout(this.loadUserPref(user), 1000)
+                setTimeout(this.loadUserPref(user), 2000)
             }
         })
     }
@@ -128,10 +128,11 @@ class PomoApp extends Component {
             if (data) {
                 this.setState({
                     userStats: data
-                }, console.log(data))
+                })
                 //if data hasn't loaded, try again in a second
             } else {
-                setTimeout(this.watchUserStats(user), 1000)
+                userStatsRef.off()
+                setTimeout(this.watchUserStats(user), 2000)
             }
         }); 
     }
@@ -222,6 +223,7 @@ class PomoApp extends Component {
     //saves new userpreferences, sets state and saves to cookie or db if signed in
     saveUserPref = (newUserPref) => {
         if (this.state.isLoggedIn) {
+            console.log('saving to database ' + newUserPref)
             firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userPref').set(newUserPref)
         } else {
             this.setCookies(newUserPref)

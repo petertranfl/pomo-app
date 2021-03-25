@@ -41,11 +41,10 @@ class Login extends Component {
         let loginLogout;
         if (this.state.isSignedIn) {
           loginLogout = <div className="signOut">
-                          {/* <p>Welcome {firebase.auth().currentUser.displayName}</p> */}
                           <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
                         </div>
         } else {
-          loginLogout = <div>
+          loginLogout = <div className="signIn">
                         <p>Sign In:</p>
                           <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
                         </div>
