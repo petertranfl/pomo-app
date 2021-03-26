@@ -179,7 +179,8 @@ class PomoApp extends Component {
     saveDailyHour = (category) => {
         //save if user is logged in
         if (this.state.isLoggedIn) {
-            const hours =  Math.fround(this.state.userPref.pomodoroInitial / 3600)
+            const rawHours =  (this.state.userPref.pomodoroInitial / 3600)
+            const hours = rawHours.toFixed(2)
             const newPomoData = this.state.userStats.pomoData
             const day = moment().format('dddd')
             //if no record for that day, create new entry
@@ -204,6 +205,7 @@ class PomoApp extends Component {
                     pomoData: newPomoData
                 }
             }))
+            console.log(newPomoData)
             firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats').update({pomoData: newPomoData})
         }
     }
@@ -270,8 +272,10 @@ class PomoApp extends Component {
     //finishes pomodoro. Increment task pomo and local pomocounter +1 then switches to correct timer based on current pomocounter.
     completePomodoro = () => {
         let newTimerType = 1;
+        console.log('completing pomo')
 
         if (this.state.activeTaskId !== "") {
+            (console.log('activeTaskID found'))
             const newTaskList = this.state.taskList;
             const activeTaskIndex = newTaskList.findIndex((task => task.timeStamp === this.state.activeTaskId));
             if (activeTaskIndex === -1) {
@@ -287,6 +291,7 @@ class PomoApp extends Component {
                     this.checkForNewTask(activeTaskIndex);
                 }
             }
+            console.log('newTimerType ' + newTimerType)
             //send updated taskList to db
             this.saveTaskList(newTaskList)
             const category = newTaskList[activeTaskIndex].category
@@ -369,6 +374,8 @@ class PomoApp extends Component {
     }
 
     changeTimer = (timerType) => {
+        console.log('changeTimer activated')
+        console.log('timerType = ' + timerType + ' currentTimerType = ' + this.state.currentTimerType)
         if (timerType !== this.state.currentTimerType) {
            this.setState({
                currentTimerType: timerType
