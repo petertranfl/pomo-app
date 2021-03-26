@@ -55,10 +55,6 @@ class PomoApp extends Component {
         this.firstLoad();
     }
 
-    resetDatabase = () => {
-        firebase.database().ref().set(null);
-    }
-
     firstLoad = () => {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
@@ -122,19 +118,23 @@ class PomoApp extends Component {
     }
 
     watchUserStats = (user) => {
-        let userStatsRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats');
-        userStatsRef.on('value', (snapshot) => {
-            let data = snapshot.val();
-            if (data) {
-                this.setState({
-                    userStats: data
-                })
-                //if data hasn't loaded, try again in a second
-            } else {
-                userStatsRef.off()
-                setTimeout(this.watchUserStats(user), 2000)
-            }
-        }); 
+        if (firebase.auth().currentUser.uid) {
+            let userStatsRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats');
+            userStatsRef.on('value', (snapshot) => {
+                let data = snapshot.val();
+                if (data) {
+                    this.setState({
+                        userStats: data
+                    })
+                    //if data hasn't loaded, try again in a second
+                } else {
+                    userStatsRef.off()
+                    setTimeout(this.watchUserStats(user), 2000)
+                }
+            }); 
+        } else {
+            return
+        }
     }
 
     loadCookies = () => {
@@ -278,6 +278,7 @@ class PomoApp extends Component {
             (console.log('activeTaskID found'))
             const newTaskList = this.state.taskList;
             const activeTaskIndex = newTaskList.findIndex((task => task.timeStamp === this.state.activeTaskId));
+            //result is -1 if item can't be found
             if (activeTaskIndex === -1) {
                 alert('incorrect taskId in completePomo')
                 return

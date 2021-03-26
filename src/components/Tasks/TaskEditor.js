@@ -25,12 +25,16 @@ const TaskEditor = (props) => {
                 completed: taskInfo.completed,
                 finished: taskInfo.finished,
         }
-        const str = editedTask.title.replace(/\s/g, "");
+        const titlestr = editedTask.title.replace(/\s/g, "");
+        const catstr = editedTask.title.replace(/\s/g, "");
         const pomo = editedTask.duration
-        if (str === "") {
+        if (titlestr === "") {
             document.getElementById('editTaskTitle').placeholder = "Task Must Have Title"
             shakeCard();
             return
+        }
+        if (catstr === "") {
+            editedTask.category = 'No Category'
         }
         if (pomo < 1) {
             shakeCard();

@@ -18,13 +18,20 @@ const TaskCreator = (props) => {
             duration: parseInt(document.getElementById('taskEstPomodoro').value),
             finished: false,
         };
-        const str = task.title.replace(/\s/g, "");
+        //title cant be empty
+        const titlestr = task.title.replace(/\s/g, "");
         const pomo = task.duration;
-        if (str === "") {
+        if (titlestr === "") {
             document.getElementById('taskTitle').placeholder = "Task Must Have Title"
             shakeCard();
             return
         }
+        //category cant be empty
+        const catstr = task.category.replace(/\s/g, "");
+        if (catstr === "") {
+            task.category = 'No Category'
+        }
+        //pomodoro cant be less than 1
         if (pomo < 1) {
             shakeCard();
             return
@@ -63,7 +70,7 @@ const TaskCreator = (props) => {
                 <input type="text" placeholder="Task Name" autoFocus={true} id="taskTitle"></input>
                 <p id="estPomo">Est. Pomos</p>
                 <input type="text" placeholder="Category" id="taskCategory"></input>
-                <input type="number" defaultValue={1} id="taskEstPomodoro"></input>
+                <input type="number" defaultValue='1' min='1' id="taskEstPomodoro"></input>
                 <motion.div id="saveTaskDiv" onClick={() => createTask()}>
                     <motion.button className="motionButtonFont">
                         <FontAwesomeIcon icon={faThumbtack} id="saveTask" size="lg"></FontAwesomeIcon>

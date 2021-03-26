@@ -99,6 +99,9 @@ input {
     left: 0;
     right: 0;
     background-color: #f6e4d9;
+    border: 3px solid #74433567;
+    border-radius: 8px;
+    outline: none;
 }
 
 .chartModal {
@@ -112,6 +115,9 @@ input {
     left: 0;
     right: 0;
     background-color: #f6e4d9;
+    border: 3px solid #74433567;
+    border-radius: 8px;
+    outline: none;
 }
 
 .firebaseui-card-content {

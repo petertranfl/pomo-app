@@ -5,11 +5,65 @@
     justify-content: center;
 }
 
-.editorBox h1 {
+.editorSwitches {
+    height: 5em;
+    border: 1px solid #ccbab1;
+    border-radius: 4px;
+    padding-top: 1em;
+    text-align: center;
+    margin-top: 4em;
+}
+
+.timerTitle {
+    text-align: center;
+    font-size: 2em;
+    margin-top: 1em;
+}
+
+.labelTitle {
+    text-align: center;
+    margin-top: 2em;
+    font-size: 1em;
+}
+
+.timerInputs {
+    height: 6em !important;
+    margin-top: 1em;
+    margin-right: 2em;
+}
+
+.timerInputs input {
+    text-align: center;
+    font-size: 2em;
+    width: 2.5em;
+}
+
+.submitTimerEditButton {
+    margin-top: 0.5em !important;
+    margin-left: 43% !important;
     text-align: center;
 }
 
 /* overriding default css*/
+.editorForm label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1em
+}
+
 .MuiTypography-body1 {
     font-family: 'Fredoka One', cursive !important;
+}
+
+.MuiTextField-root {
+    margin-top: 2em !important;
+}
+
+
+.MuiOutlinedInput-root {
+    margin-left: 2em;
+}
+
+.MuiInputLabel-root {
+    font-size: 1.2em !important;
+    margin-left: 1.2em;
 }

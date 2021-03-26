@@ -45,7 +45,7 @@ class Login extends Component {
                         </div>
         } else {
           loginLogout = <div className="signIn">
-                        <h2>Welcome</h2>
+                        <h1>Welcome</h1>
                           <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
                         </div>
         }

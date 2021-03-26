@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import "./TimerEditor.css"
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCheck} from '@fortawesome/free-solid-svg-icons'
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -22,7 +25,6 @@ class TimerEditor extends Component {
     handleChange = (event) => {
         event.persist();
         event.preventDefault();
-        console.log(event)
         this.setState({
             [event.target.name] : parseInt(event.target.value)
         })
@@ -55,27 +57,47 @@ class TimerEditor extends Component {
     }
 
     render() {
+
+
         return (
             <div className="editorBox">
-                <form onSubmit={this.handleSubmit}>
-                    <h1 className="timerTitle">Settings</h1> <p>Timer (minutes)</p>
+                <form onSubmit={this.handleSubmit} className="editorForm">
+                    <div className="timerTitle">Settings</div>
+                    <div className="labelTitle">Timer (minutes)</div>
                     <div className="timerInputs">
                         <TextField 
                             label="Pomodoro" 
                             name="pomodoroInitial" 
                             type="number" 
+                            InputProps={{
+                                inputProps: {min: 1}
+                            }}
+                            className="timerEditorNumber"
+                            variant="outlined"
                             defaultValue={this.state.pomodoroInitial}
                             onChange={this.handleChange} />
                         <TextField
                             label="Short Break"
                             name="shortInitial"
                             type="number"
+                            InputProps={{
+                                inputProps: {
+                                    min: 1
+                                }
+                            }}
+                            variant="outlined"
                             defaultValue={this.state.shortInitial}
                             onChange={this.handleChange}/>
                         <TextField
                             label="Long Break"
                             name="longInitial"
                             type="number"
+                            InputProps={{
+                                inputProps: {
+                                    min: 1
+                                }
+                            }}
+                            variant="outlined"
                             defaultValue={this.state.longInitial}
                             onChange={this.handleChange}/>
                     </div>
@@ -101,7 +123,13 @@ class TimerEditor extends Component {
                             </FormGroup>
                         </FormControl>
                     </div>
-                    <button value="submit">OK</button>
+                    <Button 
+                            className="submitTimerEditButton"
+                            value="submit"
+                            onClick={(event) => this.handleSubmit(event)}
+                            color='#501507'>
+                        <FontAwesomeIcon icon={faCheck} size="3x"></FontAwesomeIcon>
+                    </Button>
                 </form>
             </div>
         )
