@@ -242,14 +242,6 @@ class PomoApp extends Component {
         }))
     }
 
-    closeOverlay = () => {
-        if (this.state.modalType === 1) {
-        this.submitEdit(); 
-        } else {
-            this.modalToggler(0)
-        }
-    }
-
     tick = () => {
             //if prev duration was 0s, timer is finished
             if (this.state.currentDuration === 0) {
@@ -279,7 +271,7 @@ class PomoApp extends Component {
     completePomodoro = () => {
         let newTimerType = 1;
 
-        if (this.state.activeTaskId != "") {
+        if (this.state.activeTaskId !== "") {
             const newTaskList = this.state.taskList;
             const activeTaskIndex = newTaskList.findIndex((task => task.timeStamp === this.state.activeTaskId));
             if (activeTaskIndex === -1) {
@@ -436,7 +428,7 @@ class PomoApp extends Component {
             <div className="wholePage">
                 <ReactModal
                     isOpen={this.state.showModal}
-                    className="Modal"
+                    className={this.state.modalType === 2 ? "chartModal" : "Modal"}
                     overlayClassName="Overlay"
                     shouldCloseOnOverlayClick={true}
                     shouldFocusAfterRender={true}
@@ -488,9 +480,13 @@ class PomoApp extends Component {
                                 />
                         </div>
                     <div className="hintDiv">
-                            {/* This is content to explain pomodoros. 
-                            Maybe a tutorial? also content to give scrollbar for content layout. */}
-                        </div>
+                        <h4>Click on the person icon in the top right to sign in.</h4>
+                        <h4>Add Tasks to start tracking stats.</h4>
+                        <h4>Click on a task to set it as active.</h4>
+                        <h4>Drag and drop tasks in preferred order.</h4>
+                        <h4>Customize timers and autostarts with the gear icon below the start button.</h4>
+                        <h4>Click on the chart button next to the gear icon to look at weekly stats.</h4>
+                    </div>
             </div>
         )
     }

@@ -92,14 +92,36 @@ input {
     z-index: 5;
     position: absolute;
     height: 30em;
-    width: 60em;
-    top: 30%;
-    left: 30%;
+    width: 40em;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-color: #f6e4d9;
 }
+
+.chartModal {
+    z-index: 5;
+    position: absolute;
+    height: 35em;
+    width: 60em;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f6e4d9;
+}
+
 .firebaseui-card-content {
     padding-top: 2em !important;
 }
+
+.firebaseui-card-footer{
+    padding-top: 3em !important;
+}
+
 .Overlay {
     position: fixed;
     z-index: 5;
@@ -156,10 +178,6 @@ input {
 
 
 @media screen and (max-height: 1200px) {
-    .Modal {
-        top: 20%;
-        left: 25%;
-    }
     .timerContainer {
         height: 59.6%;
     }

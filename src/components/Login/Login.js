@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import "./Login.css"
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from '../../firebase/firebase';
 import * as firebaseui from 'firebaseui'
@@ -15,7 +16,7 @@ class Login extends Component {
     render() {
         const uiConfig =  {
             callbacks: {
-              signInSuccessWithAuthResult: function(authResult) {
+              signInSuccessWithAuthResult: function() {
                 // User successfully signed in.
                 // Return type determines whether we continue the redirect automatically
                 // or whether we leave that to developer to handle.\
@@ -29,7 +30,6 @@ class Login extends Component {
               // Leave the lines as is for the providers you want to offer your users.
               firebase.auth.GoogleAuthProvider.PROVIDER_ID,
               firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-              firebase.auth.TwitterAuthProvider.PROVIDER_ID,
               firebase.auth.EmailAuthProvider.PROVIDER_ID,
             ],
             credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO,
@@ -45,7 +45,7 @@ class Login extends Component {
                         </div>
         } else {
           loginLogout = <div className="signIn">
-                        <p>Sign In:</p>
+                        <h2>Welcome</h2>
                           <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
                         </div>
         }

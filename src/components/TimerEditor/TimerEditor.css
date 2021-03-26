@@ -1,0 +1,15 @@
+.editorBox {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.editorBox h1 {
+    text-align: center;
+}
+
+/* overriding default css*/
+.MuiTypography-body1 {
+    font-family: 'Fredoka One', cursive !important;
+}
