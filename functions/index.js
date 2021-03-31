@@ -16,6 +16,7 @@ exports.createUserData = functions.auth.user().onCreate((user) => {
         userStats: {
             "longestStreak": 0,
                 "streak": 0,
+                "longestStreak": 0,
                 "lastLoginDate": "",
                 "pomoData": {
                         "Monday": 0,
@@ -33,7 +34,7 @@ exports.createUserData = functions.auth.user().onCreate((user) => {
 });
 
 //check if user has logged in everyday at 11:59PM
-exports.scheduledFunctionCrontab = functions.pubsub.schedule('59 23 * * *')
+exports.streakChecker = functions.pubsub.schedule('59 23 * * *')
   .timeZone('America/Chicago') // Users can choose timezone - default is America/Los_Angeles
   .onRun((context) => {
     //Compare last login timestamp vs current timestamp
@@ -64,7 +65,7 @@ exports.scheduledFunctionCrontab = functions.pubsub.schedule('59 23 * * *')
   })
 
 //Clear out tasks from last week at start of current day.
-exports.scheduledFunctionCrontab = functions.pubsub.schedule('0 0 * * *')
+exports.clearTasksWeekly = functions.pubsub.schedule('0 0 * * *')
 .timeZone('America/Chicago') // Users can choose timezone - default is America/Los_Angeles
 .onRun((context) => {
     let currentTimeStamp = context.timestamp()
