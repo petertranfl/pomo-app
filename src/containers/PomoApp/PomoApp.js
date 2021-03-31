@@ -59,8 +59,10 @@ class PomoApp extends Component {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 // User is signed in.
-                this.loadUserPref(user);
-                this.watchUserStats(user);
+                //log into server to track streak
+                this.serverLogin();
+                this.loadUserPref();
+                this.watchUserStats();
                 if (this.state.showModal === true) {
                     this.modalToggler(0)
                 }
@@ -77,8 +79,14 @@ class PomoApp extends Component {
         })
     }
 
+    serverLogin = () => {
+        let loginDate = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats/lastLoginDate');
+        let currentDate = Date.now().toString();
+        loginDate.set(currentDate)
+    }
+    
     //grabs userpref once and then grabs tasklist
-    loadUserPref = (user) => {
+    loadUserPref = () => {
         let userPrefRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userPref');
         userPrefRef.once('value', (snapshot) => {
             let data = snapshot.val();
@@ -89,9 +97,10 @@ class PomoApp extends Component {
                     currentDuration: data.pomodoroInitial,
                     userPref: data
                 }, this.loadTaskList(data.autoStartTasks))
+                //sign user into server
             } else {
                 //data hasn't finished creating after first signup. need to wait.
-                setTimeout(this.loadUserPref(user), 2000)
+                setTimeout(this.loadUserPref(), 2000)
             }
         })
     }
@@ -117,7 +126,7 @@ class PomoApp extends Component {
         })
     }
 
-    watchUserStats = (user) => {
+    watchUserStats = () => {
         if (firebase.auth().currentUser.uid) {
             let userStatsRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats');
             userStatsRef.on('value', (snapshot) => {
@@ -129,7 +138,7 @@ class PomoApp extends Component {
                     //if data hasn't loaded, try again in a second
                 } else {
                     userStatsRef.off()
-                    setTimeout(this.watchUserStats(user), 2000)
+                    setTimeout(this.watchUserStats(), 2000)
                 }
             }); 
         } else {

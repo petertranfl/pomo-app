@@ -41,7 +41,7 @@ input {
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    height: 57.55%;
+    height: 47.7em;
     width: 100%;
     margin-top: -30%;
     margin-left: auto;
@@ -56,8 +56,8 @@ input {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 0;
-    height: 27%;
-    width: 27%;
+    height: 14em;
+    width: 48em;
     border-radius: 12px;
     border: 8px solid rgb(121, 64, 64);
     border-top-width: 6px;
@@ -185,11 +185,11 @@ input {
 
 @media screen and (max-height: 1200px) {
     .timerContainer {
-        height: 59.6%;
+        min-height: 22em;
     }
     .timerSubContainer {
-        height: 30%;
-        width: 32%;
+        min-height: 14em;
+        min-width: 10em;
     }
     .editButton {
         width: 4em;

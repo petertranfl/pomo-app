@@ -74,7 +74,7 @@ const TaskEditor = (props) => {
             <input type="text" placeholder="Task Name" autoFocus={true} required={true} id="editTaskTitle" defaultValue={taskInfo.title}></input>
             <p id="estPomo">Est. Pomos</p>
             <input type="text" placeholder="Category" id="editTaskCategory" defaultValue={taskInfo.category}></input>
-            <input type="number" defaultValue={taskInfo.duration} id="editTaskDuration"></input>
+            <input type="number" defaultValue={taskInfo.duration} min="1" id="editTaskDuration"></input>
             <motion.div
                 onClick={hideEditCard} id="cancelEditDiv">
                     <FontAwesomeIcon icon={faTimes} size="2x" id="cancelEditButton"></FontAwesomeIcon>
