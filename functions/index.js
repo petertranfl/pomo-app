@@ -68,7 +68,7 @@ exports.streakChecker = functions.pubsub.schedule('59 23 * * *')
 exports.clearTasksWeekly = functions.pubsub.schedule('0 0 * * *')
 .timeZone('America/Chicago') // Users can choose timezone - default is America/Los_Angeles
 .onRun((context) => {
-    let currentTimeStamp = context.timestamp()
+    let currentTimeStamp = context.timestamp
     //convert UNIX timestamp to ms for conversion
     let currentDate = new Date(parseInt(currentTimeStamp) * 1000)
     const intDay = currentDate.getDay()
