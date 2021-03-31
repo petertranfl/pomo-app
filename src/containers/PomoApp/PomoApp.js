@@ -41,7 +41,7 @@ class PomoApp extends Component {
                 autoStartTasks: false
             },
             userStats: {
-                currentStreak: 0,
+                streak: 0,
                 longestStreak: 0,
                 lastLoginDate: '',
                 pomoData: {}
@@ -84,7 +84,7 @@ class PomoApp extends Component {
         let currentDate = Date.now().toString();
         loginDate.set(currentDate)
     }
-    
+
     //grabs userpref once and then grabs tasklist
     loadUserPref = () => {
         let userPrefRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userPref');

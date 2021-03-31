@@ -49,8 +49,8 @@ const StatsViewer = (props) => {
     return (
         <div className="statsViewer">
             <h3>Active Task: {truncate(activeTaskTitle, 15)}</h3>
-            <p>Current Streak: </p>
-            <p>Highest Streak: </p>
+            <p>Current Streak: {props.userStats.streak}</p>
+            <p>Highest Streak: {props.userStats.longestStreak}</p>
             <p>Estimated Finish: {moment().add(totalDuration(), 's').format('LT')}</p>
             <p>Hours Completed Today: {completedHours()}</p>
         </div>
