@@ -39,7 +39,7 @@ exports.streakChecker = functions.pubsub.schedule('59 23 * * *')
   .onRun((context) => {
     //Compare last login timestamp vs current timestamp
     let loginTimeStamp;
-    let loginDateRef = admin.database().ref("/users/" + user.uid + "/userStats/lastLoginDate")
+    let loginDateRef = admin.database().ref("/users/{pushId}/userStats/lastLoginDate")
     loginDateRef.once('value', (snapshot) => {
         loginTimeStamp = snapshot.val();
     });
@@ -50,7 +50,7 @@ exports.streakChecker = functions.pubsub.schedule('59 23 * * *')
 
     //if timestamp difference > 86400 seconds, then user has not logged in within 24 hrs
     let newStreak;
-    let streakRef = admin.database().ref("/users/" + user.uid + "/userStats/streak")
+    let streakRef = admin.database().ref("/users/{pushId/userStats/streak")
     streakRef.once('value', (snapshot) => {
         newStreak = snapshot.val()
     })
@@ -96,7 +96,7 @@ exports.clearTasksWeekly = functions.pubsub.schedule('0 0 * * *')
             day = 'Saturday'
             break;
     }
-    let pomoDataRef = admin.database().ref("/users/" + user.uid + "/userStats/pomoData")
+    let pomoDataRef = admin.database().ref("/users/{pushId}/userStats/pomoData")
     pomoDataRef.child(day).set(0)
     return null
 });
