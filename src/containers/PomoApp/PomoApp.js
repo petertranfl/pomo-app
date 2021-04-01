@@ -81,40 +81,39 @@ class PomoApp extends Component {
     streakCheck = () => {
         
         //get users last login info
-        let userStatsRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats/')
+        let userStatsRef = firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats')
         let userStats;
         userStatsRef.once('value', (snapshot) => {
             userStats = snapshot.val();
-        })
-        //if data finished loading
-        if (userStats) {
-            //strip date times to just compare days
-            const currentDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate())
-            const tempLastDate = new Date(userStats.lastLoginDate)
-            const lastDate = new Date(tempLastDate.getFullYear(), tempLastDate.getMonth(), tempLastDate.getDay())
+            //if data finished loading
+            if (userStats) {
+                //strip date times to just compare days
+                const currentDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate())
+                const tempLastDate = new Date(userStats.lastLoginDate)
+                const lastDate = new Date(tempLastDate.getFullYear(), tempLastDate.getMonth(), tempLastDate.getDate())
 
-            console.log(currentDate)
-            console.log(lastDate)
+                console.log(currentDate)
+                console.log(lastDate)
 
-            //check if user logged has not logged in today
-            if (currentDate.getTime() !== lastDate.getTime()) {
-        
-                //check if user has not logged in yesterday
-                if ((currentDate.getTime() / 1000 - lastDate.getTime() / 1000) !== 86400 ) {
-                    //reset streak counter
-                    userStats.streak = 0
+                //check if user logged has not logged in today
+                if (currentDate.getTime() !== lastDate.getTime()) {
+            
+                    //check if user has not logged in yesterday
+                    if ((currentDate.getTime() / 1000 - lastDate.getTime() / 1000) !== 86400 ) {
+                        //reset streak counter
+                        userStats.streak = 0
+                    }
+                    userStats.streak += 1
+                    userStats.longestStreak = Math.max(userStats.longestStreak, userStats.streak)
                 }
-                userStats.streak += 1
-                userStats.longestStreak = Math.max(userStats.longestStreak, userStats.streak)
-                console.log(userStats.streak)
+                //save to db
+                userStats.lastLoginDate = Date.now()
+                userStatsRef.set(userStats)
+                this.watchUserStats();
+            } else {
+                setTimeout(this.streakCheck(), 2000)
             }
-            //save to db
-            userStats.lastLoginDate = Date.now()
-            userStatsRef.set(userStats)
-            this.watchUserStats();
-        } else {
-            setTimeout(this.streakCheck(), 2000)
-        }
+        })
     }
 
     //grabs userpref once and then grabs tasklist
@@ -148,12 +147,10 @@ class PomoApp extends Component {
                 if (autostart === true) {
                     firstTaskId = data[0].timeStamp
                 }
-            this.setState({
-                activeTaskId: firstTaskId,
-                taskList: data
+                this.setState({
+                    activeTaskId: firstTaskId,
+                    taskList: data
                 })
-            } else {
-                setTimeout(this.loadTaskList(), 2000)
             }
         })
     }

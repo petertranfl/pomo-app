@@ -70,7 +70,7 @@ exports.clearTasksWeekly = functions.pubsub.schedule('0 0 * * *')
     let usersRef = admin.database().ref('/userList').orderByKey();
     usersRef.once("value").then(function(snapshot) {
         snapshot.forEach(function(childSnapshot) {
-            pomoDataRef = admin.database().ref('/users/' + childSnapshot.key + '/userStats/pomoData')
+            pomoDataRef = admin.database().ref('/users/' + childSnapshot.val() + '/userStats/pomoData')
             pomoDataRef.child(day).set(0)
         })
     })
