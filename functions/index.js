@@ -17,7 +17,7 @@ exports.createUserData = functions.auth.user().onCreate((user) => {
             "longestStreak": 0,
                 "streak": 0,
                 "longestStreak": 0,
-                "lastLoginDate": "",
+                "lastLoginDate": Date.now(),
                 "pomoData": {
                         "Monday": 0,
                         "Tuesday": 0,
@@ -30,39 +30,9 @@ exports.createUserData = functions.auth.user().onCreate((user) => {
             },
     }
     admin.database().ref("/users/" + user.uid).set(newProfile)
+    admin.database().ref("/userList").push(user.uid)
     return null
 });
-
-//check if user has logged in everyday at 11:59PM
-exports.streakChecker = functions.pubsub.schedule('59 23 * * *')
-  .timeZone('America/Chicago') // Users can choose timezone - default is America/Los_Angeles
-  .onRun((context) => {
-    //Compare last login timestamp vs current timestamp
-    let loginTimeStamp;
-    let loginDateRef = admin.database().ref("/users/{pushId}/userStats/lastLoginDate")
-    loginDateRef.once('value', (snapshot) => {
-        loginTimeStamp = snapshot.val();
-    });
-    let currentTimeStamp = context.timestamp;
-    loginTimeStamp = parseInt(loginTimeStamp)
-    currentTimeStamp = parseInt(currentTimeStamp)
-    const timeDiff = loginTimeStamp - currentTimeStamp
-
-    //if timestamp difference > 86400 seconds, then user has not logged in within 24 hrs
-    let newStreak;
-    let streakRef = admin.database().ref("/users/{pushId/userStats/streak")
-    streakRef.once('value', (snapshot) => {
-        newStreak = snapshot.val()
-    })
-    if (timeDiff > 86400) {
-        newStreak = 0
-    } else {
-        newStreak = newStreak + 1
-    }
-    //update streak
-    streakRef.set(newStreak)
-    return null
-  })
 
 //Clear out tasks from last week at start of current day.
 exports.clearTasksWeekly = functions.pubsub.schedule('0 0 * * *')
@@ -70,8 +40,7 @@ exports.clearTasksWeekly = functions.pubsub.schedule('0 0 * * *')
 .onRun((context) => {
     let currentTimeStamp = context.timestamp
     //convert UNIX timestamp to ms for conversion
-    let currentDate = new Date(parseInt(currentTimeStamp) * 1000)
-    const intDay = currentDate.getDay()
+    const intDay = new Date(currentTimeStamp).getDay()
     let day;
     switch(intDay) {
         case 0:
@@ -96,7 +65,14 @@ exports.clearTasksWeekly = functions.pubsub.schedule('0 0 * * *')
             day = 'Saturday'
             break;
     }
-    let pomoDataRef = admin.database().ref("/users/{pushId}/userStats/pomoData")
-    pomoDataRef.child(day).set(0)
+    //loop through all users
+    let pomoDataRef
+    let usersRef = admin.database().ref('/userList').orderByKey();
+    usersRef.once("value").then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+            pomoDataRef = admin.database().ref('/users/' + childSnapshot.key + '/userStats/pomoData')
+            pomoDataRef.child(day).set(0)
+        })
+    })
     return null
 });
