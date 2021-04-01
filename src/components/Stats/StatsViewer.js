@@ -9,12 +9,28 @@ const StatsViewer = (props) => {
         const activeTaskIndex = props.taskList.findIndex(task => task.timeStamp === props.activeTaskId)
 
         if (activeTaskIndex === -1) {
-            activeTaskTitle = 'No Task Selected'
+            activeTaskTitle = 'None'
         } else {
              activeTaskTitle = props.taskList[activeTaskIndex].title
         }
     } else {
         activeTaskTitle = 'No Task Selected'
+    }
+
+    function streak() {
+        if (props.isLoggedIn) {
+            return props.userStats.streak
+        } else {
+            return "Login to Track Stats"
+        }
+    }
+
+    function longestStreak() {
+        if (props.isLoggedIn) {
+            return props.userStats.longestStreak
+        } else {
+            return "Login to Track Stats"
+        }
     }
 
     function truncate(str, n){
@@ -49,8 +65,9 @@ const StatsViewer = (props) => {
     return (
         <div className="statsViewer">
             <h3>Active Task: {truncate(activeTaskTitle, 15)}</h3>
-            <p>Current Streak: {props.userStats.streak}</p>
-            <p>Highest Streak: {props.userStats.longestStreak}</p>
+            <p class={props.isLoggedIn ? "hide" : "loginReminder"}>Login to Track Stats</p>
+            <p class={props.isLoggedIn ? "streak" : "hide"}>Current Streak: {streak()}</p>
+            <p class={props.isLoggedIn ? "streak" : "hide"}>Highest Streak: {longestStreak()}</p>
             <p>Estimated Finish: {moment().add(totalDuration(), 's').format('LT')}</p>
             <p>Hours Completed Today: {completedHours()}</p>
         </div>

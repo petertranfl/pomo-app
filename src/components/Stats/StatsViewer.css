@@ -8,3 +8,12 @@
 .statsViewer h3{
     margin-top: 0em;
 }
+
+.hide {
+    display: none;
+}
+
+.streak {
+    /* empty for now but maybe ill change it up */
+    
+}

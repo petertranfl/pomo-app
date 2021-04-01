@@ -175,6 +175,7 @@ class TaskManager extends Component {
                         taskList={this.props.taskList}
                         userPref={this.props.userPref}
                         userStats={this.props.userStats}
+                        isLoggedIn={this.props.isLoggedIn}
                         />
                 </div>
             </div>

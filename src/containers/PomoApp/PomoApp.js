@@ -32,7 +32,6 @@ class PomoApp extends Component {
             isTimerRunning: false,
             currentDuration: 1500,
             isLoggedIn: false,
-            // username: "",
             userPref: {
                 pomodoroInitial: 1500,
                 shortInitial: 300,
@@ -522,6 +521,7 @@ class PomoApp extends Component {
                                 activeTaskId={this.state.activeTaskId}
                                 saveTaskList={this.saveTaskList}
                                 showEditCard={this.setEditCard}
+                                isLoggedIn={this.state.isLoggedIn}
                                 />
                         </div>
                     <div className="hintDiv">
