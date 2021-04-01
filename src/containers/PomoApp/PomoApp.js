@@ -4,13 +4,14 @@ import {motion} from 'framer-motion';
 import click1 from '../../components/sound/FirstClickPomo.mp3'
 import click2 from '../../components/sound/SecondClickPomo.mp3'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCog, faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCog} from '@fortawesome/free-solid-svg-icons';
 import {faChartBar} from '@fortawesome/free-regular-svg-icons';
 import moment from 'moment';
 import Cookies from 'js-cookie';
 import firebase from '../../firebase/firebase';
 import ReactModal from 'react-modal';
 import Window from '../../components/Window/Window';
+import ProfileButton from '../../components/Login/ProfileButton';
 import Login from '../../components/Login/Login';
 import Timer from '../../components/Timer/Timer';
 import TimerStartPause from '../../components/TimerButton/TimerStartPause';
@@ -31,7 +32,6 @@ class PomoApp extends Component {
             isTimerRunning: false,
             currentDuration: 1500,
             isLoggedIn: false,
-            loggedInYesterday: false,
             // username: "",
             userPref: {
                 pomodoroInitial: 1500,
@@ -486,10 +486,9 @@ class PomoApp extends Component {
                     <h1>Pomofi</h1>
                 </header>
                     <Window/>
-                    <div id="loginButton"
-                        onClick={() => this.modalToggler(0)}>
-                        <FontAwesomeIcon icon={faUserCircle} size="2x" color="#501607c7" id="loginButton"/>
-                    </div>
+                    <ProfileButton
+                        isLoggedIn={this.state.isLoggedIn}
+                        toggleModal={this.modalToggler}/>
                     <div className="timerContainer">
                         <div className="timerSubContainer">
                             <div className="timerDisplay">

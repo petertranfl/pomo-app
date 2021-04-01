@@ -1,0 +1,10 @@
+#loginButton {
+    position: absolute;
+    top: 1%;
+    right: 5%;
+    font-size: 1.75em;
+}
+
+#loginButton:hover {
+    cursor: pointer
+}

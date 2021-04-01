@@ -39,18 +39,21 @@ class Login extends Component {
             privacyPolicyUrl: '<your-privacy-policy-url>'
           };
         let loginLogout;
-        if (this.state.isSignedIn) {
-          loginLogout = <div className="signOut">
-                          <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
-                        </div>
-        } else {
-          loginLogout = <div className="signIn">
-                        <h1>Welcome</h1>
-                          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
-                        </div>
-        }
+        // if (this.state.isSignedIn) {
+        //   loginLogout = <div className="signOut">
+        //                   <button onClick={() => firebase.auth().signOut()}>Sign Out</button>
+        //                 </div>
+        // } else {
+        //   loginLogout = <div className="signIn">
+        //                 <h1>Welcome</h1>
+        //                   <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+        //                 </div>
+        // }
           return (
-            loginLogout
+                  <div className="signIn">
+                    <h1>Welcome</h1>
+                          <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+                  </div>
         )
     }
 }
