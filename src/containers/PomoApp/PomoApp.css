@@ -57,7 +57,7 @@ input {
 .timerButtons {
     display: flex;
     flex-wrap: wrap;
-    height: 92%;
+    height: 13em;
     width: 100%;
     margin-top: 0.5em;
     margin-right: 1em;
@@ -67,8 +67,8 @@ input {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 85%;
-    width: 75%;
+    height: 12em;
+    width: 40em;
     margin-top: 0.5em;
     margin-bottom: 1em;
     margin-left: 1em;
@@ -174,15 +174,22 @@ input {
 
 @media screen and (max-height: 1200px) {
     .timerContainer {
-        min-height: 22em;
+        height: 36em;
     }
     .timerSubContainer {
-        min-height: 14em;
-        min-width: 10em;
+        height: 12em;
+        width: 43em;
+    }
+    .timerDisplay {
+        height: 10em;
+    }
+    .timerButtons {
+        height: 10.5em;
     }
     .editButton {
         width: 4em;
         font-size: 0.85em;
+        margin-right: 0.75em;
     }
     .chartButton {
         width: 4em;
