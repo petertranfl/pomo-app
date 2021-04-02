@@ -73,7 +73,7 @@ const StatsViewer = (props) => {
     return (
         <div className="statsViewer">
             <h3>Active Task: </h3>
-            <h3>{truncate(activeTaskTitle, 50)}</h3>
+            <h3>{activeTaskTitle}</h3>
             <p className={props.isLoggedIn ? "hide" : "loginReminder"}>---Login to Track Stats---</p>
             <p className={props.isLoggedIn ? "streak" : "hide"}>Current Streak: {streak()}</p>
             <p className={props.isLoggedIn ? "streak" : "hide"}>Highest Streak: {longestStreak()}</p>
