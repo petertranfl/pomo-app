@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './StatsViewer.css'
 import moment from 'moment';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCog, faUserCircle, faInfoCircle, faChartBar, faEyeSlash} from '@fortawesome/free-solid-svg-icons';
 
 const StatsViewer = (props) => {
+
+    const [show, setShow] = useState(false)
 
     let activeTaskTitle;
     if (props.taskList) {
@@ -62,6 +66,10 @@ const StatsViewer = (props) => {
         }
     }
 
+    function toggleHint() {
+        setShow(!show);
+    }
+
     return (
         <div className="statsViewer">
             <h3>Active Task: {truncate(activeTaskTitle, 15)}</h3>
@@ -70,6 +78,20 @@ const StatsViewer = (props) => {
             <p className={props.isLoggedIn ? "streak" : "hide"}>Highest Streak: {longestStreak()}</p>
             <p>Estimated Finish: {moment().add(totalDuration(), 's').format('LT')}</p>
             <p>Hours Completed Today: {completedHours()}</p>
+            <div className={show ? "hintDiv" : "hide"}>
+                <h4>Click on the {<FontAwesomeIcon icon={faUserCircle}/>} icon at the top right to sign in.</h4>
+                <h4>Add task cards and set active to start tracking stats.</h4>
+                <h4>Click on the task card to set it as active.</h4>
+                <h4>Drag and drop tasks in preferred order.</h4>
+                <h4>Customize settings with the {<FontAwesomeIcon icon={faCog}/>} icon.</h4>
+                <h4>Click on the {<FontAwesomeIcon icon={faChartBar}/>} icon to look at weekly stats.</h4>
+                <div className="hideHint" onClick={() => toggleHint()}>
+                    {<FontAwesomeIcon icon={faEyeSlash} size="2x"/>}
+                </div>
+            </div>
+            <div className={show ? "hide" : "infoButton"} onClick={() => toggleHint()}>
+                <FontAwesomeIcon icon={faInfoCircle} size="2x"/>
+            </div>
         </div>
     )
 }

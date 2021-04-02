@@ -4,7 +4,7 @@ import {motion} from 'framer-motion';
 import click1 from '../../components/sound/FirstClickPomo.mp3'
 import click2 from '../../components/sound/SecondClickPomo.mp3'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCog, faUserCircle} from '@fortawesome/free-solid-svg-icons';
+import {faCog} from '@fortawesome/free-solid-svg-icons';
 import {faChartBar} from '@fortawesome/free-regular-svg-icons';
 import moment from 'moment';
 import Cookies from 'js-cookie';
@@ -57,6 +57,16 @@ class PomoApp extends Component {
     firstLoad = () => {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
+                Cookies.set('pomofiCookie', JSON.stringify({
+                    userPref: {
+                        pomodoroInitial: 1500,
+                        shortInitial: 300,
+                        longInitial: 600,
+                        autoStartTimer: false,
+                        autoStartTasks: false
+                    },
+                    taskList: [],
+                }))
                 // User is signed in.
                 this.streakCheck();
                 this.loadUserPref();
@@ -496,25 +506,18 @@ class PomoApp extends Component {
                                 </motion.button>
                             </div>
                         </div>
-                            <TaskManager
-                                startTask={this.startTask}
-                                taskList={this.state.taskList}
-                                userPref={this.state.userPref}
-                                userStats={this.state.userStats}
-                                activeTaskId={this.state.activeTaskId}
-                                saveTaskList={this.saveTaskList}
-                                showEditCard={this.setEditCard}
-                                isLoggedIn={this.state.isLoggedIn}
-                                />
-                        </div>
-                    <div className="hintDiv">
-                        <h4>Click on the {<FontAwesomeIcon icon={faUserCircle}/>} icon at the top right to sign in.</h4>
-                        <h4>Add task cards and set active to start tracking stats.</h4>
-                        <h4>Click on the task card to set it as active.</h4>
-                        <h4>Drag and drop tasks in preferred order.</h4>
-                        <h4>Customize settings with the {<FontAwesomeIcon icon={faCog}/>} icon.</h4>
-                        <h4>Click on the {<FontAwesomeIcon icon={faChartBar}/>} icon to look at weekly stats.</h4>
+                        <TaskManager
+                            startTask={this.startTask}
+                            taskList={this.state.taskList}
+                            userPref={this.state.userPref}
+                            userStats={this.state.userStats}
+                            activeTaskId={this.state.activeTaskId}
+                            saveTaskList={this.saveTaskList}
+                            showEditCard={this.setEditCard}
+                            isLoggedIn={this.state.isLoggedIn}
+                            />
                     </div>
+                    <div className="whiteSpaceDiv"/>
             </div>
         )
     }

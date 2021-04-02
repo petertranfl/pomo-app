@@ -127,6 +127,10 @@ input {
     background-color: rgba(107, 107, 107, 0.794);
 }
 
+.whiteSpaceDiv {
+    height: 20em;
+}
+
 .editButton {
     height: 3.5em;
     width: 4.6em;
@@ -165,14 +169,6 @@ input {
 .chartButton:hover {
     color:rgba(143, 143, 143, 0.746)
 }
-
-.hintDiv {
-    margin-left: 3em;
-    font-size: 1.25em;
-    border-style: dotted black 4px;
-    height: 40em;
-}
-
 
 @media screen and (max-height: 1200px) {
     .timerContainer {
