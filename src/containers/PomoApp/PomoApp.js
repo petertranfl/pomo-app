@@ -4,7 +4,7 @@ import {motion} from 'framer-motion';
 import click1 from '../../components/sound/FirstClickPomo.mp3'
 import click2 from '../../components/sound/SecondClickPomo.mp3'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCog} from '@fortawesome/free-solid-svg-icons';
+import {faCog, faUserCircle} from '@fortawesome/free-solid-svg-icons';
 import {faChartBar} from '@fortawesome/free-regular-svg-icons';
 import moment from 'moment';
 import Cookies from 'js-cookie';
@@ -64,14 +64,12 @@ class PomoApp extends Component {
                     this.modalToggler(0)
                 }
             } else {
-                console.log('did not sign in')
                 this.loadCookies();
                 if (this.state.showModal === true) {
                     this.modalToggler(0)
                 }
             }
         }, (error) => {
-            console.log('cors?')
             console.log(error)
         })
     }
@@ -90,9 +88,6 @@ class PomoApp extends Component {
                 const currentDate = new Date(new Date().getFullYear(),new Date().getMonth() , new Date().getDate())
                 const tempLastDate = new Date(userStats.lastLoginDate)
                 const lastDate = new Date(tempLastDate.getFullYear(), tempLastDate.getMonth(), tempLastDate.getDate())
-
-                console.log(currentDate)
-                console.log(lastDate)
 
                 //check if user logged has not logged in today
                 if (currentDate.getTime() !== lastDate.getTime()) {
@@ -176,8 +171,15 @@ class PomoApp extends Component {
 
     loadCookies = () => {
         let cookie = Cookies.getJSON('pomofiCookie');
-        //if no cookie currently exists, create new
-        if (!cookie) {
+        //if cookie exists
+        if (cookie) {
+            //set state from cookie
+            this.setState({
+                isLoggedIn: false,
+                userPref: cookie.userPref,
+                taskList: cookie.taskList
+            })
+        } else {
             Cookies.set('pomofiCookie', JSON.stringify({
                 userPref: {
                     pomodoroInitial: 1500,
@@ -187,15 +189,8 @@ class PomoApp extends Component {
                     autoStartTasks: false
                 },
                 taskList: [],
-            })) 
-        console.log('no cookie found, creating cookie')
+            }))
         }
-        //set state from cookie
-        this.setState({
-            isLoggedIn: false,
-            userPref: cookie.userPref,
-            taskList: cookie.taskList
-        })
     }
 
     setCookies = (data) => {
@@ -208,7 +203,7 @@ class PomoApp extends Component {
         //otherwise it is taskList
         else {
             tempCookie.taskList = data;
-            Cookies.set('pomofiCookies', JSON.stringify(tempCookie))
+            Cookies.set('pomofiCookie', JSON.stringify(tempCookie))
         }
     }
 
@@ -242,7 +237,6 @@ class PomoApp extends Component {
                     pomoData: newPomoData
                 }
             }))
-            console.log(newPomoData)
             firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userStats').update({pomoData: newPomoData})
         }
     }
@@ -262,7 +256,6 @@ class PomoApp extends Component {
     //saves new userpreferences, sets state and saves to cookie or db if signed in
     saveUserPref = (newUserPref) => {
         if (this.state.isLoggedIn) {
-            console.log('saving to database ' + newUserPref)
             firebase.database().ref('users/' + firebase.auth().currentUser.uid + '/userPref').set(newUserPref)
         } else {
             this.setCookies(newUserPref)
@@ -274,7 +267,6 @@ class PomoApp extends Component {
 
     //toggles modal opening/closing and opens different modal child based on modalType
     modalToggler = (newModalType) => {
-        console.log('modal toggled')
         this.setState(prevState => ({
             showModal: !prevState.showModal,
             modalType: newModalType,
@@ -291,7 +283,6 @@ class PomoApp extends Component {
                 } else {
                     //if not on pomodorotimer, then switch to pomodorotimer
                     this.changeTimer(0);
-                    console.log('changed to pomo')
                     if (this.state.userPref.autoStartTimer === true) {
                         this.startTimer(true);
                     }
@@ -301,18 +292,14 @@ class PomoApp extends Component {
             this.setState({
                     currentDuration: this.state.currentDuration - 1,
             })
-            console.log(this.state)
-            console.log('pomotick')
         }
     }
 
     //finishes pomodoro. Increment task pomo and local pomocounter +1 then switches to correct timer based on current pomocounter.
     completePomodoro = () => {
         let newTimerType = 1;
-        console.log('completing pomo')
 
         if (this.state.activeTaskId !== "") {
-            (console.log('activeTaskID found'))
             const newTaskList = this.state.taskList;
             const activeTaskIndex = newTaskList.findIndex((task => task.timeStamp === this.state.activeTaskId));
             //result is -1 if item can't be found
@@ -378,13 +365,11 @@ class PomoApp extends Component {
                 this.setState({
                     isTimerRunning: false,
                 })
-                console.log('timer paused')
                 clearInterval(this.state.timerId);
             }
     }
 
     resetTimer = () => {
-        console.log('resetTimer activated')
         clearInterval(this.state.timerId);
         this.setState({
             isTimerRunning: false
@@ -412,8 +397,6 @@ class PomoApp extends Component {
     }
 
     changeTimer = (timerType) => {
-        console.log('changeTimer activated')
-        console.log('timerType = ' + timerType + ' currentTimerType = ' + this.state.currentTimerType)
         if (timerType !== this.state.currentTimerType) {
            this.setState({
                currentTimerType: timerType
@@ -424,7 +407,7 @@ class PomoApp extends Component {
     startTask = (taskId) => {
         this.setState({
             activeTaskId: taskId,
-        }, console.log('setactivetaskid as ' + taskId))
+        })
     }
 
     archiveTasks = () => {
@@ -525,12 +508,12 @@ class PomoApp extends Component {
                                 />
                         </div>
                     <div className="hintDiv">
-                        <h4>Click on the person icon in the top right to sign in.</h4>
-                        <h4>Add Tasks to start tracking stats.</h4>
-                        <h4>Click on a task to set it as active.</h4>
+                        <h4>Click on the {<FontAwesomeIcon icon={faUserCircle}/>} icon at the top right to sign in.</h4>
+                        <h4>Add task cards and set active to start tracking stats.</h4>
+                        <h4>Click on the task card to set it as active.</h4>
                         <h4>Drag and drop tasks in preferred order.</h4>
-                        <h4>Customize timers and autostarts with the gear icon below the start button.</h4>
-                        <h4>Click on the chart button next to the gear icon to look at weekly stats.</h4>
+                        <h4>Customize settings with the {<FontAwesomeIcon icon={faCog}/>} icon.</h4>
+                        <h4>Click on the {<FontAwesomeIcon icon={faChartBar}/>} icon to look at weekly stats.</h4>
                     </div>
             </div>
         )

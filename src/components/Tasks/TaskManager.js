@@ -77,9 +77,6 @@ class TaskManager extends Component {
     }
 
     editTask = (index, task) => {
-        console.log('editing task')
-        console.log(index)
-        console.log(task)
         let newTaskList = this.props.taskList
         newTaskList[index] = task
         this.hideEditCard()

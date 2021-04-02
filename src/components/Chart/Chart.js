@@ -2,7 +2,6 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const Chart = (props) => {
-  console.log(props.data)
     let pomoData;
     //if data object is empty, fill it with empty values
     if (Object.keys(props.data).length === 0) {

@@ -65,9 +65,9 @@ const StatsViewer = (props) => {
     return (
         <div className="statsViewer">
             <h3>Active Task: {truncate(activeTaskTitle, 15)}</h3>
-            <p class={props.isLoggedIn ? "hide" : "loginReminder"}>---Login to Track Stats---</p>
-            <p class={props.isLoggedIn ? "streak" : "hide"}>Current Streak: {streak()}</p>
-            <p class={props.isLoggedIn ? "streak" : "hide"}>Highest Streak: {longestStreak()}</p>
+            <p className={props.isLoggedIn ? "hide" : "loginReminder"}>---Login to Track Stats---</p>
+            <p className={props.isLoggedIn ? "streak" : "hide"}>Current Streak: {streak()}</p>
+            <p className={props.isLoggedIn ? "streak" : "hide"}>Highest Streak: {longestStreak()}</p>
             <p>Estimated Finish: {moment().add(totalDuration(), 's').format('LT')}</p>
             <p>Hours Completed Today: {completedHours()}</p>
         </div>
