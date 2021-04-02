@@ -72,19 +72,20 @@ const StatsViewer = (props) => {
 
     return (
         <div className="statsViewer">
-            <h3>Active Task: {truncate(activeTaskTitle, 15)}</h3>
+            <h3>Active Task: </h3>
+            <h3>{truncate(activeTaskTitle, 50)}</h3>
             <p className={props.isLoggedIn ? "hide" : "loginReminder"}>---Login to Track Stats---</p>
             <p className={props.isLoggedIn ? "streak" : "hide"}>Current Streak: {streak()}</p>
             <p className={props.isLoggedIn ? "streak" : "hide"}>Highest Streak: {longestStreak()}</p>
             <p>Estimated Finish: {moment().add(totalDuration(), 's').format('LT')}</p>
             <p>Hours Completed Today: {completedHours()}</p>
             <div className={show ? "hintDiv" : "hide"}>
-                <h4>Click on the {<FontAwesomeIcon icon={faUserCircle} color="#744334"/>} icon at the top right to sign in.</h4>
+                <h4>{<FontAwesomeIcon icon={faUserCircle} color="#744334"/>} at the top right to sign in.</h4>
                 <h4>Add task cards and set active to start tracking stats.</h4>
-                <h4>Click on the task card to set it as active.</h4>
+                <h4>Click on a task card to set it active.</h4>
                 <h4>Drag and drop tasks in preferred order.</h4>
-                <h4>Customize settings with the {<FontAwesomeIcon icon={faCog}/>} icon.</h4>
-                <h4>Click on the {<FontAwesomeIcon icon={faChartBar}/>} icon to look at weekly stats.</h4>
+                <h4>Customize settings with {<FontAwesomeIcon icon={faCog}/>}.</h4>
+                <h4><FontAwesomeIcon icon={faChartBar}/> to look at weekly stats.</h4>
                 <div className="hideHint" onClick={() => toggleHint()}>
                     {<FontAwesomeIcon icon={faEyeSlash} size="2x"/>}
                 </div>

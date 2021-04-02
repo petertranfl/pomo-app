@@ -48,6 +48,12 @@
     border-bottom-color: #a87a6e
 }
 
+.taskCategory {
+    width: 25em !important;
+    margin-top: 0.25em !important;
+    color: #2f2a2ab9
+}
+
 .editTaskPenDiv {
     position: absolute;
     top: 0.4em;

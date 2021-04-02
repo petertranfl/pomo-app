@@ -21,6 +21,10 @@ const Task = (props) => {
     function hideEditCard() {
         props.hideEditCard();
     }
+    function truncate(str, n){
+        //remove all whitespaces to check if task is empty
+        return (str.length > n) ? str.substr(0, n-1) + '...' : str;
+      };
 
     return (
         <motion.div className={taskInfo.timeStamp === props.activeTaskId ? "taskCard activeTask" : "taskCard"}
@@ -29,6 +33,7 @@ const Task = (props) => {
                         <div className="editTaskPenDiv">
                             <FontAwesomeIcon icon={faPen} size="2x" className="editTaskPen" onClick={() => showEditCard(taskInfo.timeStamp)}></FontAwesomeIcon>
                         </div>
+                        <div className="taskCategory">{truncate(taskInfo.category, 45)}</div>
                         <h3>{taskInfo.completed} / {taskInfo.duration}</h3>
         </motion.div>
     )

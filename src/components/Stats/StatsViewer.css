@@ -6,7 +6,13 @@
 }
 
 .statsViewer h3{
-    margin-top: 0em;
+    margin-top: 0.25em;
+    margin-bottom: 0em;
+}
+
+.activeTaskDiv {
+    overflow: hidden;
+    white-space: normal !important;
 }
 
 .hide {
