@@ -79,7 +79,7 @@ const StatsViewer = (props) => {
             <p>Estimated Finish: {moment().add(totalDuration(), 's').format('LT')}</p>
             <p>Hours Completed Today: {completedHours()}</p>
             <div className={show ? "hintDiv" : "hide"}>
-                <h4>Click on the {<FontAwesomeIcon icon={faUserCircle}/>} icon at the top right to sign in.</h4>
+                <h4>Click on the {<FontAwesomeIcon icon={faUserCircle} color="#744334"/>} icon at the top right to sign in.</h4>
                 <h4>Add task cards and set active to start tracking stats.</h4>
                 <h4>Click on the task card to set it as active.</h4>
                 <h4>Drag and drop tasks in preferred order.</h4>
@@ -90,7 +90,7 @@ const StatsViewer = (props) => {
                 </div>
             </div>
             <div className={show ? "hide" : "infoButton"} onClick={() => toggleHint()}>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x"/>
+                <FontAwesomeIcon icon={faInfoCircle} size="3x"/>
             </div>
         </div>
     )

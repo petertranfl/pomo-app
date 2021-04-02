@@ -18,6 +18,26 @@
     
 }
 
+.infoButton {
+    margin-top: 5em;
+    margin-left: 10em;
+    color: #744334;
+}
+
+.infoButton :hover {
+    cursor: pointer;
+    color: #f6e4d8;
+}
+
+.hideHint {
+    color: #501507;
+}
+
+.hideHint :hover{
+    cursor: pointer;
+    color: white;
+}
+
 .hintDiv {
     font-size: 1em;
     width: 18em;
@@ -25,4 +45,5 @@
     border: solid 4px #fff3ed;
     border-radius: 12px;
     background-color: #ffe7d9;
+    margin-bottom: 3em;
 }
