@@ -21,7 +21,7 @@ const StatsViewer = (props) => {
         if (props.isLoggedIn) {
             return props.userStats.streak
         } else {
-            return "Login to Track Stats"
+            return "--Login to Track Stats--"
         }
     }
 
@@ -29,7 +29,7 @@ const StatsViewer = (props) => {
         if (props.isLoggedIn) {
             return props.userStats.longestStreak
         } else {
-            return "Login to Track Stats"
+            return "--Login to Track Stats--"
         }
     }
 
@@ -65,7 +65,7 @@ const StatsViewer = (props) => {
     return (
         <div className="statsViewer">
             <h3>Active Task: {truncate(activeTaskTitle, 15)}</h3>
-            <p class={props.isLoggedIn ? "hide" : "loginReminder"}>Login to Track Stats</p>
+            <p class={props.isLoggedIn ? "hide" : "loginReminder"}>---Login to Track Stats---</p>
             <p class={props.isLoggedIn ? "streak" : "hide"}>Current Streak: {streak()}</p>
             <p class={props.isLoggedIn ? "streak" : "hide"}>Highest Streak: {longestStreak()}</p>
             <p>Estimated Finish: {moment().add(totalDuration(), 's').format('LT')}</p>
