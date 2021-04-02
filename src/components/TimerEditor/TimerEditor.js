@@ -8,6 +8,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import {Switch} from '@material-ui/core'
+import { withStyles, withTheme } from '@material-ui/core/styles';
 
 class TimerEditor extends Component {
     constructor(props) {
@@ -61,8 +62,28 @@ class TimerEditor extends Component {
     }
 
     render() {
+        const CustomSwitch = withStyles({
+            switchBase: {
+              color: "white",
+              '&$checked': {
+                color: "#7e4848",
+              },
+              '&$checked + $track': {
+                backgroundColor: "#7e4848",
+              },
+            },
+            checked: {},
+            track: {},
+          })(Switch);
 
-
+        const CustomButton = withStyles(() => ({
+        root: {
+            color: "#7e4848",
+            '&:hover': {
+            color: "7e48488e",
+            },
+        },
+        }))(Button);
         return (
             <div className="editorBox">
                 <form onSubmit={this.handleSubmit} className="editorForm">
@@ -110,7 +131,7 @@ class TimerEditor extends Component {
                             <FormGroup aria-label="position" row>
                                 <FormControlLabel
                                 value="AutoStartTimerTrue"
-                                control={<Switch
+                                control={<CustomSwitch
                                     checked={this.state.autoStartTimer} 
                                     onChange={this.toggleAutoStartTimer}/>}
                                 label="AutoStart Timer"
@@ -118,7 +139,7 @@ class TimerEditor extends Component {
                                 />
                                 <FormControlLabel
                                 value="AutoStartTasksTrue"
-                                control={<Switch
+                                control={<CustomSwitch
                                     checked={this.state.autoStartTasks} 
                                     onChange={this.toggleAutoStartTasks}/>}
                                 label="AutoStart Tasks"
@@ -127,13 +148,13 @@ class TimerEditor extends Component {
                             </FormGroup>
                         </FormControl>
                     </div>
-                    <Button 
+                    <CustomButton 
                             className="submitTimerEditButton"
                             value="submit"
                             onClick={(event) => this.handleSubmit(event)}
                             color='#501507'>
                         <FontAwesomeIcon icon={faCheck} size="3x"></FontAwesomeIcon>
-                    </Button>
+                    </CustomButton>
                 </form>
             </div>
         )

@@ -9,7 +9,7 @@ const ProfileButton = (props) => {
     if (props.isLoggedIn) {
         button = <div id="loginButton"
                     onClick={() => firebase.auth().signOut()}>
-                    <FontAwesomeIcon icon={faSignOutAlt}size="2x" color="#501607c7" id="loginButton"/>
+                    <FontAwesomeIcon icon={faSignOutAlt}size="2x" className="signOutButton" id="loginButton"/>
                 </div>
     } else {
         button = <div id="loginButton"

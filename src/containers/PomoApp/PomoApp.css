@@ -143,7 +143,7 @@ input {
 }
 
 .editButton:hover {
-    color:rgb(144, 144, 144)
+    color: #f5eeea
 }
 
 .editButton:active {
@@ -167,7 +167,7 @@ input {
 }
 
 .chartButton:hover {
-    color:rgba(143, 143, 143, 0.746)
+    color:#f5eeea;
 }
 
 @media screen and (max-height: 1200px) {

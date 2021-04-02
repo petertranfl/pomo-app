@@ -9,6 +9,10 @@
     background-color: #ECC7B0;
 }
 
+.timerStart:hover {
+    color: #f5eeea;
+}
+
 .timerPause {
     font-family: 'Fredoka One', cursive;
     font-size: 2.5em;
@@ -20,6 +24,9 @@
     background-color: #f2c1c1; 
 }
 
+.timerPause:hover {
+    color: #f5eeea;
+}
 @media screen and (max-height: 1200px) {
     .timerStart {
         height: 3em;

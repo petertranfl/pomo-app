@@ -8,6 +8,11 @@
     padding-left: 12px;
 }
 
+.taskCard:hover {
+    background-color: #ffe2d2;
+    border-color: #fffaf7;
+}
+
 .taskCard h2 {
     font-size: 1.5em;
     max-width: 80%;
@@ -33,6 +38,12 @@
     margin-top: -0.5em;
     margin-left: -0.5em;
     border-right-width: 6px;
+    border-right-color: #835144;
+    border-bottom-color: #a87a6e
+}
+
+.activeTask:hover {
+    background-color: #ffe7d9;
     border-right-color: #835144;
     border-bottom-color: #a87a6e
 }

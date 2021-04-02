@@ -13,6 +13,10 @@
     cursor: pointer;
 }
 
+.createTaskButton:hover {
+    color: #f5eeeab2;
+}
+
 .createTaskButton:active {
     -webkit-box-shadow: inset 1px 1px 10px #333;
     -moz-box-shadow:    inset 1px 1px 10px #333;

@@ -6,5 +6,16 @@
 }
 
 #loginButton:hover {
-    cursor: pointer
+    cursor: pointer;
+    color: #ecc7b0;
+    
+}
+
+.signOutButton {
+    color: #501607c7;
+}
+
+.signOutButton:hover {
+    cursor: pointer;
+    color: #ecc7b0;
 }
