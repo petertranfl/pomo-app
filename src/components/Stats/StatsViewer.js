@@ -81,9 +81,9 @@ const StatsViewer = (props) => {
             <p>Hours Completed Today: {completedHours()}</p>
             <div className={show ? "hintDiv" : "hide"}>
                 <h4>{<FontAwesomeIcon icon={faUserCircle} color="#744334"/>} at the top right to sign in.</h4>
-                <h4>Add task cards and set active to start tracking stats.</h4>
+                <h4>Add task cards and set one active to start tracking stats.</h4>
                 <h4>Click on a task card to set it active.</h4>
-                <h4>Drag and drop tasks in preferred order.</h4>
+                <h4>Drag and drop tasks in top-down order</h4>
                 <h4>Customize settings with {<FontAwesomeIcon icon={faCog}/>}.</h4>
                 <h4><FontAwesomeIcon icon={faChartBar}/> to look at weekly stats.</h4>
                 <div className="hideHint" onClick={() => toggleHint()}>

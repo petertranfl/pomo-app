@@ -140,6 +140,7 @@ input {
     border-radius: 12px;
     padding: 0;
     background-color: #ECC7B0;
+    outline: none;
 }
 
 .editButton:hover {
@@ -164,6 +165,7 @@ input {
     background-color: #ECC7B0;
     margin-top: 0.5em;
     margin-left: 1em;
+    outline: none;
 }
 
 .chartButton:hover {

@@ -7,6 +7,7 @@
     border-radius: 12px;
     padding: 0;
     background-color: #ECC7B0;
+    outline: none;
 }
 
 .timerStart:hover {
@@ -21,7 +22,8 @@
     border: 4px inset rgb(126, 72, 72);
     border-radius: 12px;
     padding: 0;
-    background-color: #f2c1c1; 
+    background-color: #f2c1c1;
+    outline: none;
 }
 
 .timerPause:hover {
