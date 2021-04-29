@@ -222,7 +222,7 @@ class PomoApp extends Component {
         //save if user is logged in
         if (this.state.isLoggedIn) {
             const rawHours =  (this.state.userPref.pomodoroInitial / 3600)
-            const hours = rawHours.toFixed(2)
+            const hours = parseFloat(rawHours.toFixed(2))
             const newPomoData = this.state.userStats.pomoData
             const day = moment().format('dddd')
             //if no record for that day, create new entry
